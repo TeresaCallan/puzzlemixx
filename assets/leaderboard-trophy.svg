@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title id="title">Golden Leaderboard trophy</title>
+  <defs>
+    <linearGradient id="gold" x1="18" y1="12" x2="78" y2="84" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff4b0"/><stop offset=".28" stop-color="#f6c95a"/><stop offset=".62" stop-color="#c98a1f"/><stop offset="1" stop-color="#fff0a0"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="34" y1="18" x2="63" y2="67" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fffbe1"/><stop offset=".5" stop-color="#ffe089"/><stop offset="1" stop-color="#d99b28"/>
+    </linearGradient>
+  </defs>
+  <path d="M28 18h40v14c0 20-8.9 33.8-20 33.8S28 52 28 32V18Z" fill="url(#gold)" stroke="#8c5a12" stroke-width="3"/>
+  <path d="M29 25H16v8c0 12.5 7.3 21 19 21M67 25h13v8c0 12.5-7.3 21-19 21" fill="none" stroke="url(#gold)" stroke-linecap="round" stroke-linejoin="round" stroke-width="7"/>
+  <path d="M48 65.5V77" stroke="#a76f18" stroke-width="7"/><path d="M30 84h36" stroke="url(#gold)" stroke-linecap="round" stroke-width="9"/>
+  <path d="m48 28 4.1 8.3 9.2 1.3-6.7 6.5 1.6 9.2-8.2-4.3-8.2 4.3 1.6-9.2-6.7-6.5 9.2-1.3L48 28Z" fill="url(#shine)" stroke="#a66d17" stroke-width="1.6"/>
+</svg>

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PuzzleMixx — Leaderboard</title>
+    <link rel="stylesheet" href="styles.css?v=85" />
+    <link rel="stylesheet" href="leaderboard.css?v=36" />
+  </head>
+  <body class="leaderboard-page">
+    <header class="leaderboard-sticky" id="leaderboard-sticky" aria-hidden="true" inert>
+      <div class="leaderboard-sticky-inner">
+        <a class="brand leaderboard-sticky-brand" href="index.html" aria-label="Return to PuzzleMixx"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">workouts</span></a>
+        <div class="sticky-prize-centre">
+          <div class="sticky-my-points" aria-live="polite"><img src="assets/leaderboard-trophy.svg" alt="" /><span>My Points<strong id="sticky-my-points">0 pts</strong></span></div>
+          <div class="prize-ribbons" aria-label="Leaderboard prizes">
+            <button class="prize-ribbon prize-ribbon-first" type="button" data-prize="first" aria-label="See the first prize"><span>1</span><small>First prize</small></button>
+            <button class="prize-ribbon prize-ribbon-second" type="button" data-prize="second" aria-label="See the second prize"><span>2</span><small>Second prize</small></button>
+            <button class="prize-ribbon prize-ribbon-third" type="button" data-prize="third" aria-label="See the third prize"><span>3</span><small>Third prize</small></button>
+          </div>
+          <div class="contest-countdown"><span>Prizes awarded in</span><strong id="contest-countdown">Loading…</strong></div>
+        </div>
+        <a class="sticky-back-link" href="index.html">Back to Nieve’s playlist</a>
+      </div>
+    </header>
+    <header class="leaderboard-nav">
+      <a class="brand" href="index.html" aria-label="Return to PuzzleMixx"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">workouts</span></a>
+      <a class="back-to-puzzle" href="index.html">← Back to Nieve’s playlist</a>
+    </header>
+
+    <main class="leaderboard-main">
+      <section class="leaderboard-hero" aria-labelledby="leaderboard-title">
+        <div class="hero-trophy" aria-hidden="true"><img src="assets/leaderboard-trophy.svg" alt="" /></div>
+        <div>
+          <p class="leaderboard-kicker">PuzzleMixx rewards</p>
+          <h1 id="leaderboard-title"><span class="leader-word-wrap"><span class="gold-leader" id="leader-word" tabindex="0" role="button" aria-label="Celebrate the current leaderboard leader">Leader</span><span class="leader-celebration" id="leader-celebration" aria-hidden="true"><strong id="leader-celebration-name"></strong><i class="sparkle sparkle-one">✦</i><i class="sparkle sparkle-two">✧</i><i class="sparkle sparkle-three">✦</i><i class="sparkle sparkle-four">✧</i><i class="sparkle sparkle-five">✦</i><i class="sparkle sparkle-six">✧</i></span></span><span>board</span></h1>
+          <p>Complete songs, conquer The Mental Workout, and share every well-earned win.</p>
+        </div>
+        <div class="total-score" aria-live="polite"><span class="top-scorer-label">Top scorer</span><strong id="top-scorer-points">0</strong><span class="top-scorer-name" id="top-scorer-name">—</span></div>
+      </section>
+
+      <section class="points-ribbon" aria-label="How points work">
+        <div><strong>+1</strong><span>for every completed song</span></div>
+        <div><strong>+10</strong><span>Mental Workout bonus</span></div>
+        <div><strong>+10</strong><span>for each social media share</span></div>
+      </section>
+
+      <div class="card-reopen-row">
+        <button class="card-reopen" id="show-social-card" type="button" hidden>Add Socials</button>
+        <button class="card-reopen" id="show-share-card" type="button" hidden>Share Success</button>
+      </div>
+      <div class="leaderboard-grid" id="leaderboard-grid">
+        <section class="leader-card account-card" id="account-card" aria-labelledby="account-title">
+          <p class="card-kicker">Your account</p>
+          <h2 id="account-title">Create your <span class="profile-title-brand" role="img" aria-label="PuzzleMixx"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span><span aria-hidden="true">uzzle<span class="brand-mixx">Mixx</span></span></span> profile</h2>
+          <p class="prototype-note">Prototype profiles are saved privately in this browser.</p>
+          <form id="account-form">
+            <label>Display name<input id="display-name" name="displayName" autocomplete="name" required maxlength="30" placeholder="Your leaderboard name" /></label>
+            <label>Email<input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" /></label>
+            <button class="leader-action" type="submit">Create my account</button>
+          </form>
+          <div class="profile-summary" id="profile-summary" hidden>
+            <span class="profile-avatar" id="profile-avatar">P</span>
+            <div><strong id="profile-name"></strong><span id="profile-email"></span></div>
+            <div class="profile-controls"><button class="text-action" id="edit-profile" type="button">Edit</button><button class="text-action" id="remove-profile" type="button">Remove</button></div>
+          </div>
+        </section>
+
+        <section class="leader-card social-card" id="social-card" aria-labelledby="social-title">
+          <button class="card-close" id="hide-social-card" type="button" aria-label="Hide social links">×</button>
+          <p class="card-kicker">Connect</p>
+          <h2 id="social-title">Link your social world</h2>
+          <form id="social-form">
+            <label><span>Instagram</span><input id="instagram" type="url" placeholder="https://instagram.com/you" /></label>
+            <label><span>TikTok</span><input id="tiktok" type="url" placeholder="https://tiktok.com/@you" /></label>
+            <label><span>Snapchat</span><input id="snapchat" type="url" placeholder="https://snapchat.com/add/you" /></label>
+            <label><span>YouTube</span><input id="youtube" type="url" placeholder="https://youtube.com/@you" /></label>
+            <label><span>Facebook</span><input id="facebook" type="url" placeholder="https://facebook.com/you" /></label>
+            <button class="leader-action" type="submit">Save social links</button>
+          </form>
+          <p class="form-status" id="social-status" aria-live="polite"></p>
+        </section>
+
+        <section class="leader-card standings-card" id="standings-card" aria-labelledby="standings-title">
+          <div class="card-heading-row"><div><h2 id="standings-title"><span class="standings-top-word">Top</span><span class="standings-wordmark" aria-label="PuzzleMixxers"><span class="brand standings-exact-brand" aria-hidden="true"><span class="brand-mark"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span><span class="standings-ers">ers</span></span></span></h2></div><div class="standings-heading-actions"><button class="jump-to-me" id="jump-to-me" type="button">Jump to my standing</button><img src="assets/leaderboard-trophy.svg" alt="" /></div></div>
+          <ol class="standings" id="standings"></ol>
+        </section>
+
+        <section class="leader-card share-card" id="share-card" aria-labelledby="share-title">
+          <button class="card-close" id="hide-share-card" type="button" aria-label="Hide share your success">×</button>
+          <p class="card-kicker">Celebrate</p>
+          <h2 id="share-title">Share your success</h2>
+          <div class="share-bonus-badge"><strong>+10</strong> <span>per share</span></div>
+          <div class="share-success-picker">
+            <p class="share-success-label">Choose a success</p>
+            <div class="share-success-list" id="share-success-list" role="group" aria-label="Successes available to share"></div>
+            <p class="share-limit-note" id="share-limit-note"></p>
+          </div>
+          <div class="share-network-picker">
+            <p class="share-success-label">Share with a linked network</p>
+            <div class="share-network-list" id="share-network-list" role="group" aria-label="Linked social networks available for sharing"></div>
+            <p class="share-network-note" id="share-network-note"></p>
+            <button class="text-action add-share-socials" id="add-share-socials" type="button">Add social media</button>
+          </div>
+          <div class="share-preview">
+            <video id="share-video" controls playsinline preload="metadata" hidden></video>
+            <a class="share-preview-brand" id="share-brand-link" href="index.html" aria-label="Join the PuzzleMixx game"><img src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" /></a>
+            <div class="share-message-copy"><p id="share-message">I’m working my way up the PuzzleMixx Leaderboard!</p><a class="join-game-link" id="join-game-link" href="index.html">JOIN THE GAME !</a></div>
+          </div>
+          <div class="share-actions">
+            <button class="leader-action" id="share-button" type="button">Share this success</button>
+            <button class="secondary-action" id="copy-button" type="button">Copy message</button>
+          </div>
+          <p class="form-status" id="share-status" aria-live="polite"></p>
+        </section>
+      </div>
+    </main>
+
+    <dialog class="prize-dialog share-publish-dialog" id="share-publish-dialog" aria-labelledby="share-publish-title">
+      <button class="prize-dialog-close" type="button" data-close-prize aria-label="Close sharing preparation">×</button>
+      <p class="card-kicker">Share success</p>
+      <h2 id="share-publish-title">Prepare your post</h2>
+      <div class="share-publish-stage" id="share-prepare-stage">
+        <p id="share-prepare-copy"></p>
+        <p class="prototype-note">PuzzleMixx will copy your caption, download the short video, and open only your selected linked network. You publish the post yourself.</p>
+        <div class="share-actions">
+          <button class="leader-action" id="prepare-network-post" type="button">Prepare post</button>
+          <button class="secondary-action" type="button" data-close-prize>Not now</button>
+        </div>
+      </div>
+      <div class="share-publish-stage" id="share-confirm-stage" hidden>
+        <p id="share-confirm-copy"></p>
+        <label class="published-post-link">Post link <span>optional</span><input id="published-post-url" type="url" placeholder="Paste the finished post link" /></label>
+        <div class="share-actions">
+          <button class="leader-action" id="confirm-network-post" type="button">Yes, it’s published</button>
+          <button class="secondary-action" id="post-not-published" type="button">Not yet</button>
+        </div>
+      </div>
+      <div class="share-publish-stage" id="share-view-stage" hidden>
+        <p id="share-view-copy"></p>
+        <div class="share-actions">
+          <button class="leader-action" id="view-network-post" type="button">View my post</button>
+          <button class="secondary-action" type="button" data-close-prize>Close</button>
+        </div>
+      </div>
+      <p class="form-status" id="share-publish-status" aria-live="polite"></p>
+    </dialog>
+
+    <dialog class="prize-dialog" id="prize-first" aria-labelledby="first-prize-title">
+      <button class="prize-dialog-close" type="button" data-close-prize aria-label="Close first prize">×</button>
+      <div class="prize-dialog-heading"><span class="prize-dialog-medal gold-medal">1</span><div><p class="card-kicker">First prize</p><h2 id="first-prize-title">£150 for your <span class="title-workout-word">workout</span></h2></div></div>
+      <p class="prize-intro">Choose the place that keeps you moving. The winner receives a £150 prize cheque made out to their chosen organisation.</p>
+      <div class="association-choices" role="group" aria-label="Choose an association type">
+        <button class="association-choice active" type="button" data-payee="your chosen Gym">Gym</button>
+        <button class="association-choice" type="button" data-payee="your chosen Studio">Studio</button>
+        <button class="association-choice" type="button" data-payee="your chosen Sport association">Sport association</button>
+      </div>
+      <div class="prize-cheque" aria-label="A prototype prize cheque for 150 pounds">
+        <div class="cheque-brand"><span>Puzzle<span>Mixx</span></span><small>WINNER’S PRIZE</small></div>
+        <div class="cheque-date">31 · 12 · 2026</div>
+        <span class="cheque-label">Pay</span><strong id="cheque-payee">your chosen Gym</strong>
+        <div class="cheque-amount-words">One hundred and fifty pounds only</div><div class="cheque-amount">£150.00</div>
+        <div class="cheque-signature">PuzzleMixx</div>
+      </div>
+    </dialog>
+
+    <dialog class="prize-dialog prize-video-dialog" id="prize-second" aria-labelledby="second-prize-title">
+      <button class="prize-dialog-close" type="button" data-close-prize aria-label="Close second prize">×</button>
+      <div class="prize-dialog-heading"><span class="prize-dialog-medal silver-medal">2</span><div><p class="card-kicker">Second prize</p><h2 id="second-prize-title"><a class="prize-title-link" href="https://www.converse.com/uk/en/products/customize" target="_blank" rel="noopener noreferrer">Customise Your Converse</a></h2></div></div>
+      <video id="second-prize-video" controls preload="metadata" playsinline>
+        <source src="assets/prizes/TrainersTaylor.mp4" type="video/mp4" />
+      </video>
+    </dialog>
+
+    <dialog class="prize-dialog prize-shirt-dialog" id="prize-third" aria-labelledby="third-prize-title">
+      <button class="prize-dialog-close" type="button" data-close-prize aria-label="Close third prize">×</button>
+      <div class="prize-dialog-heading"><span class="prize-dialog-medal bronze-medal">3</span><div><p class="card-kicker">Third prize</p><h2 id="third-prize-title">Inner <img class="prize-title-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" /> prize oversize T</h2></div></div>
+      <button class="prize-shirt-zoom" id="prize-shirt-zoom" type="button" aria-pressed="false" aria-label="Zoom in to inspect the inside back-neck embroidery">
+        <img src="assets/prizes/youre-my-psycho-tshirt-v5.png" alt="Black drop-shoulder T-shirt with subtle black-on-black textured embroidery reading You’re My Psycho on the left breast and purple embroidery contained entirely within the inside back neck" />
+        <span id="prize-shirt-zoom-hint">Click to zoom into the neck embroidery</span>
+      </button>
+    </dialog>
+
+    <script src="leaderboard.js?v=34"></script>
+  </body>
+</html>
