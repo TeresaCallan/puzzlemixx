@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>PuzzleMixx — Coming soon</title>
+<meta name="description" content="PuzzleMixx workouts: work out the puzzle to reveal your workout. Coming soon." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="assets/puzzlemixx-brand-mark.webp" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=DM+Serif+Display:ital@0;1&family=Manrope:wght@600;700&display=swap" />
+<style>
+  :root { --bg:#F6F4FA; --ink:#1B1626; --muted:#4F4760; --accent:#6B2FA3; --line:#E2DCEC; }
+  * { box-sizing:border-box; }
+  html,body { height:100%; }
+  body { margin:0; display:grid; place-items:center; min-height:100svh; background:var(--bg); color:var(--ink); font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;
+         padding:max(24px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left)); }
+  main { width:min(100%,560px); display:flex; flex-direction:column; align-items:center; gap:22px; text-align:center; }
+  .mark { width:112px; height:112px; border-radius:50%; object-fit:cover; box-shadow:0 0 0 6px var(--accent),0 18px 40px #6b2fa333; }
+  .word { margin:0; font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:clamp(2.4rem,9vw,3.4rem); letter-spacing:-.035em; line-height:1; }
+  .word span { color:var(--accent); }
+  .sub { margin:-10px 0 0; font-family:"DM Mono",ui-monospace,monospace; font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+  h1 { margin:6px 0 0; font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:clamp(1.9rem,7vw,2.6rem); letter-spacing:-.03em; line-height:1.05; text-wrap:balance; }
+  h1 em { color:var(--accent); }
+  p.lede { margin:0; max-width:40ch; color:var(--muted); font-size:1.05rem; line-height:1.55; }
+  .pill { display:inline-block; padding:10px 20px; border:1px solid var(--line); border-radius:999px; background:#fff; font-weight:700; font-size:.95rem; }
+  @media (prefers-reduced-motion:no-preference) { .mark { animation:breathe 3.2s ease-in-out infinite; } }
+  @keyframes breathe { 50% { transform:scale(1.04); } }
+</style>
+</head>
+<body>
+<main>
+  <img class="mark" src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" width="112" height="112" />
+  <p class="word">Puzzle<span>Mixx</span></p>
+  <p class="sub">workouts</p>
+  <h1>Something new is on its way</h1>
+  <p class="lede">Work out the puzzle to reveal your <em>workout</em>. Win prizes, share your success, and dance the playlist with us.</p>
+  <span class="pill">Coming soon</span>
+</main>
+</body>
+</html>
