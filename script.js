@@ -115,7 +115,7 @@ let pendingPaidHint = null;
 let freeHintAvailable = true;
 
 const pad = (n) => String(n).padStart(2, '0');
-const thumbnailFileFor = (n) => `yt:${PIECE_YOUTUBE_IDS[n - 1]}`;
+const thumbnailFileFor = (n) => `media/nieve/hover/${pad(n)}.mp4`;   // silent hover clips, stored with the site
 const previewFileFor = (n) => `yt:${PIECE_YOUTUBE_IDS[n - 1]}`;
 const songWorkoutFileFor = (n) => `yt:${COMPLETE_PEACE_YOUTUBE_IDS[n - 1]}`;
 const posterFileFor = (n) => `media/nieve/posters/${pad(n)}.webp`;

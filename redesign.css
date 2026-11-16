@@ -117,6 +117,7 @@ yt-video iframe { position:absolute; inset:0; width:100%; height:100%; border:0;
 .song-reward-dialog yt-video { margin-top:20px; }
 .finish-dialog yt-video#lazy-workout-player,.finish-dialog yt-video#movie-player { width:100%; height:auto; aspect-ratio:16/9; min-height:0; max-height:calc(100svh - 220px); justify-self:center; }
 .reel yt-video.reel-preview { position:absolute; inset:0; z-index:0; background:transparent; pointer-events:none; }
+.reel yt-video.reel-preview.is-playing { opacity:1; }
 .reel yt-video.reel-preview iframe { width:140%; height:140%; left:-20%; top:-20%; }   /* crops YouTube's title bar out of the small tiles */
 
 /* ---------- Phone: "Pocket Tray" ---------- */

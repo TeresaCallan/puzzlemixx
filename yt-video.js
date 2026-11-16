@@ -101,6 +101,7 @@
       return loadYouTubeApi().then((YT) => new Promise((resolve) => {
         if (this._id !== id) { resolve(); return; }
         this._destroy();
+        this._paused = false;   // _destroy() resets this; we are about to play
         const mount = document.createElement('div');
         this.replaceChildren(mount);
         const loop = this.hasAttribute('loop');

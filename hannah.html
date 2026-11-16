@@ -6,7 +6,7 @@
     <title>PuzzleMixx — Hannah’s Playlist</title>
     <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=" />
     <link rel="stylesheet" href="styles.css?v=107" />
-    <link rel="stylesheet" href="redesign.css?v=1" />
+    <link rel="stylesheet" href="redesign.css?v=2" />
   </head>
   <body>
     <header class="compact-header" id="compact-header" aria-hidden="true" inert>
@@ -30,8 +30,8 @@
         </div>
         <div class="compact-tools">
           <div class="view-switch compact-view-switch" role="group" aria-label="Choose puzzle view">
-            <button class="view-button" id="compact-puzzle-view-button" aria-pressed="true" aria-label="Sort PuzzleMixx by PuzzleMixx">
-              <span>Sort</span><img class="sort-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="" /><span>by</span><img class="sort-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="" />
+            <button class="view-button" id="compact-puzzle-view-button" aria-pressed="true" aria-label="Sort by PuzzleMixx">
+              <span>Sort by</span><img class="sort-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="" />
             </button>
             <button class="view-button" id="compact-sort-view-button" aria-pressed="false">Sort by song</button>
           </div>
@@ -71,8 +71,8 @@
         <h1 id="game-title">Work out the puzzle to reveal your <span class="title-workout-word">WORKOUT</span></h1>
         <div class="game-tools">
           <div class="view-switch" role="group" aria-label="Choose puzzle view">
-            <button class="view-button" id="puzzle-view-button" aria-pressed="true" aria-label="Sort PuzzleMixx by PuzzleMixx">
-              <span>Sort</span><img class="sort-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="" /><span>by</span><img class="sort-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="" />
+            <button class="view-button" id="puzzle-view-button" aria-pressed="true" aria-label="Sort by PuzzleMixx">
+              <span>Sort by</span><img class="sort-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="" />
             </button>
             <button class="view-button" id="sort-view-button" aria-pressed="false">Sort by song</button>
           </div>
@@ -173,11 +173,11 @@
     <template id="reel-template">
       <article class="reel" draggable="true" role="button" tabindex="0">
         <img class="reel-poster" alt="" />
-        <yt-video class="reel-preview" loop muted aria-hidden="true"></yt-video>
+        <video class="reel-preview" playsinline preload="none" muted loop aria-hidden="true"></video>
         <span class="reel-play" aria-hidden="true"><span class="play-icon">▶</span></span>
       </article>
     </template>
-    <script src="yt-video.js?v=1"></script>
-    <script src="hannah.js?v=6"></script>
+    <script src="yt-video.js?v=2"></script>
+    <script src="hannah.js?v=redesign-3"></script>
   </body>
 </html>
