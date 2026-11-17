@@ -8,10 +8,10 @@ const POINTS_MULTIPLIER = 2;
 // Puzzle pieces play WITH SOUND (17 Nov 2026). The hover previews stored with the site stay silent.
 // Set PIECE_SOUND back to false to mute the pieces again.
 const PIECE_SOUND = true;
-// YouTube IDs for Tee’s videos (T-time workouts › Puzzles › Tee’s). Filled in once they are uploaded.
-const PIECE_YOUTUBE_IDS = [/*TEE_PIECES*/];   // 30 pieces, in puzzle order 1.1, 1.2, 2.1 … 10.8
-const COMPLETE_PEACE_YOUTUBE_IDS = [/*TEE_SONGS*/];   // 10 songs, WalkerSong1 … WalkerSong10
-const TEE_WORKOUT_YOUTUBE_ID = '/*TEE_WORKOUT*/';   // Tee’s 30-minute workout
+// YouTube IDs from “Tee’s Puzzle Links” (T-time workouts › Puzzles › Tee’s › links).
+const PIECE_YOUTUBE_IDS = ["2FT7UZ1mfXA", "kXNgQvjZr4k", "R44sXQk1bYA", "U8j7vKz1JKk", "a_FwcT72W-w", "-n_6Cf0Ntus", "aZ_q2p3vSAc", "kL_oilCqJkc", "8NonW8XdNd4", "bh09loN9zJk", "SpNevy0mvgo", "ZUcGIFppcOM", "NcsLlsPhWE8", "Bi1TEoaPLiM", "8U7PNhqVtUk", "Yl-G-2S6A6s", "Hh--sktceIQ", "0ljd2EN9H0k", "WrNeLFtu1O4", "4shlKTXjHO8", "H2JnZ4xPGfQ", "3Sk0R7hyCas", "IKXHoRu-TtA", "QV70AEpQ1Dg", "J3fzCAIq84I", "LikDUoJH450", "Mm8U0LG1vFc", "iQxYnujoaiE", "5SR9M0uyFjU", "6P3dnUwBZPI"];   // 30 pieces, in puzzle order 1.1, 1.2, 2.1 … 10.8
+const COMPLETE_PEACE_YOUTUBE_IDS = ["NWvmPq0WAIA", "6TQMpS_0_D8", "a9nUXiBZyBw", "V647ir2iFD0", "tio0ChgR4uI", "XU_30DwBsa0", "iAv1KCYfgo8", "JpoPwdCXRew", "mbXsyiRYJRM", "bI8pIhfhPM8"];   // 10 songs, WalkerSong1 … WalkerSong10
+const TEE_WORKOUT_YOUTUBE_ID = 'wSNt0rW2Y-E';   // Tee’s 30-minute workout
 const clips = Array.from({ length: TOTAL }, (_, i) => i + 1);
 const SONG_PILES = [
   [1, 2],
@@ -30,7 +30,7 @@ const SONG_REWARD_MOVIE_CLIPS = new Map([[1, [1]], [2, [2]], [3, [3]], [4, [4]],
 const SONG_REWARD_CLIP_STARTS = new Map();
 const SONG_REWARD_CLIP_END_TRIMS = new Map();
 const EXERCISE_TITLES = ['Mobility','Mobility & Core Prep','Cardio','Core','Flexibility & Core','Legs, Core & Coordination','Legs, Core & Coordination 2nd Side','Combination Exercises','Stretch','Aerial Dance Therapy'];
-window.PM_GAME = { puzzle: 'tee', titles: EXERCISE_TITLES, completeIds: COMPLETE_PEACE_YOUTUBE_IDS, mentalLink: TEE_WORKOUT_YOUTUBE_ID.startsWith('/*') ? 'https://www.puzzlemixx.com/tee.html' : `https://youtu.be/${TEE_WORKOUT_YOUTUBE_ID}`, currentSong: null };
+window.PM_GAME = { puzzle: 'tee', titles: EXERCISE_TITLES, completeIds: COMPLETE_PEACE_YOUTUBE_IDS, mentalLink: `https://youtu.be/${TEE_WORKOUT_YOUTUBE_ID}`, currentSong: null };
 
 const game = document.querySelector('.game');
 const reels = document.querySelector('#reels');
