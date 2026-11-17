@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PuzzleMixx — Movie Puzzle</title>
     <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=" />
-    <link rel="stylesheet" href="styles.css?v=107" />
-    <link rel="stylesheet" href="redesign.css?v=2" />
+    <link rel="stylesheet" href="styles.css?v=redesign-5" />
+    <link rel="stylesheet" href="redesign.css?v=18" />
   </head>
   <body>
     <header class="compact-header" id="compact-header" aria-hidden="true" inert>
       <div class="compact-header-inner">
-        <a class="brand compact-brand" href="index.html" aria-label="PuzzleMixx workouts home"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">workouts</span></a>
+        <a class="brand compact-brand" href="/" aria-label="PuzzleMixx workouts home"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">workouts</span></a>
         <a class="compact-leaderboard" href="leaderboard.html" aria-label="Open the PuzzleMixx Leaderboard">
           <span class="compact-trophy"><img src="assets/leaderboard-trophy.svg" alt="" /></span>
           <span class="compact-leaderboard-copy">Leaderboard <span id="leaderboard-points">0 pts</span></span>
@@ -23,6 +23,7 @@
               <div class="playlist-menu-inner">
                 <a href="index.html" data-playlist-id="nieve" aria-current="page">Nieve’s PuzzleMixx</a>
                 <a href="hannah.html" data-playlist-id="hannah">Hannah’s PuzzleMixx</a>
+                <a class="golden-puzzle-option" href="tee.html" data-playlist-id="tee">Tee’s DBL PTS PuzzleMixx</a>
               </div>
             </nav>
           </div>
@@ -44,7 +45,7 @@
     <main class="shell">
       <header class="masthead">
         <div class="brand-explainer">
-          <a class="brand" href="index.html" aria-label="PuzzleMixx workouts home" aria-describedby="brand-explanation"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">workouts</span></a>
+          <a class="brand" href="/" aria-label="PuzzleMixx workouts home" aria-describedby="brand-explanation"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">workouts</span></a>
           <div class="brand-explanation" id="brand-explanation" role="note">
             <div class="brand-explanation-card">
               <span class="brand-explanation-kicker">How PuzzleMixx works</span>
@@ -60,6 +61,7 @@
               <div class="playlist-menu-inner">
                 <a href="index.html" data-playlist-id="nieve" aria-current="page">Nieve’s PuzzleMixx</a>
                 <a href="hannah.html" data-playlist-id="hannah">Hannah’s PuzzleMixx</a>
+                <a class="golden-puzzle-option" href="tee.html" data-playlist-id="tee">Tee’s DBL PTS PuzzleMixx</a>
               </div>
             </nav>
           </div>
@@ -82,6 +84,21 @@
       </section>
 
       <section class="game" aria-label="Movie puzzle">
+        <aside class="song-reward-rail" id="song-reward-rail" aria-labelledby="reward-shelf-title" hidden>
+          <div class="song-reward-rail-heading">
+            <div class="reward-shelf-text">
+              <p class="reward-shelf-kicker"><img src="assets/puzzlemixx-brand-mark.webp" alt="" />Your rewards</p>
+              <h2 class="reward-shelf-title" id="reward-shelf-title">Win all 10 workout videos</h2>
+              <p class="reward-shelf-count" id="song-reward-count" aria-live="polite">0 of 10 won</p>
+            </div>
+            <button type="button" id="hide-song-rewards" aria-label="Hide your rewards">×</button>
+          </div>
+          <div class="song-reward-list" id="song-reward-list"></div>
+        </aside>
+        <button class="song-reward-rail-show" id="show-song-rewards" type="button" aria-label="Show your rewards" hidden>
+          <img src="assets/puzzlemixx-brand-mark.webp" alt="" />
+          <span>Your rewards</span>
+        </button>
         <div class="reels-panel">
           <div class="section-heading"><p class="kicker" id="reels-heading"></p><p id="reels-instructions"></p></div>
           <div class="reels" id="reels" aria-label="Unplaced video reels"></div>
@@ -90,20 +107,10 @@
           <div class="section-heading"><div class="timeline-title-row"><p class="progress" id="progress" aria-live="polite">0 of 35 placed</p><p class="kicker" id="timeline-heading">The Mental Workout</p></div><p id="timeline-instructions"></p></div>
           <div class="timeline" id="timeline" aria-label="Movie timeline"></div>
         </div>
-        <aside class="song-reward-rail" id="song-reward-rail" aria-label="Won workout links" hidden>
-          <div class="song-reward-rail-heading">
-            <p>Won workouts</p>
-            <button type="button" id="hide-song-rewards" aria-label="Hide won workout links">×</button>
-          </div>
-          <div class="song-reward-list" id="song-reward-list"></div>
-        </aside>
-        <button class="song-reward-rail-show" id="show-song-rewards" type="button" aria-label="Show won workout links" hidden>
-          <img src="assets/puzzlemixx-brand-mark.webp" alt="" />
-          <span>Won workouts</span>
-        </button>
       </section>
       <p class="sr-only" id="sort-status" aria-live="polite"></p>
     </main>
+    <footer class="pm-legal"><a href="terms.html">Terms &amp; Conditions</a><span aria-hidden="true">·</span><a href="privacy.html">Privacy</a></footer>
 
     <dialog id="clip-dialog" class="dialog clip-dialog">
       <button class="close" aria-label="Close clip">×</button>
@@ -120,13 +127,20 @@
       <yt-video id="movie-player" controls></yt-video>
       <div class="finish-actions">
         <button class="button button-dark" id="replay-button">Play from the beginning</button>
-        <a class="button button-gold" href="leaderboard.html?share=mental">Share your success for points</a>
+        <a class="button button-gold" href="leaderboard.html">See your points</a>
       </div>
+    </dialog>
+
+    <dialog id="won-workout-dialog" class="dialog won-workout-dialog" aria-labelledby="won-workout-title">
+      <button class="song-reward-close" id="won-workout-close" type="button" aria-label="Close">×</button>
+      <p class="reward-shelf-kicker"><img src="assets/puzzlemixx-brand-mark.webp" alt="" />Your reward</p>
+      <h2 id="won-workout-title">Nieve’s workout</h2>
+      <yt-video id="won-workout-player" controls></yt-video>
     </dialog>
 
     <dialog id="song-reward-dialog" class="dialog song-reward-dialog">
       <button class="song-reward-close" type="button" aria-label="Return to The Lazy Workout">×</button>
-      <h2 id="song-reward-title">You have WON the workout!</h2>
+      <h2 id="song-reward-title">You have WON the Complete Peace!</h2>
       <p class="song-reward-copy">This <span class="rainbow-peace" role="img" aria-label="PEACE"><span aria-hidden="true">P</span><span aria-hidden="true">E</span><span aria-hidden="true">A</span><span aria-hidden="true">C</span><span aria-hidden="true">E</span></span> is sorted ! Dance and sing the <span class="rainbow-peace" role="img" aria-label="PEACE"><span aria-hidden="true">P</span><span aria-hidden="true">E</span><span aria-hidden="true">A</span><span aria-hidden="true">C</span><span aria-hidden="true">E</span></span> now, or <button class="song-reward-inline-close" type="button">close</button> to return to the puzzle.</p>
       <div class="song-reward-actions" id="song-reward-actions">
         <button class="song-watch-button" id="song-watch-button" type="button">
@@ -144,7 +158,7 @@
           <button class="button button-quiet" id="song-return-puzzle" type="button">Return to the puzzle</button>
         </div>
       </div>
-      <a class="button button-gold song-share-link" id="song-share-link" href="leaderboard.html?share=song">Share this win</a>
+      <a class="button button-gold song-share-link" id="song-share-link" href="leaderboard.html">See your points</a>
     </dialog>
 
     <dialog id="hint-cost-dialog" class="dialog hint-cost-dialog" aria-describedby="hint-cost-description">
@@ -164,9 +178,15 @@
         <img class="reel-poster" alt="" />
         <video class="reel-preview" playsinline preload="none" muted loop aria-hidden="true"></video>
         <span class="reel-play" aria-hidden="true"><span class="play-icon">▶</span></span>
+        <span class="reel-sound" aria-hidden="true"><span class="reel-sound-icon">🔊</span><span class="reel-sound-text">Tap for sound</span></span>
       </article>
     </template>
+    <script src="pm-menu.js?v=1"></script>
     <script src="yt-video.js?v=2"></script>
-    <script src="script.js?v=redesign-3"></script>
+    <script src="firebase-config.js?v=2"></script>
+    <script src="script.js?v=redesign-12"></script>
+    <script type="module" src="pm-points.js?v=16"></script>
+      <script src="pm-words.js?v=13"></script>
+    <script src="pm-share.js?v=3"></script>
   </body>
 </html>

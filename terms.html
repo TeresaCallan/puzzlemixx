@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>PuzzleMixx — Terms &amp; Conditions</title>
+    <link rel="icon" href="assets/puzzlemixx-brand-mark.webp" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=DM+Serif+Display:ital@0;1&family=Manrope:wght@500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="styles.css?v=redesign-5" />
+    <style>
+      :root { --t-ink:#1B1626; --t-muted:#4F4760; --t-line:#E2DCEC; --t-bg:#F6F4FA; --t-deep:#6B2FA3; --t-gold:#E2B33C; }
+      body.terms-page { margin:0; background:var(--t-bg); color:var(--t-ink); font:500 16px/1.65 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif; }
+      .t-nav { max-width:880px; margin:0 auto; padding:18px max(16px,env(safe-area-inset-right,0px)) 6px max(16px,env(safe-area-inset-left,0px)); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+      .t-nav a.t-back { color:var(--t-deep); font:700 14px Manrope,system-ui,sans-serif; text-decoration:none; }
+      .t-nav a.t-back:hover { text-decoration:underline; text-underline-offset:3px; }
+      .t-main { max-width:880px; margin:0 auto; padding:10px max(16px,env(safe-area-inset-right,0px)) 72px max(16px,env(safe-area-inset-left,0px)); }
+      .t-head { padding:28px clamp(20px,4vw,40px); border:1px solid #E6D6B0; border-radius:24px; background:linear-gradient(120deg,#FFFFFF 0%,#FBF6FF 50%,#FFF4D6 100%); box-shadow:0 20px 50px #6B2FA314; }
+      .t-kicker { margin:0 0 6px; color:var(--t-muted); font:500 11px "DM Mono",ui-monospace,monospace; letter-spacing:.14em; text-transform:uppercase; }
+      .t-head h1 { margin:0; color:var(--t-deep); font:400 clamp(2.1rem,5vw,3.1rem)/1.05 "DM Serif Display",Georgia,serif; letter-spacing:-.025em; text-wrap:balance; }
+      .t-head p { margin:12px 0 0; color:var(--t-muted); max-width:62ch; }
+      .t-test { margin:22px 0 0; padding:18px 20px; border:1px solid #E3C46A; border-radius:16px; background:linear-gradient(135deg,#FFFAEB,#FDEBB5); }
+      .t-test h2 { margin:0 0 6px; color:#4A3304; font:400 1.35rem/1.2 "DM Serif Display",Georgia,serif; }
+      .t-test p { margin:0; color:#4A3304; }
+      .t-test p + p { margin-top:8px; }
+      .t-toc { margin:26px 0 8px; padding:16px 20px; border:1px solid var(--t-line); border-radius:16px; background:#fff; }
+      .t-toc ol { margin:6px 0 0; padding-left:22px; columns:2 260px; column-gap:28px; }
+      .t-toc a { color:var(--t-deep); text-decoration:none; font-weight:700; font-size:.94rem; }
+      .t-toc a:hover { text-decoration:underline; text-underline-offset:3px; }
+      section.t-sec { margin-top:30px; }
+      section.t-sec h2 { margin:0 0 8px; color:var(--t-deep); font:400 1.55rem/1.15 "DM Serif Display",Georgia,serif; letter-spacing:-.015em; scroll-margin-top:20px; }
+      section.t-sec p, section.t-sec li { max-width:68ch; }
+      section.t-sec ol, section.t-sec ul { padding-left:22px; }
+      section.t-sec li + li { margin-top:6px; }
+      .t-points { width:100%; max-width:560px; border-collapse:collapse; margin:10px 0 4px; font-size:.95rem; }
+      .t-points th, .t-points td { padding:8px 10px; border-bottom:1px solid var(--t-line); text-align:left; vertical-align:top; }
+      .t-points th { color:var(--t-muted); font:500 11px "DM Mono",ui-monospace,monospace; letter-spacing:.1em; text-transform:uppercase; }
+      .t-points td:first-child { width:90px; color:var(--t-deep); font:400 1.2rem "DM Serif Display",Georgia,serif; }
+      .t-table-wrap { overflow-x:auto; }
+      .t-fill { padding:1px 6px; border-radius:6px; background:#FDEBB5; color:#4A3304; font-weight:800; }
+      .t-foot { margin-top:40px; padding-top:18px; border-top:1px solid var(--t-line); color:var(--t-muted); font-size:.88rem; }
+      a { color:var(--t-deep); }
+      .t-countries { list-style:none; padding-left:0 !important; display:flex; flex-wrap:wrap; gap:8px 18px; }
+      .t-check { margin:14px 0 10px; padding:16px 18px; border:1px solid #E3C46A; border-radius:16px; background:linear-gradient(135deg,#FFFCF2,#FFF3CF); display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; }
+      .t-check label { color:var(--t-ink); }
+      .t-check select { min-width:220px; max-width:100%; padding:9px 12px; border:1px solid #CFC5DF; border-radius:10px; background:#fff; color:var(--t-ink); font:600 15px Manrope,system-ui,sans-serif; }
+      .t-check select:focus-visible { outline:3px solid #B98BE0; outline-offset:1px; }
+      .t-check-result { flex:1 1 100%; margin:0; min-height:1.4em; font-weight:700; }
+      .t-check-result.yes { color:#1F7A4D; }
+      .t-check-result.no { color:#6B2FA3; }
+    </style>
+  </head>
+  <body class="terms-page">
+    <header class="t-nav">
+      <a class="brand" href="index.html" aria-label="PuzzleMixx home"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">WORKOUTS</span></a>
+      <nav style="display:flex;gap:16px;flex-wrap:wrap"><a class="t-back" href="privacy.html">Privacy</a><a class="t-back" href="leaderboard.html">← Leaderboard</a></nav>
+    </header>
+
+        <main class="t-main">
+      <div class="t-head">
+        <p class="t-kicker">PuzzleMixx rewards · version 3 · last updated 17 November 2026</p>
+        <h1>Terms &amp; Conditions</h1>
+        <p>These terms explain how the PuzzleMixx game, points, leaderboard and prizes work. By joining the leaderboard you agree to them. Please read them before you play for prizes. Our <a href="privacy.html">Privacy Notice</a> forms part of these terms.</p>
+
+        <div class="t-test" role="note" aria-labelledby="test-rounds-title">
+          <h2 id="test-rounds-title">Rounds 1, 2 and 3 are test rounds, with real prizes</h2>
+          <p>The first three rounds (16 November 2026 to 13 August 2027) are test rounds. PuzzleMixx could not be tested with live players before launch, so we are using these rounds to make sure everything works. <strong>Every prize in the test rounds is real and will be awarded.</strong></p>
+          <p>The places shown on the leaderboard when a test round closes (after any sudden death) are final, except where we find, before the prizes are sent, that points were recorded in error or gained by breaking the fair play rules (section 8). In that case we will correct the points and the places. Any other concern about a test round’s result is welcome as feedback through “Report a problem”, but will not change who receives that round’s prizes. This does not affect your statutory rights.</p>
+        </div>
+      </div>
+
+      <nav class="t-toc" aria-label="Contents">
+        <p class="t-kicker">Contents</p>
+        <ol>
+          <li><a href="#promoter">Who runs PuzzleMixx</a></li>
+          <li><a href="#entry">Who can play</a></li>
+          <li><a href="#countries">Where prizes can be won</a></li>
+          <li><a href="#free">Free to play</a></li>
+          <li><a href="#rounds">Rounds and dates</a></li>
+          <li><a href="#points">How points work</a></li>
+          <li><a href="#share">Share your win</a></li>
+          <li><a href="#fair">Fair play</a></li>
+          <li><a href="#winners">How winners are decided</a></li>
+          <li><a href="#prizes">The prizes</a></li>
+          <li><a href="#claiming">Telling winners and claiming prizes</a></li>
+          <li><a href="#publish">Publishing winners</a></li>
+          <li><a href="#health">Health and safety</a></li>
+          <li><a href="#privacy">Your personal information</a></li>
+          <li><a href="#changes">Changes and problems</a></li>
+          <li><a href="#liability">Our responsibility to you</a></li>
+          <li><a href="#law">Law and contact</a></li>
+        </ol>
+      </nav>
+
+      <section class="t-sec" id="promoter">
+        <h2>1. Who runs PuzzleMixx</h2>
+        <p>The PuzzleMixx game and prizes are run by <strong>Teresa Rae Callan, trading as PuzzleMixx</strong> (“we”, “us”), of 11 Clock Tower Mews, London N1 7BB, United Kingdom. Email: <strong>puzzlemixx@gmail.com</strong>.</p>
+      </section>
+
+      <section class="t-sec" id="entry">
+        <h2>2. Who can play</h2>
+        <ul>
+          <li><strong>The competition is for people aged 18 or over.</strong> You must be 18 or over to sign in, join the leaderboard, earn points and win prizes. When you sign in you confirm that you are 18 or over.</li>
+          <li><strong>Anyone can play the puzzles for fun</strong> without signing in. No points are kept and no prizes can be won without an account.</li>
+          <li><strong>Under 18?</strong> You can play for fun, or play together with your grown-up on their account. The points and any prizes belong to the account holder, who must be 18 or over.</li>
+          <li>You sign in with your own Google account or email address. You may have <strong>one leaderboard account</strong>.</li>
+          <li>You choose a <strong>PuzzleMixxer Player ID</strong>: a nickname of 3–20 letters, numbers, spaces, - or _. No two players can have the same Player ID (capitals don’t count, so “PuzzleQueen” and “puzzlequeen” are the same). You can change it at any time. We will remove or replace a Player ID that is offensive, pretends to be someone else, or contains personal details such as an email address or phone number.</li>
+          <li>To <strong>win a prize</strong> you must live in one of the countries in section 3.</li>
+          <li>Teresa Rae Callan, anyone who helps run PuzzleMixx, and their immediate families can play but cannot win prizes.</li>
+          <li>We record the date you agreed to these terms and which version, so we can show who agreed to what.</li>
+        </ul>
+      </section>
+
+      <section class="t-sec" id="countries">
+        <h2>3. Where prizes can be won</h2>
+        <p>Prizes can be won by players who live in:</p>
+        <ul class="t-countries">
+          <li>🇬🇧 the <strong>United Kingdom</strong> (England, Scotland, Wales and Northern Ireland)</li>
+          <li>🇮🇪 <strong>Ireland</strong></li>
+          <li>🇦🇺 <strong>Australia</strong></li>
+          <li>🇳🇿 <strong>New Zealand</strong></li>
+        </ul>
+        <div class="t-check" id="country-check">
+          <label for="country-select"><strong>Can I win prizes?</strong> Choose where you live:</label>
+          <select id="country-select"><option value="">Choose your country…</option></select>
+          <p class="t-check-result" id="country-result" aria-live="polite"></p>
+        </div>
+        <p>Players everywhere else are very welcome to play and appear on the leaderboard for fun, but cannot receive prizes. If a player who cannot receive a prize finishes in a prize place, that prize passes to the next eligible player in that round. We may add more countries in future rounds and will list them here before the round starts.</p>
+      </section>
+
+      <section class="t-sec" id="free">
+        <h2>4. Free to play</h2>
+        <p>PuzzleMixx is free. No purchase or payment is needed to play, earn points or win a prize. Points are earned by skill and effort: completing the puzzles, finishing the Mental Workout and performing the exercises. Chance plays no part in choosing winners. Your normal internet or data charges apply.</p>
+      </section>
+
+      <section class="t-sec" id="rounds">
+        <h2>5. Rounds and dates</h2>
+        <p>The game runs in back-to-back rounds. Round 1 lasts 91 days; every round after that lasts 90 days. Each round ends at <strong>midnight GMT</strong> (1am UK time when British Summer Time applies), shown by the countdown on the leaderboard, and the next round starts straight away.</p>
+        <div class="t-table-wrap">
+          <table class="t-points">
+            <thead><tr><th>Round</th><th>Dates</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>16 Nov 2026 – 14 Feb 2027 · test round</td></tr>
+              <tr><td>2</td><td>15 Feb 2027 – 15 May 2027 · test round</td></tr>
+              <tr><td>3</td><td>16 May 2027 – 13 Aug 2027 · test round</td></tr>
+              <tr><td>4 on</td><td>Every 90 days, starting 14 Aug 2027</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Your points are saved from day to day. <strong>Everyone’s points go back to 0 at the start of each new round.</strong> Earlier rounds stay in your points history.</p>
+      </section>
+
+      <section class="t-sec" id="points">
+        <h2>6. How points work</h2>
+        <div class="t-table-wrap">
+          <table class="t-points">
+            <thead><tr><th>Points</th><th>For</th></tr></thead>
+            <tbody>
+              <tr><td>+1</td><td>Each complete PEACE (song) you complete, once per song per puzzle in each round.</td></tr>
+              <tr><td>+10</td><td>Completing The Mental Workout, once per puzzle in each round.</td></tr>
+              <tr><td>+5</td><td>Sharing a win (section 7): once per complete PEACE and once per Mental Workout you have won in that round.</td></tr>
+              <tr><td>−5</td><td>Each paid hint. You are always asked to confirm before a hint is charged.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Points are only saved while you are signed in; points earned before signing in on the same device are added when you sign in. Your total can go below zero.</p>
+      </section>
+
+      <section class="t-sec" id="share">
+        <h2>7. Share your win</h2>
+        <p>After you win a complete PEACE or The Mental Workout, tap <strong>Share your win</strong> and send the ready-made message from any app you choose (for example WhatsApp, Messages, Facebook, X or email). For example: “Here is my complete PEACE: Cardio [link to the song on YouTube] Join the game! @PuzzleMixx www.puzzlemixx.com”.</p>
+        <ul>
+          <li><strong>+5 points</strong> are added as soon as you choose an app and share, or copy the message. We don’t check or see what you post.</li>
+          <li>Each win can be shared for points <strong>once</strong>: once per complete PEACE and once per Mental Workout, in each round, and only for wins in the current round. You can share again as often as you like, but without more points.</li>
+          <li>Please only send the message to people who are happy to receive it, and follow the rules of the app you use.</li>
+        </ul>
+      </section>
+      <!-- PAUSED (17 Nov 2026): the 90-second Instagram bonus. To bring it back, restore this section, add “+100 · Each approved 90-second Instagram video (section 7)” to the points table and renumber.
+      <section class="t-sec" id="bonus">
+        <h2>7. The 90-second Instagram bonus</h2>
+        <ol>
+          <li>Perform 90 seconds of any PuzzleMixx exercise.</li>
+          <li>Do the exercises <strong>and</strong> sing the song.</li>
+          <li>Post it on <strong>Instagram</strong> and tag <strong>@puzzlemixx</strong>. Add the song with <strong>Instagram’s own music feature</strong>; please don’t play the song from another device in the background.</li>
+          <li>Share the link to your Instagram post in your PuzzleMixx profile. We check every video; once we approve your link, +100 points are added.</li>
+          <li>Post as many <strong>different</strong> exercises as you like: one +100 bonus per video. The same video cannot earn twice.</li>
+        </ol>
+        <p>We approve a video if it clearly shows 90 seconds of a PuzzleMixx exercise performed while singing the song, posted on Instagram and tagging @puzzlemixx. The post must stay visible to us until it has been checked. We may decline videos that do not meet this, repeat an earlier video, or contain anything offensive or unlawful.</p>
+        <p>Your video stays yours. We only view it to check it; we do not repost, share or reuse it. You are responsible for following Instagram’s own rules, including its music guidelines, and for having permission from anyone else who appears in your video. Instagram may limit or remove music in some posts; if that happens your video can still be approved if it meets the criteria above.</p>
+      </section>
+      -->
+
+      <section class="t-sec" id="fair">
+        <h2>8. Fair play</h2>
+        <p>Play the puzzles yourself, or with family members playing alongside you on your account. We may remove points from, or disqualify, anyone who uses more than one account, uses software, scripts or other people to earn points, interferes with the website, or gives false information (including about their age or country). If we do, we will tell you why by email.</p>
+      </section>
+
+      <section class="t-sec" id="winners">
+        <h2>9. How winners are decided</h2>
+        <ul>
+          <li>When a round ends, the three eligible players with the most points in that round (more than 0) win 1st, 2nd and 3rd place.</li>
+          <li><strong>Ties are decided by sudden death.</strong> If players are tied for a prize place, the first of them to gain points in the next round takes the higher place, the next takes the place after, and so on until every prize place is filled. Tied players are told on the leaderboard.</li>
+          <li><strong>Backstop:</strong> if a tie is still not settled 30 days after the round ended, the tied player who reached their final score first during that round takes the higher place, using the times recorded by our system.</li>
+          <li>Places are worked out automatically from the points recorded when the round closes, subject to section 8 and the test-round note at the top of this page.</li>
+        </ul>
+      </section>
+
+      <section class="t-sec" id="prizes">
+        <h2>10. The prizes</h2>
+        <p>One of each prize is awarded in every round:</p>
+        <ul>
+          <li><strong>1st prize: £150 of training</strong> (or the equivalent in your local currency, using the Bank of England exchange rate on the day the round ends). We pay it directly to the gym, studio or sport association you nominate, towards your training there. If that organisation cannot accept the payment for any reason, we pay it instead to a <strong>registered charity you nominate</strong>.</li>
+          <li><strong>2nd prize: a pair of Converse trainers</strong> worth up to £130, chosen by the winner within that value.</li>
+          <li><strong>3rd prize: an oversized PuzzleMixx-branded T-shirt</strong>, one size only.</li>
+        </ul>
+        <p>The prizes are as described: no cash alternative and no other alternative is offered, and prizes cannot be transferred or exchanged. Only if a prize becomes unavailable for reasons outside our control will we provide a replacement of equal or greater value. We pay standard delivery. Any import duty or local tax that applies to a prize is the winner’s responsibility.</p>
+      </section>
+
+      <section class="t-sec" id="claiming">
+        <h2>11. Telling winners and claiming prizes</h2>
+        <ul>
+          <li>Winners are told on the leaderboard the next time they sign in after the round ends, with a “Claim your prize” button in their profile. If a winner has not claimed within 14 days, we will also email the address on their account.</li>
+          <li>To claim, send your full name, postal address, country, email address and, for the 1st prize, your chosen gym, studio or sport association (and a back-up registered charity), within <strong>60 days</strong> of the round ending.</li>
+          <li>We may ask for proof of age, identity or country before sending a prize.</li>
+          <li>We will send each prize, or make the 1st-prize payment, within <strong>30 days</strong> of receiving the winner’s complete details.</li>
+          <li>If, after at least two attempts to contact a winner, we cannot reach them, or a prize is not claimed within 60 days, the prize passes to the next eligible player in that round.</li>
+        </ul>
+      </section>
+
+      <section class="t-sec" id="publish">
+        <h2>12. Publishing winners</h2>
+        <p>The leaderboard shows every player’s Player ID and points, and “Past winners” lists each round’s winners by Player ID. Your email address is never shown. Please choose a Player ID you are happy to have shown publicly; we suggest a nickname rather than your real name. On request we will provide the surname and county (or region) of each round’s prize winners, so anyone can see that prizes were genuinely awarded. If you win and object to this, email us and we will share less, but we may still need to give winner details to the Advertising Standards Authority if asked to show that prizes were awarded fairly.</p>
+      </section>
+
+      <section class="t-sec" id="health">
+        <h2>13. Health and safety</h2>
+        <p>PuzzleMixx includes exercise. Work within your own ability, warm up, make sure you have enough space, and stop straight away if you feel pain, dizziness or discomfort. If you have a health condition, are pregnant or have not exercised for a while, check with a doctor first. The workouts are for general fitness and are not medical advice. You take part at your own risk, subject to section 16.</p>
+      </section>
+
+      <section class="t-sec" id="privacy">
+        <h2>14. Your personal information</h2>
+        <p>How we collect, use, store and protect your information, including where it is processed and how long we keep it, is explained in our <a href="privacy.html">Privacy Notice</a>.</p>
+      </section>
+
+      <section class="t-sec" id="changes">
+        <h2>15. Changes and problems</h2>
+        <p>We will only change these terms in exceptional circumstances, for example to fix a fault or meet a legal requirement, and never in a way that unfairly affects players in a round that has already started. Changes are shown on this page with a new version number and date, and on the leaderboard; we will ask you to agree to the new version next time you sign in. If a technical fault, attack or event outside our control affects the game, we may pause it, correct points that were recorded in error, or extend a round, and we will explain what happened on the leaderboard.</p>
+      </section>
+
+      <section class="t-sec" id="liability">
+        <h2>16. Our responsibility to you</h2>
+        <p>We will run PuzzleMixx with reasonable care and skill. We are not responsible for internet or device problems outside our control, or for losses that were not foreseeable. Nothing in these terms limits our liability for death or personal injury caused by our negligence, for fraud, or for anything else that cannot be limited by law, and nothing affects your statutory rights.</p>
+      </section>
+
+      <section class="t-sec" id="law">
+        <h2>17. Law and contact</h2>
+        <p>These terms are governed by the law of England and Wales. If you live elsewhere in the UK or in another eligible country, you keep any protections the law where you live gives you. Questions, problems or feedback: <strong>puzzlemixx@gmail.com</strong>, or use “Report a problem” in your profile.</p>
+      </section>
+
+      <p class="t-foot">PuzzleMixx · Terms &amp; Conditions · version 3 · last updated 17 November 2026 · Teresa Rae Callan, trading as PuzzleMixx, 11 Clock Tower Mews, London N1 7BB, United Kingdom</p>
+    </main>
+    <script src="pm-countries.js?v=2"></script>
+    <script>
+      (function () {
+        var select = document.getElementById('country-select');
+        var result = document.getElementById('country-result');
+        window.PM_COUNTRIES.all.forEach(function (c) { var o = document.createElement('option'); o.value = c.code; o.textContent = c.name; select.appendChild(o); });
+        select.addEventListener('change', function () {
+          var c = window.PM_COUNTRIES.find(select.value);
+          if (!c) { result.textContent = ''; result.className = 't-check-result'; return; }
+          var yes = window.PM_COUNTRIES.canWin(c.code);
+          result.className = 't-check-result ' + (yes ? 'yes' : 'no');
+          var where = window.PM_COUNTRIES.inSentence(c.code);
+          result.textContent = yes ? '✓ Yes! Players in ' + where + ' can win prizes.' : 'You can play and join the leaderboard for fun, but prizes can’t be sent to ' + where + ' yet.';
+        });
+      })();
+    </script>
+
+  </body>
+</html>

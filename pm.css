@@ -1,0 +1,366 @@
+/* PuzzleMixx leaderboard + profile ("Studio Light"), layered over leaderboard.css */
+.pm-page {
+  --pm-bg:#F6F4FA; --pm-panel:#FFFFFF; --pm-soft:#FAF8FD; --pm-line:#E2DCEC; --pm-ink:#1B1626; --pm-muted:#4F4760;
+  --pm-accent:#6B2FA3; --pm-accent-soft:#EDE8F5; --pm-gold-bg:#FFF4D1; --pm-gold-ink:#6B4A06; --pm-red:#A3324D; --pm-green:#1F7A4D;
+  background:var(--pm-bg); color:var(--pm-ink);
+}
+.pm-page .leaderboard-main { max-width:1240px; margin:0 auto; }
+.pm-notice { margin:0 0 18px; padding:12px 16px; border:1px solid var(--pm-line); border-radius:12px; background:var(--pm-panel); color:var(--pm-muted); font-weight:600; }
+
+.pm-points-ribbon { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+.pm-points-ribbon > div { display:flex; flex-direction:column; gap:4px; padding:14px 16px; border:1px solid var(--pm-line); border-radius:14px; background:var(--pm-panel); }
+.pm-points-ribbon strong { font:400 1.9rem/1 "DM Serif Display",Georgia,serif; color:var(--pm-accent); }
+.pm-points-ribbon span { font-size:.88rem; color:var(--pm-muted); line-height:1.3; }
+.pm-points-ribbon .pm-ribbon-star { background:var(--pm-gold-bg); border-color:#F0DFA8; }
+.pm-points-ribbon .pm-ribbon-star strong { color:var(--pm-gold-ink); }
+.pm-points-ribbon .pm-ribbon-minus strong { color:var(--pm-muted); }
+
+.pm-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:20px; align-items:start; margin-top:20px; }
+.pm-side { display:flex; flex-direction:column; gap:20px; min-width:0; }
+.pm-page .leader-card { min-width:0; border:1px solid var(--pm-line); border-radius:18px; background:var(--pm-panel); box-shadow:0 10px 30px #1b16260b; padding:22px; }
+.pm-page .card-kicker { font:500 12px "DM Mono",ui-monospace,monospace; letter-spacing:.12em; text-transform:uppercase; color:var(--pm-muted); margin:0 0 6px; }
+.pm-card h2 { margin:0 0 10px; font:400 clamp(1.6rem,2.6vw,2rem)/1.08 "DM Serif Display",Georgia,serif; letter-spacing:-.025em; }
+.pm-fine { margin:6px 0 0; font-size:.85rem; color:var(--pm-muted); line-height:1.45; }
+.pm-empty { margin:12px 0 0; padding:14px; border:1.5px dashed #C4B8D8; border-radius:12px; color:var(--pm-muted); font-size:.92rem; text-align:center; }
+.pm-empty[hidden] { display:none; }
+
+.pm-form { display:flex; flex-direction:column; gap:12px; }
+.pm-form label { display:flex; flex-direction:column; gap:6px; font-weight:700; font-size:.88rem; color:var(--pm-ink); }
+.pm-form input,.pm-form textarea { font:500 1rem Manrope,system-ui,sans-serif; padding:11px 13px; border:1px solid #CFC5DF; border-radius:10px; background:#fff; color:var(--pm-ink); }
+.pm-form input:focus-visible,.pm-form textarea:focus-visible { outline:3px solid #B98BE0; outline-offset:1px; border-color:var(--pm-accent); }
+.pm-optional { font-weight:500; color:var(--pm-muted); }
+.pm-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.pm-page .leader-action { align-self:flex-start; border:0; border-radius:999px; padding:12px 20px; background:var(--pm-accent); color:#fff; font:700 14px Manrope,system-ui,sans-serif; cursor:pointer; text-decoration:none; }
+.pm-page .leader-action:hover { background:#5A2590; }
+.pm-page .leader-action:disabled { opacity:.5; cursor:not-allowed; }
+.pm-page .text-action { border:0; background:none; color:var(--pm-accent); font:700 14px Manrope,system-ui,sans-serif; cursor:pointer; padding:6px 2px; text-decoration:underline; text-underline-offset:3px; }
+.pm-page .form-status { margin:10px 0 0; min-height:1.2em; font-size:.9rem; font-weight:600; color:var(--pm-muted); }
+.pm-page .form-status[data-tone="ok"] { color:var(--pm-green); }
+.pm-page .form-status[data-tone="error"] { color:var(--pm-red); }
+.pm-sent { padding:14px 16px; border-radius:12px; background:var(--pm-accent-soft); }
+.pm-sent p { margin:0 0 8px; }
+.pm-inline { margin-top:12px; }
+
+.pm-profile { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.pm-profile > div:nth-child(2) { display:flex; flex-direction:column; min-width:0; flex:1; }
+.pm-profile #profile-email { color:var(--pm-muted); font-size:.88rem; overflow-wrap:anywhere; }
+.pm-page .profile-avatar { display:grid; place-items:center; width:46px; height:46px; border-radius:50%; background:var(--pm-accent); color:#fff; font:400 1.4rem "DM Serif Display",serif; }
+
+/* My points */
+.pm-mypoints-head { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+.pm-mypoints h2 { font-size:clamp(2.2rem,4vw,2.8rem); margin:0; }
+.pm-mypoints h2 small { font:600 1rem Manrope,system-ui,sans-serif; color:var(--pm-muted); letter-spacing:0; }
+.pm-report-button { display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border:1px solid #D9CDE8; border-radius:999px; background:var(--pm-soft); color:var(--pm-accent); font:700 13px Manrope,system-ui,sans-serif; cursor:pointer; transition:background .16s,border-color .16s,transform .16s; }
+.pm-report-button:hover { background:#fff; border-color:var(--pm-accent); transform:translateY(-1px); }
+.pm-report-button:focus-visible { outline:3px solid #B98BE0; outline-offset:2px; }
+.pm-history { list-style:none; margin:16px 0 0; padding:0; max-height:360px; overflow-y:auto; border-top:1px solid var(--pm-line); }
+.pm-history li { display:grid; grid-template-columns:96px minmax(0,1fr) auto; gap:12px; align-items:baseline; padding:10px 2px; border-bottom:1px solid var(--pm-line); font-size:.93rem; }
+.pm-h-date { color:var(--pm-muted); font-size:.82rem; font-variant-numeric:tabular-nums; }
+.pm-h-what { min-width:0; overflow-wrap:anywhere; }
+.pm-h-what em { color:var(--pm-gold-ink); font-style:normal; font-weight:700; font-size:.82rem; margin-left:4px; }
+.pm-h-pts { font-weight:800; color:var(--pm-green); font-variant-numeric:tabular-nums; }
+.pm-history li.pm-minus .pm-h-pts { color:var(--pm-red); }
+.pm-history li.pm-pending .pm-h-pts { color:var(--pm-gold-ink); }
+
+/* Share */
+.pm-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.pm-chip { display:flex; flex-direction:column; align-items:flex-start; gap:2px; padding:9px 13px; border:1px solid #D9CDE8; border-radius:12px; background:#fff; color:var(--pm-ink); font:700 13px Manrope,system-ui,sans-serif; cursor:pointer; text-align:left; }
+.pm-chip small { font-weight:600; color:var(--pm-muted); font-size:11.5px; }
+.pm-chip.active { border-color:var(--pm-accent); background:var(--pm-accent-soft); box-shadow:inset 0 0 0 1px var(--pm-accent); }
+.pm-chip.done small { color:var(--pm-green); }
+.pm-share-box { margin-top:14px; padding:16px; border-radius:14px; background:var(--pm-soft); border:1px solid var(--pm-line); }
+.pm-share-message { margin:0 0 14px; font-size:1rem; line-height:1.5; overflow-wrap:anywhere; }
+.pm-share-buttons { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.pm-share-net { display:inline-flex; align-items:center; min-height:40px; padding:0 14px; border:1px solid #CFC5DF; border-radius:999px; background:#fff; color:var(--pm-ink); font:700 13px Manrope,system-ui,sans-serif; text-decoration:none; cursor:pointer; }
+.pm-share-net:hover { border-color:var(--pm-accent); color:var(--pm-accent); }
+
+/* Bonus */
+.pm-bonus { border-color:#F0DFA8; background:linear-gradient(180deg,#FFFBEF,#fff 60%); }
+.pm-steps { margin:4px 0 16px; padding-left:20px; display:flex; flex-direction:column; gap:6px; line-height:1.45; }
+.pm-claims { list-style:none; margin:14px 0 0; padding:0; display:flex; flex-direction:column; gap:6px; }
+.pm-claim { display:flex; gap:12px; flex-wrap:wrap; align-items:baseline; padding:9px 12px; border-radius:10px; background:var(--pm-soft); font-size:.88rem; }
+.pm-claim span { color:var(--pm-muted); }
+.pm-claim a { color:var(--pm-accent); font-weight:700; }
+.pm-claim strong { margin-left:auto; }
+.pm-claim-pending strong { color:var(--pm-gold-ink); }
+.pm-claim-approved strong { color:var(--pm-green); }
+.pm-claim-rejected strong { color:var(--pm-red); }
+
+/* Standings */
+.pm-standings .standings { max-height:none; }
+.pm-rank { display:inline-grid; place-items:center; min-width:26px; height:26px; margin-right:8px; border-radius:50%; background:var(--pm-accent-soft); color:var(--pm-muted); font:700 12px Manrope,system-ui,sans-serif; }
+.standing-row.pm-flash { animation:pmFlash 1.6s ease; }
+@keyframes pmFlash { 30% { background:#F1E4FF; } }
+
+/* Dialog */
+.pm-dialog { width:min(92vw,520px); border:0; border-radius:20px; padding:28px; background:#fff; color:var(--pm-ink); box-shadow:0 30px 80px #1b162655; }
+.pm-dialog::backdrop { background:#1b1626a6; backdrop-filter:blur(4px); }
+.pm-dialog h2 { margin:0 0 16px; font:400 1.8rem/1.1 "DM Serif Display",Georgia,serif; letter-spacing:-.025em; }
+
+@media (max-width:760px) {
+  .pm-grid { grid-template-columns:1fr; }
+  .pm-points-ribbon { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .pm-points-ribbon .pm-ribbon-star { grid-column:1 / -1; }
+}
+@media (max-width:520px) {
+  .pm-history li { grid-template-columns:1fr auto; }
+  .pm-h-date { grid-column:1 / -1; }
+  .pm-page .leader-card { padding:18px; }
+}
+@media (prefers-reduced-motion:reduce) { .pm-report-button,.standing-row.pm-flash { transition:none; animation:none; } }
+
+.pm-paste { margin:4px 0 10px; }
+.pm-paste summary { cursor:pointer; color:var(--pm-accent); font-weight:700; font-size:.9rem; }
+.pm-paste .pm-form { margin-top:10px; }
+.pm-page .pm-paste label { font:600 .9rem/1.4 Manrope,system-ui,sans-serif; letter-spacing:0; text-transform:none; color:var(--pm-ink); }
+.pm-paste .leader-action { align-self:flex-start; }
+
+.pm-google { display:inline-flex; align-items:center; justify-content:center; gap:10px; align-self:stretch; min-height:46px; padding:0 18px; border:1px solid #CFC5DF; border-radius:999px; background:#fff; color:var(--pm-ink); font:700 15px Manrope,system-ui,sans-serif; cursor:pointer; box-shadow:0 2px 8px #1b16260d; transition:border-color .16s, box-shadow .16s; }
+.pm-google svg { width:20px; height:20px; }
+.pm-google:hover { border-color:var(--pm-accent); box-shadow:0 4px 14px #6B2FA322; }
+.pm-google:focus-visible { outline:3px solid #B98BE0; outline-offset:2px; }
+.pm-google:disabled { opacity:.55; cursor:not-allowed; }
+.pm-or { display:flex; align-items:center; gap:10px; margin:2px 0; color:var(--pm-muted); font-size:.82rem; font-weight:600; }
+.pm-or::before,.pm-or::after { content:""; flex:1; height:1px; background:var(--pm-line); }
+
+/* Socials + Tell your friends (collapsible) */
+.pm-collapsible { position:relative; }
+.pm-collapsible .card-close { top:16px; right:16px; }
+.pm-collapsible h2 { padding-right:36px; }
+.pm-reopen-row { justify-content:flex-end; margin:18px 0 0; }
+.pm-page .card-reopen { color:var(--pm-accent); background:#fff; border-color:#D9CDE8; font:700 13px Manrope,system-ui,sans-serif; padding:9px 15px; }
+.pm-share-link { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:6px 0 12px; padding:12px 12px 12px 16px; border:1px solid var(--pm-line); border-radius:14px; background:var(--pm-soft); }
+.pm-share-link span { flex:1 1 160px; min-width:0; font:700 1.05rem Manrope,system-ui,sans-serif; color:var(--pm-ink); overflow-wrap:anywhere; }
+.pm-share-link .leader-action { align-self:center; }
+.pm-share-points { margin-top:14px; }
+
+.pm-page .pm-jump-status { margin:0 0 8px; min-height:0; }
+.pm-page .pm-jump-status:empty { display:none; }
+.pm-standings .standings { max-height:min(70vh,640px); overflow-y:auto; }
+
+.pm-share-how { margin:0 0 10px; line-height:1.5; }
+.pm-share-how strong { color:var(--pm-accent); }
+.pm-share-claim { margin-top:14px; padding-top:14px; border-top:1px solid var(--pm-line); }
+.pm-share-claim .pm-chips { margin-top:0; }
+
+/* +100 bonus rules sheet */
+.pm-rules-anchor { position:relative; padding:0 !important; }
+.pm-rules-trigger { display:flex; flex-direction:column; gap:4px; width:100%; height:100%; padding:14px 16px; border:0; border-radius:14px; background:none; color:inherit; font:inherit; text-align:left; cursor:pointer; }
+.pm-rules-trigger strong { font:400 1.9rem/1 "DM Serif Display",Georgia,serif; color:var(--pm-gold-ink); }
+.pm-rules-trigger span { font-size:.88rem; color:var(--pm-muted); line-height:1.3; }
+.pm-rules-trigger small { margin-top:2px; color:var(--pm-gold-ink); font:700 12px Manrope,system-ui,sans-serif; text-decoration:underline; text-underline-offset:3px; }
+.pm-rules-trigger:focus-visible { outline:3px solid #E2B33C; outline-offset:2px; }
+.pm-rules { position:fixed; z-index:200; top:var(--rules-top,80px); left:var(--rules-left,50%); width:min(380px,calc(100vw - 32px)); max-height:calc(100svh - 32px); overflow-y:auto; transform:translateX(-50%); padding:20px 22px; border:1px solid #EBD38A; border-radius:16px; background:#fff; color:var(--pm-ink); box-shadow:0 20px 50px #1b162638; text-align:left; }
+.pm-rules h3 { margin:0 0 10px; font:400 1.35rem/1.15 "DM Serif Display",Georgia,serif; letter-spacing:-.015em; }
+.pm-rules ol { margin:0 0 10px; padding-left:20px; display:flex; flex-direction:column; gap:7px; font-size:.92rem; line-height:1.45; }
+.pm-rules ul { margin:6px 0 0; padding-left:18px; display:flex; flex-direction:column; gap:5px; }
+.pm-rules strong { color:var(--pm-ink); }
+.pm-inline-rules { padding:0 2px !important; }
+.pm-private { margin-top:16px; padding:14px 16px; border:1px dashed #D9C27E; border-radius:14px; background:#FFFDF6; }
+.pm-private p { margin:0 0 10px; line-height:1.5; font-size:.94rem; overflow-wrap:anywhere; }
+@media (max-width:760px) {
+  .pm-rules { top:auto; bottom:max(16px,env(safe-area-inset-bottom,0px)); left:50%; }
+}
+
+.pm-page .pm-points-ribbon { height:auto; max-height:none; overflow:visible; }
+
+.pm-page .pm-points-ribbon .pm-rules { display:block; min-height:0; gap:0; padding:20px 22px; background:#fff; }
+.pm-page .pm-points-ribbon .pm-rules span { font-size:inherit; color:inherit; }
+.pm-page .pm-points-ribbon .pm-rules strong { font:700 1em Manrope,system-ui,sans-serif; color:var(--pm-ink); }
+.pm-page .pm-points-ribbon .pm-rules li { overflow-wrap:anywhere; }
+.pm-page .pm-points-ribbon .pm-rules h3 { color:var(--pm-ink); }
+
+/* Desktop: like the original, the page fills one screen. The banner and points
+   stay put at full size; the standings and the profile cards scroll inside. */
+@media (min-width:761px) {
+  .pm-page .leaderboard-main { grid-template-rows:auto auto auto minmax(0,1fr); }
+  .pm-page .leaderboard-main > .leaderboard-hero { grid-row:1; min-height:max-content; }
+  .pm-page .leaderboard-main > .pm-points-ribbon { grid-row:2; min-height:max-content; }
+  .pm-page .leaderboard-main > .pm-notice { grid-row:3; }
+  .pm-page .leaderboard-main > .pm-grid { grid-row:4; height:100%; min-height:0; margin-top:0; align-items:stretch; }
+  .pm-page .pm-grid > .pm-standings { min-height:0; overflow:hidden; display:flex; flex-direction:column; }
+  .pm-page .pm-standings .standings { flex:1 1 auto; min-height:0; max-height:none; overflow-y:auto; }
+  .pm-page .pm-grid > .pm-side { min-height:0; overflow-y:auto; overscroll-behavior:contain; padding-right:4px; scrollbar-color:#a87bbc #eee5f5; }
+  .pm-page .pm-side > .leader-card { overflow:visible; flex:0 0 auto; }
+}
+
+.pm-standings .card-heading-row { flex-wrap:wrap; row-gap:8px; }
+.pm-standings .standings-heading-actions { margin-left:auto; }
+.pm-standings .jump-to-me { white-space:nowrap; }
+
+/* Reopen buttons for hidden boxes, at the top of the right-hand column */
+.pm-side > .pm-reopen-row { display:none; justify-content:flex-end; flex-wrap:wrap; gap:8px; margin:0; }
+.pm-side > .pm-reopen-row:has(.card-reopen:not([hidden])) { display:flex; }
+.pm-collapsible > .card-close[hidden] { display:none; }
+.pm-mypoints.pm-collapsible .pm-mypoints-head { padding-right:40px; }
+
+/* Points boxes: hover/tap pop-ups */
+.pm-page .pm-points-ribbon > .pm-tip-tile { position:relative; cursor:default; outline:0; }
+.pm-page .pm-points-ribbon > .pm-tip-tile:focus-visible { box-shadow:0 0 0 3px #B98BE0; }
+.pm-page .pm-points-ribbon .pm-tip { position:absolute; z-index:70; left:50%; bottom:calc(100% + 10px); width:max-content; max-width:min(320px,80vw); padding:10px 14px; border:1px solid #E2DCEC; border-radius:12px; background:#fff; color:var(--pm-ink); box-shadow:0 12px 30px #1b162629; font:700 .95rem/1.35 Manrope,system-ui,sans-serif; text-align:center; opacity:0; visibility:hidden; transform:translate(-50%,6px); transition:opacity .18s, transform .18s, visibility .18s; pointer-events:none; }
+.pm-page .pm-points-ribbon .pm-tip::after { content:""; position:absolute; left:50%; top:100%; width:10px; height:10px; margin:-5px 0 0 -5px; border-right:1px solid #E2DCEC; border-bottom:1px solid #E2DCEC; background:#fff; transform:rotate(45deg); }
+.pm-page .pm-points-ribbon .pm-tip-tile.show-tip .pm-tip { opacity:1; visibility:visible; transform:translate(-50%,0); }
+.pm-page .pm-tip-icon { display:inline-block; width:22px; height:22px; margin:0 2px; border-radius:50%; object-fit:cover; vertical-align:-6px; box-shadow:0 0 0 2px #6B2FA3; }
+.pm-page .pm-points-ribbon .pm-tile-celebration { bottom:70%; z-index:70; }
+.pm-page .pm-points-ribbon .pm-tile-celebration b { display:block; padding:7px 14px; color:#6b2fa3; font:400 clamp(1.05rem,1.8vw,1.4rem)/1 "DM Serif Display",Georgia,serif; letter-spacing:-.02em; text-align:center; white-space:nowrap; text-shadow:0 0 9px #fff,0 0 14px #e9c65f88; }
+.pm-page .pm-points-ribbon .pm-tile-celebration .sparkle { font-size:16px; }
+.pm-page .pm-points-ribbon .pm-tile-celebration.active { animation:leader-name-float 2.1s cubic-bezier(.18,.72,.25,1) both; }
+.pm-page .pm-points-ribbon .pm-tile-celebration.active .sparkle { animation:sparkle-pop 1.2s ease-in-out both; }
+.pm-page .pm-points-ribbon .pm-tile-celebration.active .sparkle-two { animation-delay:.12s; }
+.pm-page .pm-points-ribbon .pm-tile-celebration.active .sparkle-three { animation-delay:.25s; }
+.pm-page .pm-points-ribbon .pm-tile-celebration.active .sparkle-four { animation-delay:.38s; }
+.pm-page .pm-points-ribbon .pm-tile-celebration.active .sparkle-five { animation-delay:.5s; }
+.pm-page .pm-points-ribbon .pm-tile-celebration.active .sparkle-six { animation-delay:.64s; }
+@media (prefers-reduced-motion:reduce) {
+  .pm-page .pm-points-ribbon .pm-tile-celebration.active { animation:leader-name-fade 1.6s ease both; }
+  .pm-page .pm-points-ribbon .pm-tile-celebration.active .sparkle { animation:none; opacity:.85; }
+}
+
+/* Pop-up text in the deep PuzzleMixx purple (as the Top Scorer name) */
+.pm-page .pm-points-ribbon .pm-tip,
+.pm-page .pm-points-ribbon .pm-rules,
+.pm-page .pm-points-ribbon .pm-rules h3,
+.pm-page .pm-points-ribbon .pm-rules strong,
+.pm-page .pm-points-ribbon .pm-rules .card-kicker,
+.pm-page .pm-points-ribbon .pm-rules .pm-fine,
+.pm-page .pm-points-ribbon .pm-tile-celebration b { color:#6B2FA3; }
+
+/* The PuzzleMixx icon in the +1 pop-up: same gold shimmer as PEACE */
+.pm-page .pm-shimmer-icon { position:relative; display:inline-block; overflow:hidden; }
+.pm-page .pm-shimmer-icon img { display:block; width:100%; height:100%; border-radius:50%; object-fit:cover; }
+.pm-page .pm-shimmer-icon::after { content:""; position:absolute; top:0; bottom:0; left:-60%; width:60%; background:linear-gradient(100deg,transparent 0%,#E9C46Acc 40%,#FFF3C4ee 50%,#E9C46Acc 60%,transparent 100%); mix-blend-mode:screen; transform:translateX(0); animation:pmIconShimmer 60s ease-in-out infinite; pointer-events:none; will-change:transform; }
+@keyframes pmIconShimmer { 0%,2.6% { transform:translateX(0); } 4.4%,100% { transform:translateX(270%); } }
+@media (prefers-reduced-motion:reduce) { .pm-page .pm-shimmer-icon::after { animation:none; display:none; } }
+
+/* Mixx / Mixxers in the deep PuzzleMixx purple of the profile circle */
+.brand-mixx,.standings-ers { color:#6B2FA3; }
+
+.pm-page .pm-points-ribbon .pm-per { margin-right:.35em; font:inherit; color:#000; }
+
+/* Third-prize title icon: wrapper keeps the original ring and size */
+.pm-page .prize-title-brand-pic.pm-shimmer-icon { overflow:hidden; }
+
+/* −5 pop-up: "Come from behind" floats up, then "and get ahead!" slides in from the left to join it */
+.pm-page .pm-points-ribbon .pm-tip span { font:inherit; color:inherit; }
+.pm-page .pm-points-ribbon .pm-tip-moving { overflow:hidden; }
+.pm-page .pm-points-ribbon .pm-tip-moving .tip-rise,
+.pm-page .pm-points-ribbon .pm-tip-moving .tip-slide { display:inline-block; opacity:0; }
+.pm-page .pm-points-ribbon .pm-tip-tile.show-tip .tip-rise { animation:pmTipRise .55s cubic-bezier(.2,.8,.25,1) .1s both; }
+.pm-page .pm-points-ribbon .pm-tip-tile.show-tip .tip-slide { animation:pmTipSlide .6s cubic-bezier(.2,.8,.25,1) .65s both; }
+@keyframes pmTipRise { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pmTipSlide { from { opacity:0; transform:translateX(-60px); } to { opacity:1; transform:translateX(0); } }
+@media (prefers-reduced-motion:reduce) {
+  .pm-page .pm-points-ribbon .pm-tip-tile.show-tip .tip-rise,
+  .pm-page .pm-points-ribbon .pm-tip-tile.show-tip .tip-slide { animation:none; opacity:1; }
+}
+.pm-page .pm-points-ribbon .pm-tip-moving .tip-slide { margin-left:.15em; }
+
+/* All right-hand boxes hidden: the leaderboard uses the whole width; the bring-back buttons sit above it */
+.pm-page .pm-grid.pm-side-empty { grid-template-columns:minmax(0,1fr); grid-template-rows:auto minmax(0,1fr); }
+.pm-page .pm-grid.pm-side-empty > .pm-side { order:-1; overflow:visible; padding-right:0; }
+.pm-page .pm-grid.pm-side-empty > .pm-standings { min-height:0; }
+
+/* +100 box: the same soft golden glow as the Prizes & leaderboard button */
+.pm-page .pm-points-ribbon > .pm-ribbon-star { border:1px solid #E8C870; background:linear-gradient(135deg,#FFFAEB 0%,#FDEBB5 55%,#F8DC8A 100%); animation:pmRibbonGlow 3.6s ease-in-out infinite; }
+@keyframes pmRibbonGlow {
+  0%,100% { box-shadow:0 0 0 0 #E9B13000, 0 2px 8px #C9912826; }
+  50% { box-shadow:0 0 0 4px #E9B1302b, 0 4px 18px #C9912859; }
+}
+@media (prefers-reduced-motion:reduce) { .pm-page .pm-points-ribbon > .pm-ribbon-star { animation:none; box-shadow:0 2px 10px #C9912833; } }
+
+/* Past winners strip (inside the Top PuzzleMixxers card) */
+.pm-past-winners { margin:4px 0 10px; padding:10px 12px; border:1px solid #EBD38A; border-radius:12px; background:linear-gradient(120deg,#FFFCF2,#FFF3CF); }
+.pm-past-winners .card-kicker { margin:0 0 6px; color:#6B4A06; }
+.pm-pw-row { display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; padding:3px 0; font-size:.88rem; }
+.pm-pw-round { min-width:64px; color:var(--pm-muted); font:500 11px "DM Mono",ui-monospace,monospace; letter-spacing:.08em; text-transform:uppercase; }
+.pm-pw-place { display:inline-flex; align-items:center; gap:6px; font-weight:700; color:var(--pm-ink); }
+.pm-pw-place b { display:grid; place-items:center; width:20px; height:20px; border-radius:50%; font:700 11px Manrope,system-ui,sans-serif; color:#3a2a04; background:linear-gradient(135deg,#FDEBB5,#E2B33C); }
+.pm-pw-2 b { background:linear-gradient(135deg,#F1F1F4,#B9BCC6); }
+.pm-pw-3 b { background:linear-gradient(135deg,#F3D2B4,#C0814F); }
+.pm-pw-tie { color:#6B2FA3; font-style:italic; }
+.pm-pw-tie b { background:#EDE8F5; color:#6B2FA3; }
+
+/* Claim your prize button (profile box) */
+.pm-prize-button { display:inline-flex; align-items:center; gap:6px; padding:9px 16px; border:1px solid #D9AE45; border-radius:999px; background:linear-gradient(135deg,#FFF6D6 0%,#FBE29A 55%,#F3CC63 100%); color:#4A3304; font:800 13px Manrope,system-ui,sans-serif; cursor:pointer; animation:pmRibbonGlow 3.6s ease-in-out infinite; }
+.pm-prize-button:hover { transform:translateY(-1px); }
+.pm-prize-button[hidden] { display:none; }
+
+/* Winner and sudden-death pop-ups */
+.pm-win-dialog { text-align:left; }
+.pm-win-medal { display:grid; place-items:center; width:58px; height:58px; margin:0 0 10px; border-radius:50%; background:linear-gradient(135deg,#FDEBB5,#E2B33C); color:#3a2a04; font:400 1.8rem "DM Serif Display",Georgia,serif; box-shadow:0 0 0 4px #fff,0 0 0 6px #E2B33C,0 10px 24px #C9912855; }
+.pm-win-medal[data-place="2"] { background:linear-gradient(135deg,#F7F7F9,#B9BCC6); box-shadow:0 0 0 4px #fff,0 0 0 6px #B9BCC6,0 10px 24px #6b6f7a44; }
+.pm-win-medal[data-place="3"] { background:linear-gradient(135deg,#F3D2B4,#C0814F); box-shadow:0 0 0 4px #fff,0 0 0 6px #C0814F,0 10px 24px #8a542a44; }
+.pm-win-medal-tie { background:linear-gradient(135deg,#F1E8FB,#C9B2E8); color:#6B2FA3; box-shadow:0 0 0 4px #fff,0 0 0 6px #6B2FA3; }
+.pm-win-dialog h2 { color:#6B2FA3; }
+.pm-win-dialog .leader-action { text-decoration:none; }
+@media (prefers-reduced-motion:reduce) { .pm-prize-button { animation:none; } }
+
+/* Terms & Conditions: discreet link and sign-in checkbox */
+.pm-page .pm-terms-link { color:inherit; text-decoration:underline; text-decoration-color:#6B2FA366; text-underline-offset:3px; }
+.pm-page .pm-terms-link:hover { color:#6B2FA3; }
+.pm-page .pm-terms-check { display:flex; flex-direction:row; align-items:flex-start; gap:10px; padding:10px 12px; border:1px solid var(--pm-line); border-radius:12px; background:var(--pm-soft); font:600 .88rem/1.4 Manrope,system-ui,sans-serif; color:var(--pm-ink); cursor:pointer; letter-spacing:0; text-transform:none; }
+.pm-page .pm-terms-check input { flex:0 0 auto; width:18px; height:18px; margin:1px 0 0; accent-color:#6B2FA3; cursor:pointer; }
+.pm-page .pm-terms-check a { color:#6B2FA3; font-weight:800; }
+.pm-page .pm-terms-check.pm-terms-needed { border-color:var(--pm-red); box-shadow:0 0 0 3px #A3324D22; }
+.pm-page .pm-rules-terms { margin:8px 0 0; }
+.pm-page .pm-points-ribbon .pm-rules .pm-rules-terms a { color:#6B2FA3; font-weight:700; }
+
+/* "workout" in prize titles matches the WORKOUTS label beside the logo */
+.pm-page .title-workout-word { color:#6B2FA3; font:500 .5em "DM Mono",ui-monospace,monospace; font-style:normal; letter-spacing:.13em; text-transform:uppercase; vertical-align:.12em; }
+
+/* Unclaimed top-3 places */
+.pm-page .standing-row.pm-open-spot { border:1.5px dashed #D9C27E; background:#FFFDF6; color:#6B2FA3; font-style:italic; }
+.pm-page .standing-row.pm-open-spot .standing-person { color:#6B2FA3; font-weight:700; }
+.pm-page .standing-row.pm-open-spot .standing-points { color:var(--pm-muted); }
+
+/* Age group at sign-in */
+.pm-page .pm-age { margin:0; padding:10px 12px; border:1px solid var(--pm-line); border-radius:12px; background:var(--pm-soft); display:flex; flex-direction:column; gap:6px; }
+.pm-page .pm-age legend { padding:0 4px; color:var(--pm-ink); font:700 .88rem Manrope,system-ui,sans-serif; }
+.pm-page .pm-age label { display:flex; flex-direction:row; align-items:flex-start; gap:10px; font:600 .88rem/1.4 Manrope,system-ui,sans-serif; color:var(--pm-ink); cursor:pointer; letter-spacing:0; text-transform:none; }
+.pm-page .pm-age input { flex:0 0 auto; width:18px; height:18px; margin:1px 0 0; accent-color:#6B2FA3; cursor:pointer; }
+.pm-page .pm-age.pm-terms-needed { border-color:var(--pm-red); box-shadow:0 0 0 3px #A3324D22; }
+.pm-page .pm-minor-note { margin:-4px 0 12px; padding:10px 12px; border-radius:10px; background:#FFF6DC; color:#4A3304; }
+
+/* Country check (sign-in, consent pop-up) */
+.pm-page .pm-country { display:flex; flex-direction:column; gap:6px; font:700 .88rem Manrope,system-ui,sans-serif; color:var(--pm-ink); letter-spacing:0; text-transform:none; }
+.pm-page .pm-country select,.pm-page #prize-country { padding:10px 12px; border:1px solid #CFC5DF; border-radius:10px; background:#fff; color:var(--pm-ink); font:600 15px Manrope,system-ui,sans-serif; }
+.pm-page .pm-country select.pm-terms-needed { border-color:var(--pm-red); box-shadow:0 0 0 3px #A3324D22; }
+.pm-page .pm-country-result { margin:-4px 0 0; min-height:0; font:700 .85rem/1.4 Manrope,system-ui,sans-serif; }
+.pm-page .pm-country-result:empty { display:none; }
+.pm-page .pm-country-result.yes { color:var(--pm-green); }
+.pm-page .pm-country-result.no { color:#6B2FA3; }
+.pm-page #consent-dialog .pm-form { margin-top:12px; }
+.pm-page [hidden] { display:none !important; }
+
+/* Player ID live check */
+.pm-id-result{margin:.3rem 0 0;font-size:.82rem;min-height:1.1em;color:#5d5670}
+.pm-id-result.yes{color:#1f7a44}
+.pm-id-result.no{color:#b3261e}
+
+/* +5 shared-win tile (the +100 bonus tile is paused and hidden) */
+.pm-points-ribbon > .pm-ribbon-star.pm-tip-tile { grid-column:auto; }
+#bonus-tile[hidden] { display:none !important; }
+
+/* −5: the words float up and slide in on their own, no box (like the +10 celebration) */
+.pm-page .pm-points-ribbon .pm-tip.pm-tip-moving { overflow:visible; padding:4px 10px; border:0; background:none; box-shadow:none; color:#6B2FA3; font:400 clamp(1.05rem,1.8vw,1.4rem)/1.1 "DM Serif Display",Georgia,serif; letter-spacing:-.02em; white-space:nowrap; text-shadow:0 0 9px #fff,0 0 14px #e9c65f88; }
+.pm-page .pm-points-ribbon .pm-tip.pm-tip-moving::after { display:none; }
+.pm-page .pm-points-ribbon .pm-tip.pm-tip-moving { bottom:62%; text-shadow:0 0 6px #fff,0 0 10px #fff,0 0 16px #fff,0 0 22px #e9c65f99; }
+/* −5 words float DOWN out of the tile, mirroring the +10 celebration floating up */
+.pm-page .pm-points-ribbon .pm-tip.pm-tip-moving { top:18%; bottom:auto; }
+.pm-page .pm-points-ribbon .pm-tip-tile.show-tip .pm-tip.pm-tip-moving { animation:pmTipFloatDown 2.1s cubic-bezier(.18,.72,.25,1) both; }
+.pm-page .pm-points-ribbon .pm-tip-tile.show-tip .pm-tip-moving .tip-rise,
+.pm-page .pm-points-ribbon .pm-tip-tile.show-tip .pm-tip-moving .tip-slide { animation:none; opacity:1; }
+@keyframes pmTipFloatDown { 0% { opacity:0; transform:translate(-50%,-8px) scale(.88); } 16% { opacity:1; } 68% { opacity:1; } 100% { opacity:0; transform:translate(-50%,62px) scale(1.04); } }
+@media (prefers-reduced-motion:reduce) { .pm-page .pm-points-ribbon .pm-tip-tile.show-tip .pm-tip.pm-tip-moving { animation:leader-name-fade 1.6s ease both; } }
+
+/* "WORKOUT" inside a sentence: the purple DM Mono workout lettering, sized to sit with the text */
+.pm-page .pm-workout-inline { color:#6B2FA3; font:500 .84em "DM Mono",ui-monospace,monospace; font-style:normal; letter-spacing:.13em; text-transform:uppercase; white-space:nowrap; }
+/* +1 box: one normal space between "per" and "complete" */
+.pm-page .pm-points-ribbon .pm-per { margin-right:0; }
+/* −5: "Come from behind" on one line, "and get ahead!" underneath, so both always fit */
+.pm-page .pm-points-ribbon .pm-tip.pm-tip-moving { text-align:center; line-height:1.15; }
+.pm-page .pm-points-ribbon .pm-tip-moving .tip-rise,
+.pm-page .pm-points-ribbon .pm-tip-moving .tip-slide { display:block; }
+.pm-page .pm-points-ribbon .pm-tip-moving .tip-slide { margin-left:0; }
+/* Keep the points-box pop-ups above the cards underneath */
+.pm-page .leaderboard-main > .pm-points-ribbon { position:relative; z-index:30; }

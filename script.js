@@ -5,12 +5,12 @@ const FULL_WORKOUT_VERSION = 'nieve-full-workout-1';
 const HINT_DURATION_MS = 6000;
 const HINT_COST = 5;
 const PLAYLIST_NAME = 'Nieve’s Playlist';
-// Puzzle pieces always play MUTED. When you have permission to use the music,
-// ask for the links to be swapped to the unmuted pieces and PIECE_SOUND set to true.
-const PIECE_SOUND = false;
+// Puzzle pieces play WITH SOUND (17 Nov 2026). The hover previews stored with the site stay silent.
+// Set PIECE_SOUND back to false to mute the pieces again.
+const PIECE_SOUND = true;
 // YouTube IDs from “Nieve's Puzzle Links” (T-time workouts › Puzzles › Nieve's › links), in puzzle order.
 const PIECE_YOUTUBE_IDS = ["5KEuFHo6B38", "enzrOuKQdgs", "uql0Z7RUkVE", "QFbuQYlYXJc", "Lqb3Dv6uM7Y", "zGNQwpqZ5Jo", "PJpO2Ocbk8Q", "AHELeEvUH4o", "VzKsr4VSHI0", "71MXcF3ycMc", "xcy3THFpqNI", "bMV0G1iTABM", "VeTyCLhNLI0", "oBZJSgBIv1I", "Gyme3e05W7s", "MRHWy9sWB8s", "aCYI8TIxxzE", "-TwmwIn_s24", "KlLV6wvjAN4", "3PtzKJ5ziCw", "jJDrmOWtnA4", "y9hQEZF-E9M", "MpgjSL4UPT0", "Bx1rGeuG_9E", "QQ8IsdzdoOQ", "zWyV75cB954", "MEvD1zoyDwQ", "vyUNZYc_39k", "gNZat8mCzG4", "Re2kgwMLwqY", "VvtBFGvWeng", "h_XRpAO63TI", "W0QxIhmzW0k", "VPLNRS_7Qrc", "LgluDCEQtfU"];
-const COMPLETE_PEACE_YOUTUBE_IDS = ["gsuTqybFgyo", "y5sJlnIdHFs", "SKfOeEBPjWA", "b02aENheYd8", "eP_YuQUl3QI", "BUBEqGG_8Cs", "dUH-1L8hiIg", "bbPT8P9768k", "Fd1xNvlW_nU", "6QnCBeClIgE"];
+const COMPLETE_PEACE_YOUTUBE_IDS = ["gsuTqybFgyo", "y5sJlnIdHFs", "SKfOeEBPjWA", "b02aENheYd8", "eP_YuQUl3QI", "BUBEqGG_8Cs", "dUH-1L8hiIg", "bbPT8P9768k", "dK0FLLlcDjo", "6QnCBeClIgE"];
 const clips = Array.from({ length: TOTAL }, (_, i) => i + 1);
 const SONG_PILES = [
   [1, 2, 3, 4],
@@ -126,6 +126,8 @@ const reelLabels = new Map(clips.map((n, i) => [n, `REEL / ${shuffledTags[i]}`])
 function reelName(n) { return reelLabels.get(n); }
 function songPileForClip(n) { return SONG_PILES.find((pile) => pile.clips.includes(n)); }
 function sortedCountForPile(pile) { return pile.clips.filter((n) => sortedPileByClip.get(n) === pile.id).length; }
+window.PM_GAME = { puzzle: 'nieve', titles: EXERCISE_TITLES, completeIds: COMPLETE_PEACE_YOUTUBE_IDS, mentalLink: 'https://youtu.be/D5uZbUJvSC4', currentSong: null };
+
 function songRewardForPile(pileId) { return SONG_REWARDS.find((reward) => reward.id === pileId); }
 
 function normaliseSuccessCycles(stored, songIds, mentalBonus) {
@@ -177,9 +179,15 @@ function prototypePoints(score = readPrototypeScore()) {
   return earned - score.spentPoints;
 }
 
+// Points shown in the header: the online profile total when signed in, otherwise this browser's tally.
+function shownPoints(score) {
+  const online = window.PM?.state?.player;
+  return online ? (window.PM?.roundPoints ? window.PM.roundPoints(online) : online.points) : prototypePoints(score);
+}
+
 function savePrototypeScore(score) {
   localStorage.setItem(PROTOTYPE_SCORE_KEY, JSON.stringify(score));
-  leaderboardPoints.textContent = `${prototypePoints(score)} pts`;
+  leaderboardPoints.textContent = `${shownPoints(score)} pts`;
   updateHintButtons();
 }
 
@@ -197,18 +205,13 @@ function showHintNotice(message) {
 
 function requestHintConfirmation(revealHint) {
   pendingPaidHint = revealHint;
-  const currentPoints = prototypePoints();
+  const currentPoints = shownPoints();
   document.querySelector('#hint-cost-balance').textContent = `${currentPoints} pts → ${currentPoints - HINT_COST} pts`;
   if (!hintCostDialog.open) hintCostDialog.showModal();
 }
 
 function offerHint(revealHint) {
-  if (freeHintAvailable) {
-    freeHintAvailable = false;
-    showHintNotice('Your first hint is free. Your hint glows for 6 seconds.');
-    revealHint();
-    return;
-  }
+  // Every hint asks first and costs 5 points.
   requestHintConfirmation(revealHint);
 }
 
@@ -223,6 +226,7 @@ function confirmPaidHint() {
   const score = readPrototypeScore();
   score.spentPoints += HINT_COST;
   savePrototypeScore(score);
+  window.PM?.record('hint', { puzzle: 'nieve' });
   pendingPaidHint = null;
   if (hintCostDialog.open) hintCostDialog.close();
   showHintNotice('5 points deducted. Your hint glows for 6 seconds.');
@@ -250,6 +254,7 @@ function awardSongPoint(pileId) {
   }
   recordSuccessCycle(score, 'song', pileId);
   savePrototypeScore(score);
+  window.PM?.record('song', { puzzle: 'nieve', songId: pileId });
 }
 
 function awardMentalWorkoutBonus() {
@@ -257,6 +262,41 @@ function awardMentalWorkoutBonus() {
   if (!score.mentalBonus) score.mentalBonus = true;
   recordSuccessCycle(score, 'mental');
   savePrototypeScore(score);
+  window.PM?.record('mental', { puzzle: 'nieve' });
+}
+
+const wonWorkoutDialog = document.querySelector('#won-workout-dialog');
+const wonWorkoutPlayer = document.querySelector('#won-workout-player');
+const wonWorkoutTitle = document.querySelector('#won-workout-title');
+let wonWorkoutReturnFocus = null;
+
+function openWonWorkout(pileId) {
+  window.PM_GAME.currentSong = pileId; window.PMShare?.refresh();
+  const reward = songRewardForPile(pileId);
+  if (!reward || !wonWorkoutDialog) return;
+  wonWorkoutReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  wonWorkoutTitle.textContent = `Nieve’s ${EXERCISE_TITLES[pileId - 1]}`;
+  wonWorkoutPlayer.muted = false;
+  wonWorkoutPlayer.src = `yt:${reward.videoId}`;
+  if (!wonWorkoutDialog.open) wonWorkoutDialog.showModal();
+  wonWorkoutPlayer.play().catch(() => {});
+}
+
+function closeWonWorkout() {
+  wonWorkoutPlayer.pause();
+  wonWorkoutPlayer.removeAttribute('src');
+  wonWorkoutPlayer.load?.();
+  if (wonWorkoutDialog.open) wonWorkoutDialog.close();
+}
+
+if (wonWorkoutDialog) {
+  document.querySelector('#won-workout-close').addEventListener('click', closeWonWorkout);
+  wonWorkoutDialog.addEventListener('click', (event) => { if (event.target === wonWorkoutDialog) closeWonWorkout(); });
+  wonWorkoutDialog.addEventListener('close', () => {
+    wonWorkoutPlayer.pause();
+    wonWorkoutPlayer.removeAttribute('src');
+    if (wonWorkoutReturnFocus?.isConnected) wonWorkoutReturnFocus.focus({ preventScroll: true });
+  });
 }
 
 function renderSongRewardRail() {
@@ -265,6 +305,7 @@ function renderSongRewardRail() {
   showSongRewardsButton.hidden = !railIsAvailable || !rewardRailHidden;
   game.classList.toggle('reward-rail-hidden', rewardRailHidden);
   songRewardList.innerHTML = '';
+  let wonCount = 0;
 
   SONG_PILES.forEach((pile) => {
     const reward = songRewardForPile(pile.id);
@@ -273,32 +314,37 @@ function renderSongRewardRail() {
     const isWon = lazyWorkoutWon || mentalWorkoutWon;
 
     if (isWon) {
-      const thumbnail = document.createElement('a');
-      thumbnail.href = reward.url;
-      thumbnail.target = '_blank';
-      thumbnail.rel = 'noopener';
+      wonCount += 1;
+      const thumbnail = document.createElement('button');
+      thumbnail.type = 'button';
       thumbnail.className = 'song-reward-thumbnail won';
       const exerciseTitle = EXERCISE_TITLES[pile.id - 1];
-      thumbnail.setAttribute('aria-label', `Watch the won ${exerciseTitle} workout on YouTube`);
+      thumbnail.setAttribute('aria-label', `Play your won ${exerciseTitle} workout`);
+      thumbnail.addEventListener('click', () => openWonWorkout(pile.id));
       thumbnail.innerHTML = `
         <img src="https://i.ytimg.com/vi/${reward.videoId}/hqdefault.jpg" alt="" loading="lazy" />
         <span class="reward-exercise-title">${exerciseTitle}</span>
-        <span class="reward-won-label">WON</span>`;
+        <span class="reward-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 7.2v9.6l7.6-4.8z"/></svg></span>
+        <span class="reward-won-label">✓ WON</span>`;
       songRewardList.append(thumbnail);
       return;
     }
 
     const locked = document.createElement('div');
     locked.className = 'song-reward-thumbnail locked';
-    locked.setAttribute('aria-label', `Song ${pile.id} workout not yet won`);
+    locked.setAttribute('role', 'img');
+    locked.setAttribute('aria-label', `${EXERCISE_TITLES[pile.id - 1]}: not won yet`);
     locked.innerHTML = `
       <span class="reward-slot-number">${pile.id}</span>
-      <span class="question-mark-symbol" aria-hidden="true">
-        <span class="question-curl">?</span>
-        <img class="question-dot" src="assets/puzzlemixx-brand-mark.webp" alt="" />
-      </span>`;
+      <svg class="reward-lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
+      <span class="reward-locked-name">${EXERCISE_TITLES[pile.id - 1]}</span>`;
     songRewardList.append(locked);
   });
+  const rewardCount = document.querySelector('#song-reward-count');
+  if (rewardCount) {
+    rewardCount.textContent = wonCount === SONG_PILES.length ? `All ${wonCount} won!` : `${wonCount} of ${SONG_PILES.length} won`;
+    rewardCount.classList.toggle('has-wins', wonCount > 0);
+  }
   scheduleMentalGridFit();
 }
 
@@ -686,6 +732,7 @@ function attemptSort(clip, pileId) {
 }
 
 function showSongReward(pileId) {
+  window.PM_GAME.currentSong = pileId; window.PMShare?.refresh();
   const pile = SONG_PILES.find((songPile) => songPile.id === pileId);
   if (!pile) return;
   songRewardReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -695,7 +742,7 @@ function showSongReward(pileId) {
     ...pile,
     clips: SONG_REWARD_MOVIE_CLIPS.get(pile.id) || pile.clips
   };
-  songRewardTitle.textContent = 'You have WON the workout!';
+  songRewardTitle.textContent = 'You have WON the Complete Peace!';
   songRewardCopy.hidden = false;
   songRewardStatus.textContent = '';
   songRewardActions.hidden = false;
@@ -707,7 +754,7 @@ function showSongReward(pileId) {
   songRewardPlayer.hidden = true;
   songRewardPlayer.removeAttribute('src');
   songRewardPlayer.load();
-  songShareLink.href = `leaderboard.html?share=song&song=${pile.id}`;
+  songShareLink.href = 'leaderboard.html';
   if (!songRewardDialog.open) songRewardDialog.showModal();
   playRewardSound();
   startSongRewardMovie();   // the CompletePeace video pops up and plays with music
@@ -974,8 +1021,8 @@ showSongRewardsButton.addEventListener('click', () => {
 songWatchButton.addEventListener('click', startSongRewardMovie);
 songPlayAgainButton.addEventListener('click', startSongRewardMovie);
 songReturnPuzzleButton.addEventListener('click', leaveSongReward);
-document.querySelector('.song-reward-close').addEventListener('click', leaveSongReward);
-document.querySelector('.song-reward-inline-close').addEventListener('click', leaveSongReward);
+document.querySelector('#song-reward-dialog .song-reward-close').addEventListener('click', leaveSongReward);
+document.querySelector('#song-reward-dialog .song-reward-inline-close').addEventListener('click', leaveSongReward);
 songRewardDialog.addEventListener('cancel', (event) => {
   event.preventDefault();
   leaveSongReward();
@@ -1033,9 +1080,16 @@ window.addEventListener('scroll', scheduleCompactHeaderUpdate, { passive: true }
 window.addEventListener('resize', scheduleCompactHeaderUpdate);
 window.addEventListener('resize', scheduleMentalGridFit);
 window.addEventListener('storage', () => {
-  leaderboardPoints.textContent = `${prototypePoints()} pts`;
+  leaderboardPoints.textContent = `${shownPoints()} pts`;
   updateHintButtons();
 });
 reset();
 savePrototypeScore(readPrototypeScore());
 updateCompactHeader();
+
+// Keep the header points in step with the online profile.
+function connectOnlinePoints() {
+  if (!window.PM) return;
+  window.PM.onChange(() => { leaderboardPoints.textContent = `${shownPoints()} pts`; });
+}
+if (window.PM) connectOnlinePoints(); else window.addEventListener('pm-ready', connectOnlinePoints, { once: true });
