@@ -2,7 +2,7 @@
 // Tee’s DBL PTS PuzzleMixx is built but not open yet: it shows in the menu, golden but greyed out.
 // To open it: set TEE_OPEN to true (and fill in Tee’s YouTube IDs in tee.js).
 (function () {
-  const TEE_OPEN = true;
+  const TEE_OPEN = false;
   const locked = !TEE_OPEN;
   document.documentElement.classList.toggle('pm-tee-locked', locked);
   if (!locked) return;
