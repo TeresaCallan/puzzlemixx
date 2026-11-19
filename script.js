@@ -120,7 +120,22 @@ const previewFileFor = (n) => `yt:${PIECE_YOUTUBE_IDS[n - 1]}`;
 const songWorkoutFileFor = (n) => `yt:${COMPLETE_PEACE_YOUTUBE_IDS[n - 1]}`;
 const posterFileFor = (n) => `media/nieve/posters/${pad(n)}.webp`;
 const shuffle = (items) => [...items].sort(() => Math.random() - .5);
-const shuffledTags = shuffle(clips.map((_, index) => pad(index + 1)));
+// Saved progress (this device): the puzzle is kept exactly as the player left it — pieces placed,
+// piles sorted, mode, piece order and hints — until they press “Start over”.
+const PROGRESS_KEY = 'pmProgress-nieve';
+function loadProgress() {
+  try {
+    const s = JSON.parse(localStorage.getItem(PROGRESS_KEY) || 'null');
+    if (!s || s.v !== 1 || !Array.isArray(s.order) || s.order.length !== TOTAL) return null;
+    if (!clips.every((n) => s.order.includes(n))) return null;
+    return s;
+  } catch { return null; }
+}
+const savedProgress = loadProgress();
+const newPlayId = () => `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+let playId = savedProgress?.playId || newPlayId();
+const scoredThisPlay = new Set(Array.isArray(savedProgress?.scored) ? savedProgress.scored : []);   // wins already scored since the last Start over
+const shuffledTags = Array.isArray(savedProgress?.tags) && savedProgress.tags.length === TOTAL ? savedProgress.tags : shuffle(clips.map((_, index) => pad(index + 1)));
 const reelLabels = new Map(clips.map((n, i) => [n, `REEL / ${shuffledTags[i]}`]));
 
 function reelName(n) { return reelLabels.get(n); }
@@ -247,6 +262,8 @@ function recordSuccessCycle(score, type, songId = null) {
 }
 
 function awardSongPoint(pileId) {
+  if (scoredThisPlay.has(`song-${pileId}`)) return;   // one point per song per play; Start over to earn again
+  scoredThisPlay.add(`song-${pileId}`);
   const score = readPrototypeScore();
   if (!score.songIds.includes(pileId)) {
     score.songIds.push(pileId);
@@ -254,15 +271,17 @@ function awardSongPoint(pileId) {
   }
   recordSuccessCycle(score, 'song', pileId);
   savePrototypeScore(score);
-  window.PM?.record('song', { puzzle: 'nieve', songId: pileId });
+  window.PM?.record('song', { puzzle: 'nieve', songId: pileId, play: playId });
 }
 
 function awardMentalWorkoutBonus() {
+  if (scoredThisPlay.has('mental')) return;
+  scoredThisPlay.add('mental');
   const score = readPrototypeScore();
   if (!score.mentalBonus) score.mentalBonus = true;
   recordSuccessCycle(score, 'mental');
   savePrototypeScore(score);
-  window.PM?.record('mental', { puzzle: 'nieve' });
+  window.PM?.record('mental', { puzzle: 'nieve', play: playId });
 }
 
 const wonWorkoutDialog = document.querySelector('#won-workout-dialog');
@@ -513,6 +532,7 @@ function scheduleMentalGridFit() {
 }
 
 function render() {
+  queueMicrotask(saveProgress);
   if (hoveredPreview) stopHoverPreview(hoveredPreview);
   reels.innerHTML = '';
   timeline.innerHTML = '';
@@ -969,7 +989,36 @@ function reset() {
   sortCompleted = false;
   selected = null;
   dragging = null;
+  playId = newPlayId();   // a fresh play: every win can score again
+  scoredThisPlay.clear();
+  try { Object.keys(sessionStorage).filter((k) => k.startsWith('pmShared-nieve-')).forEach((k) => sessionStorage.removeItem(k)); } catch { /* ignore */ }
   render();
+}
+
+function saveProgress() {
+  try {
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify({
+      v: 1, playId, order, tags: shuffledTags, viewMode, sortCompleted, freeHintAvailable, messyZCounter,
+      placed: [...placed], sorted: [...sortedPileByClip], messy: [...messyPositions], scored: [...scoredThisPlay], at: Date.now()
+    }));
+  } catch { /* storage full or blocked: the puzzle still works, it just isn't saved */ }
+}
+
+function restoreProgress() {
+  const s = savedProgress;
+  if (!s) return false;
+  order = s.order.slice();
+  placed = new Set((s.placed || []).filter((n) => clips.includes(n)));
+  sortedPileByClip = new Map((s.sorted || []).filter((e) => Array.isArray(e) && clips.includes(e[0])));
+  messyPositions = new Map((s.messy || []).filter((e) => Array.isArray(e) && clips.includes(e[0])));
+  messyZCounter = Number.isInteger(s.messyZCounter) ? s.messyZCounter : TOTAL;
+  sortCompleted = s.sortCompleted === true || sortedPileByClip.size === TOTAL;
+  freeHintAvailable = s.freeHintAvailable !== false;
+  viewMode = s.viewMode === 'sort' ? 'sort' : 'puzzle';
+  selected = null;
+  dragging = null;
+  render();
+  return true;
 }
 
 function openCompletedMovie({ recordCompletion = false } = {}) {
@@ -1083,7 +1132,7 @@ window.addEventListener('storage', () => {
   leaderboardPoints.textContent = `${shownPoints()} pts`;
   updateHintButtons();
 });
-reset();
+if (!restoreProgress()) reset();   // pick up where they left off
 savePrototypeScore(readPrototypeScore());
 updateCompactHeader();
 

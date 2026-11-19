@@ -135,7 +135,26 @@ function eventSpec(type, info = {}) {
   return null;
 }
 
+// Songs and The Mental Workout score every time they are won (after Start over). The first win this
+// round keeps the plain id; later wins add -p2, -p3… A share matches the latest win of that song.
+const MAX_REPEATS = 1000;
+const eventExists = async (uid, id) => (await getDoc(doc(db, 'players', uid, 'events', id))).exists();
+async function winsSoFar(uid, base) {
+  let n = 0;
+  while (n < MAX_REPEATS && await eventExists(uid, n === 0 ? base : `${base}-p${n + 1}`)) n += 1;
+  return n;
+}
 async function writeEvent(uid, id, data) {
+  if (data.type === 'song' || data.type === 'mental') {
+    const n = (await winsSoFar(uid, id)) + 1;
+    if (n > MAX_REPEATS) return { added: false, reason: 'limit' };
+    if (n > 1) { id = `${id}-p${n}`; data = { ...data, n }; }
+  } else if (data.type === 'share') {
+    const winBase = data.songId ? `song-${data.puzzle}-${data.songId}${roundSuffix()}` : `mental-${data.puzzle}${roundSuffix()}`;
+    const n = await winsSoFar(uid, winBase);
+    if (n === 0) return { added: false, reason: 'nowin' };
+    if (n > 1) { id = `${id}-p${n}`; data = { ...data, n }; }
+  }
   const playerRef = doc(db, 'players', uid);
   const eventRef = doc(db, 'players', uid, 'events', id);
   if ((await getDoc(eventRef)).exists()) return { added: false, reason: 'already' };
@@ -394,7 +413,7 @@ const PM = {
     if (!spec) return { added: false };
     if (!state.configured || !state.user || !state.player) {
       const queue = store.get(QUEUE_KEY, []);
-      if (type === 'hint' || !queue.some((q) => q.type === type && eventSpec(q.type, q.info)?.id === spec.id)) {
+      if (type === 'hint' || !queue.some((q) => q.type === type && eventSpec(q.type, q.info)?.id === spec.id && (q.info?.play || '') === (info.play || ''))) {
         queue.push({ type, info });
         store.set(QUEUE_KEY, queue.slice(-200));
       }
