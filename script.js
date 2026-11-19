@@ -28,8 +28,8 @@ const SONG_PILES = [
 const SONG_REWARD_MOVIE_CLIPS = new Map(SONG_PILES.map((pile) => [pile.id, [pile.id]]));
 
 // Demo videos shown in the “Won workouts” section (Nieve only). The pop-up reward is always the CompletePeace.
-// Song 10 has no Demo yet, so it shows the CompletePeace until one is added.
-const DEMO_YOUTUBE_IDS = ["G3b6Um9EDG8", "wvfVoCawaHc", "z2rbMuG6apc", "Di3QLww-0hE", "h-LxT37fA3c", "j679cxZ6aqo", "mYGrYOeCOyM", "jIVsAxK-0FQ", "QMwFLVSTkCQ", null];
+// Every song now has a Demo; a null entry would fall back to the CompletePeace.
+const DEMO_YOUTUBE_IDS = ["G3b6Um9EDG8", "wvfVoCawaHc", "z2rbMuG6apc", "Di3QLww-0hE", "h-LxT37fA3c", "j679cxZ6aqo", "mYGrYOeCOyM", "jIVsAxK-0FQ", "QMwFLVSTkCQ", "L3bHOhL46Pk"];
 const SONG_REWARDS = COMPLETE_PEACE_YOUTUBE_IDS.map((completeId, index) => {
   const videoId = DEMO_YOUTUBE_IDS[index] || completeId;
   return { url: `https://youtu.be/${videoId}`, videoId, id: index + 1 };
