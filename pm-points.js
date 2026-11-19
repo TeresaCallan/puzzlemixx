@@ -72,7 +72,7 @@ const EMAIL_KEY = 'pmSignInEmail';
 const NAME_KEY = 'pmSignInName';
 
 const listeners = new Set();
-const state = { configured: false, ready: false, user: null, player: null, isAdmin: false, error: '', teeNotify: false };
+const state = { configured: false, ready: false, user: null, player: null, isAdmin: false, error: '' };
 let auth = null;
 let db = null;
 let unsubscribePlayer = null;
@@ -180,13 +180,6 @@ function fairPlayNotice(text) {
     clearTimeout(fairPlayNotice.timer);
     fairPlayNotice.timer = setTimeout(() => { el.hidden = true; }, 6000);
   } catch { /* ignore */ }
-}
-async function loadTeeNotify(user) {
-  try {
-    const snap = await getDoc(doc(db, 'teeNotify', user.uid));
-    state.teeNotify = snap.exists() && snap.data().on === true;
-  } catch { state.teeNotify = false; }
-  emit();
 }
 async function writeEvent(uid, id, data) {
   if (data.type === 'song' || data.type === 'mental') {
@@ -505,14 +498,6 @@ const PM = {
     return snap.docs.map((d) => ({ id: d.id, ...d.data(), at: d.data().createdAt?.toDate?.() || new Date() }));
   },
 
-  // “Notify me”: email this player each time Tee’s Double Points goes live (only if they ask; tap again to stop).
-  async setTeeNotify(on) {
-    if (!state.user || !state.user.email) throw new Error('Please sign in first.');
-    await setDoc(doc(db, 'teeNotify', state.user.uid), { email: state.user.email, name: state.player?.name || '', on: Boolean(on), at: serverTimestamp() });
-    state.teeNotify = Boolean(on);
-    emit();
-  },
-
   async myEvents() {
     if (!state.user) return [];
     const snap = await getDocs(query(collection(db, 'players', state.user.uid, 'events'), orderBy('createdAt', 'desc'), limit(500)));
@@ -655,9 +640,8 @@ window.PM = PM;
       state.user = user;
       state.isAdmin = Boolean(user && user.emailVerified && (user.email || '').toLowerCase() === ADMIN_EMAIL);
       state.player = null;
-      state.teeNotify = false;
       if (user) {
-        try { await ensurePlayer(user); watchPlayer(user); setTimeout(flushQueue, 600); loadTeeNotify(user); }
+        try { await ensurePlayer(user); watchPlayer(user); setTimeout(flushQueue, 600); }
         catch (error) { state.error = error.message; }
       } else if (unsubscribePlayer) { unsubscribePlayer(); unsubscribePlayer = null; }
       state.ready = true;
