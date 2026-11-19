@@ -422,6 +422,15 @@ const PM = {
     return writeEvent(state.user.uid, spec.id, spec.data);
   },
 
+  // Admin only: remove points from a player for breaking the fair play rules (shown in their history with the reason).
+  async removePoints(uid, amount, reason) {
+    if (!state.isAdmin) throw new Error('Only puzzlemixx@gmail.com can remove points.');
+    const pts = Math.round(Number(amount));
+    if (!Number.isInteger(pts) || pts < 1 || pts > 100000) throw new Error('Enter how many points to remove (a whole number).');
+    const why = String(reason || '').trim().slice(0, 80) || 'fair play';
+    return writeEvent(uid, `adjust-${Date.now()}`, { type: 'adjust', points: -pts, label: `Points removed by PuzzleMixx: ${why}` });
+  },
+
   // Admin only: one player's points history, oldest first (used to flag possible fake wins).
   async eventsOf(uid) {
     if (!state.isAdmin) return [];

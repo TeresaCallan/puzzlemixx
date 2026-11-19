@@ -121,25 +121,57 @@ function fairPlayFlags(events) {
   return flags;
 }
 
+let fairBoard = [];
 async function loadFairPlay() {
   try {
     const k = PM.roundAt();
     const since = PM.roundStart(k);
-    const board = (await PM.leaderboard()).map((p) => ({ ...p, pts: PM.roundPointsOf(p, k) }))
+    fairBoard = (await PM.leaderboard()).map((p) => ({ ...p, pts: PM.roundPointsOf(p, k) }))
       .filter((p) => p.pts > 0).sort((a, b) => b.pts - a.pts).slice(0, 50);
     const flagged = [];
-    for (const p of board) {
+    for (const p of fairBoard) {
       const events = (await PM.eventsOf(p.id)).filter((e) => e.at.getTime() >= since);
       const flags = fairPlayFlags(events);
       if (flags.length) flagged.push({ p, flags, wins: events.filter((e) => e.type === 'song' || e.type === 'mental').length });
     }
     $('#fake-count').textContent = flagged.length ? `(${flagged.length})` : '';
     $('#fake-list').innerHTML = flagged.map(({ p, flags, wins }) => `
-      <article class="claim"><div>
+      <article class="claim" data-uid="${esc(p.id)}"><div>
         <p class="claim-kind">${p.pts} pts this round · ${wins} wins</p>
         <h3>${esc(p.name)}</h3>
         <ul>${flags.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>
+        <form class="pm-row remove-points">
+          <label>Points to remove <input type="number" min="1" max="${p.pts}" step="1" required style="width:6em" /></label>
+          <label>Reason <input type="text" maxlength="80" value="fair play (section 8)" /></label>
+          <button class="reject" type="submit">Remove points</button>
+        </form>
+        <p class="form-status" aria-live="polite"></p>
       </div></article>`).join('');
+    $('#fake-list').querySelectorAll('.claim').forEach((el) => {
+      const p = fairBoard.find((x) => x.id === el.dataset.uid);
+      const form = el.querySelector('.remove-points');
+      const [amountInput, reasonInput] = form.querySelectorAll('input');
+      const button = form.querySelector('button');
+      const status = el.querySelector('.form-status');
+      let armed = false;
+      form.addEventListener('input', () => { armed = false; button.textContent = 'Remove points'; });
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const amount = Number(amountInput.value);
+        if (!armed) {   // ask once more, on the page, before anything changes
+          armed = true;
+          button.textContent = `Confirm: remove ${amount} pts from ${p.name}`;
+          status.textContent = 'This is added to their points history with your reason, and can’t be undone here.';
+          return;
+        }
+        button.disabled = true;
+        try {
+          await PM.removePoints(p.id, amount, reasonInput.value);
+          status.textContent = `Removed ${amount} pts from ${p.name}.`;
+          setTimeout(loadFairPlay, 1500);
+        } catch (error) { status.textContent = `That didn’t work: ${error.message}`; button.disabled = false; armed = false; button.textContent = 'Remove points'; }
+      });
+    });
     $('#fake-empty').hidden = flagged.length > 0;
   } catch (error) {
     $('#fake-empty').hidden = false;
