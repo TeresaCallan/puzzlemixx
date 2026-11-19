@@ -13,10 +13,11 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const ADMIN_EMAIL = (window.PM_ADMIN_EMAIL || 'puzzlemixx@gmail.com').toLowerCase();
-// Rolling 90-day rounds. Round 0 runs 16 Nov 2026 – 14 Feb 2027 (ends 15 Feb 00:00 UTC);
-// every later round is exactly 90 days and starts the moment the previous one ends.
+// Round 0 is practice: open play from 16 Nov 2026 until the competition starts on 26 Nov 2026
+// 00:00 UTC. No prizes and no results for practice. Round 1 (the first competition round) starts then;
+// every round is exactly 90 days and starts the moment the previous one ends (Round 1: 26 Nov 2026 – 23 Feb 2027).
 const CONTEST_START = window.PM_CONTEST_START || Date.UTC(2026, 10, 16);
-const ROUND_ONE_END = window.PM_ROUND_ONE_END || Date.UTC(2027, 1, 15);
+const ROUND_ONE_END = window.PM_ROUND_ONE_END || Date.UTC(2026, 10, 26);   // end of practice = competition start
 const ROUND_MS = (window.PM_ROUND_DAYS || 90) * 86400000;
 function roundAt(t = Date.now()) { return t < ROUND_ONE_END ? 0 : Math.floor((t - ROUND_ONE_END) / ROUND_MS) + 1; }
 function roundStart(k) { return k === 0 ? CONTEST_START : ROUND_ONE_END + (k - 1) * ROUND_MS; }
@@ -32,6 +33,7 @@ const toMs = (v) => (v && typeof v.toMillis === 'function' ? v.toMillis() : type
 // Final places for an ended round. Ties go to sudden death: among tied players, whoever is first to
 // gain points in the next round takes the higher place, then the next, until all three are given.
 function roundResults(board, k) {
+  if (k <= 0) return { round: k, start: roundStart(k), end: roundEnd(k), places: [], pending: [], done: true, practice: true };
   // Backstop: 30 days after a round ends, ties still open go to whoever reached their final score first.
   const backstop = Date.now() > roundEnd(k) + 30 * 86400000;
   const scored = board.map((p) => ({ uid: p.id, name: p.name, points: roundPointsOf(p, k), gainAt: toMs(p.firstGain?.[String(k + 1)]), reachedAt: toMs(p.lastAt?.[String(k)]), canWin: p.canWin !== false }))

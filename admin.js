@@ -35,10 +35,10 @@ async function loadRounds() {
     const fmt = (ms) => new Date(ms).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     const place = ['', '1st', '2nd', '3rd'];
     const rounds = [];
-    for (let r = k - 1; r >= 0; r -= 1) rounds.push(PM.roundResults(board, r));
+    for (let r = k - 1; r >= 1; r -= 1) rounds.push(PM.roundResults(board, r));   // Round 0 is practice
     $('#rounds-list').innerHTML = rounds.map((res) => `
       <article class="claim"><div>
-        <p class="claim-kind">Round ${res.round + 1} · ${fmt(res.start)} – ${fmt(res.end - 1)} · ${res.done ? 'winners confirmed' : 'sudden death in progress'}</p>
+        <p class="claim-kind">Round ${res.round} · ${fmt(res.start)} – ${fmt(res.end - 1)} · ${res.done ? 'winners confirmed' : 'sudden death in progress'}</p>
         ${res.places.map((w) => {
           const sent = prizes.find((p) => p.round === res.round && p.uid === w.uid);
           return `<p><strong>${place[w.place]}: ${esc(w.name)}</strong> · ${w.points} pts${w.how === 'sudden death' ? ' · won sudden death' : w.how === 'reached score first' ? ' · tie settled by backstop (reached score first)' : ''} · ${sent ? '<span style="color:var(--pm-green)">details received</span>' : 'waiting for details'}</p>`;
@@ -49,7 +49,7 @@ async function loadRounds() {
     $('#rounds-empty').hidden = rounds.length > 0;
     $('#prize-list').innerHTML = prizes.map((p) => `
       <article class="claim"><div>
-        <p class="claim-kind">Round ${p.round + 1} · ${place[p.place]} place · sent ${when(p.at)}</p>
+        <p class="claim-kind">Round ${p.round} · ${place[p.place]} place · sent ${when(p.at)}</p>
         <h3>${esc(p.fullName)} <span style="font-weight:500;color:var(--pm-muted)">(${esc(p.name)})</span></h3>
         <p style="white-space:pre-line">${esc(p.address)}</p>
         <p>${esc(p.email)}</p>
