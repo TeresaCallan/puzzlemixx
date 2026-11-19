@@ -368,3 +368,7 @@
 /* reCAPTCHA (App Check) badge hidden; the required notice is shown in the page footers instead. */
 .grecaptcha-badge { visibility: hidden !important; }
 .pm-recaptcha { font-size: .85em; }
+
+/* Under-18 note, right under the 18+ tick box */
+.pm-page .pm-under18 { margin:-4px 2px 2px; padding:8px 12px; border-left:3px solid #E2B33C; border-radius:0 10px 10px 0; background:#fff8e6; color:var(--pm-ink); font:500 .82rem/1.45 Manrope,system-ui,sans-serif; }
+.pm-page .pm-under18 strong { font-weight:800; }

@@ -1,15 +1,14 @@
 // Puzzle menu switches and Tee’s DBL PTS PuzzleMixx “live” windows.
-// Tee’s puzzle opens 4 times a day at random, for 5–15 minutes each time, between 8am and 10pm UK time.
-// Every visitor works out the same windows from the date, using the web server’s clock. The daily email job
-// (tools/tee-alerts.mjs) uses this same file, so emails go out at exactly these times.
+// Tee’s puzzle opens 8 times a day at random, for 5–15 minutes each time, spread over the whole 24 hours
+// (one window in each 3-hour block, UK days) so players everywhere in the world get a chance.
+// Every visitor works out the same windows from the date, using the web server’s clock.
 // Set TEE_ALWAYS_OPEN to true to open it all the time, or TEE_LIVE_WINDOWS to false to keep it closed.
 (function () {
   const TEE_ALWAYS_OPEN = false;
   const TEE_LIVE_WINDOWS = true;
-  const EMAIL_ALERTS_READY = false;   // shows the “Notify me” button once the email alerts are set up
-  const WINDOWS_PER_DAY = 4;
-  const DAY_START_MIN = 8 * 60;    // 08:00 UK time
-  const DAY_END_MIN = 22 * 60;     // 22:00 UK time
+  const WINDOWS_PER_DAY = 8;
+  const DAY_START_MIN = 0;         // 00:00 UK time
+  const DAY_END_MIN = 24 * 60;     // 24:00 UK time
   const MIN_LEN = 5;
   const MAX_LEN = 15;
   const onTeePage = /\/tee\.html$/.test(location.pathname);
@@ -76,53 +75,15 @@
   .pm-tee-banner a, .pm-tee-banner button { border:0; border-radius:999px; padding:8px 14px; font:700 13px/1 Manrope,system-ui,sans-serif; cursor:pointer; text-decoration:none; white-space:nowrap; }
   .pm-tee-banner a { background:linear-gradient(135deg,#c99a2e,#e8be52); color:#fff; box-shadow:0 4px 14px #c99a2e66; }
   .pm-tee-banner button { background:transparent; color:#8a6417; padding:8px 10px; font-size:18px; line-height:.8; }
-  .pm-tee-notify { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:6px 2px 2px; padding:8px 10px 8px 12px; border:1px dashed #e4c77a; border-radius:14px; background:#fffaf0; color:#6b5120; font:500 11.5px/1.35 Manrope,system-ui,sans-serif; }
-  .pm-tee-notify button { flex:none; display:inline-flex; align-items:center; gap:6px; border:1px solid #d9b45a; border-radius:999px; padding:6px 12px; background:#fff; color:#7a5512; font:700 12px/1 Manrope,system-ui,sans-serif; cursor:pointer; transition:background .2s, box-shadow .2s; }
-  .pm-tee-notify button:hover, .pm-tee-notify button:focus-visible { background:#fff4d6; box-shadow:0 0 0 3px #f2d98a66; outline:none; }
-  .pm-tee-notify button[aria-pressed="true"] { background:linear-gradient(135deg,#c99a2e,#e8be52); border-color:transparent; color:#fff; }
-  .pm-tee-notify .pm-bell { display:inline-block; transform-origin:50% 10%; }
-  .pm-tee-notify button[aria-pressed="true"] .pm-bell { animation:pmTeeRing 2.4s ease-in-out infinite; }
   .playlist-menu a.golden-puzzle-option .pm-live { margin-left:auto; padding:2px 8px; border-radius:999px; background:linear-gradient(135deg,#c99a2e,#e8be52); color:#fff; font:600 9px/1.4 "DM Mono",ui-monospace,monospace; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; box-shadow:0 0 12px #e8be5299; }
   @keyframes pmTeeTwinkle { 50% { transform:scale(1.25) rotate(12deg); opacity:.75; } }
-  @keyframes pmTeeRing { 0%,70%,100% { transform:rotate(0); } 75% { transform:rotate(14deg); } 82% { transform:rotate(-12deg); } 89% { transform:rotate(8deg); } }
   @media (max-width:520px) { .pm-tee-banner { border-radius:20px; flex-wrap:wrap; justify-content:center; text-align:center; } }
-  @media (prefers-reduced-motion:reduce) { .pm-tee-banner { transition:none; } .pm-tee-banner .pm-tee-spark, .pm-tee-notify .pm-bell { animation:none !important; } }`;
+  @media (prefers-reduced-motion:reduce) { .pm-tee-banner { transition:none; } .pm-tee-banner .pm-tee-spark { animation:none !important; } }`;
   const style = document.createElement('style');
   style.textContent = css;
   document.head.append(style);
 
-  // ---------- Notify me (by email, only for signed-in players who ask) ----------
-  const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } } };
-  const wantsNotify = () => Boolean(window.PM?.state?.teeNotify);
-  function paintNotifyButtons() {
-    document.querySelectorAll('.pm-tee-notify button').forEach((b) => {
-      const on = wantsNotify();
-      b.setAttribute('aria-pressed', String(on));
-      b.innerHTML = `<span class="pm-bell" aria-hidden="true">🔔</span>${on ? 'We’ll email you' : 'Notify me'}`;
-    });
-  }
-  async function toggleNotify(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    const PM = window.PM;
-    if (!PM?.state?.user || !PM.state.player) {
-      hint('Sign in on the Leaderboard first, then tap “Notify me” — we’ll email you when Double Points goes live.');
-      return;
-    }
-    const button = event.currentTarget;
-    button.disabled = true;
-    try {
-      const on = !wantsNotify();
-      await PM.setTeeNotify(on);
-      hint(on ? `Done — we’ll email ${PM.state.user.email} each time Double Points goes live. Tap again to stop.` : 'Email alerts are off. Tap “Notify me” any time to turn them back on.');
-    } catch (error) {
-      hint('That didn’t work. Please try again.');
-    }
-    button.disabled = false;
-    paintNotifyButtons();
-  }
-  window.addEventListener('pm-ready', () => window.PM?.onChange?.(paintNotifyButtons), { once: true });
-  if (window.PM?.onChange) window.PM.onChange(paintNotifyButtons);
+  // ---------- Small notices ----------
   function hint(text) {
     let el = document.querySelector('#pm-tee-hint');
     if (!el) {
@@ -158,20 +119,14 @@
         a.removeAttribute('aria-current');
         a.setAttribute('aria-disabled', 'true');
         a.setAttribute('tabindex', '-1');
-        a.title = 'Opens 4 times a day at random';
+        a.title = 'Opens 8 times a day at random';
         a.insertAdjacentHTML('beforeend', `<span class="pm-soon">${TEE_LIVE_WINDOWS ? 'Opens soon' : 'Coming soon'}</span>`);
       }
-      const inner = a.parentElement;
-      if (EMAIL_ALERTS_READY && TEE_LIVE_WINDOWS && !TEE_ALWAYS_OPEN && inner && !inner.querySelector('.pm-tee-notify')) {
-        a.insertAdjacentHTML('afterend', '<div class="pm-tee-notify"><span>Double Points opens 4× a day, at random, for 5–15 min.</span><button type="button" aria-pressed="false"></button></div>');
-        inner.querySelector('.pm-tee-notify button').addEventListener('click', toggleNotify);
-      }
     });
-    paintNotifyButtons();
   }
   document.addEventListener('click', (e) => {
     const a = e.target.closest?.('.playlist-menu a.golden-puzzle-option.is-locked');
-    if (a) { e.preventDefault(); hint(EMAIL_ALERTS_READY ? 'Tee’s DBL PTS PuzzleMixx opens 4 times a day at random. Tap “Notify me” and we’ll email you when it’s live.' : 'Tee’s DBL PTS PuzzleMixx opens 4 times a day at random, for 5–15 minutes. Keep an eye out!'); }
+    if (a) { e.preventDefault(); hint('Tee’s DBL PTS PuzzleMixx opens 8 times a day at random, day and night, for 5–15 minutes. Check back often — and get lucky!'); }
   }, true);
 
   // ---------- Live banner and alert ----------
