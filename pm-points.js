@@ -2,7 +2,7 @@
 // Exposes window.PM. Works in a reduced "not set up yet" mode until
 // window.PM_FIREBASE_CONFIG (firebase-config.js) is filled in.
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { initializeAppCheck, ReCaptchaV3Provider } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check.js';
+import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check.js';
 import {
   getAuth, onAuthStateChanged, sendSignInLinkToEmail, isSignInWithEmailLink,
   signInWithEmailLink, signOut as fbSignOut,
@@ -624,9 +624,9 @@ window.PM = PM;
   }
   try {
     const app = initializeApp(config);
-    // App Check: points are only accepted from the real PuzzleMixx pages (reCAPTCHA v3, invisible to players).
+    // App Check: points are only accepted from the real PuzzleMixx pages (reCAPTCHA / Fraud Defense, invisible to players).
     if (window.PM_APPCHECK_SITE_KEY) {
-      try { initializeAppCheck(app, { provider: new ReCaptchaV3Provider(window.PM_APPCHECK_SITE_KEY), isTokenAutoRefreshEnabled: true }); }
+      try { initializeAppCheck(app, { provider: new ReCaptchaEnterpriseProvider(window.PM_APPCHECK_SITE_KEY), isTokenAutoRefreshEnabled: true }); }
       catch (error) { console.warn('PuzzleMixx: App Check did not start', error); }
     }
     auth = getAuth(app);

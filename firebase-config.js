@@ -22,3 +22,5 @@ window.PM_CONTEST_END = Date.UTC(2027, 1, 23, 23, 59, 59);
 
 // The address shared in success posts so friends can join the game.
 window.PM_JOIN_URL = 'https://www.puzzlemixx.com';
+// Firebase App Check (reCAPTCHA / Google Cloud Fraud Defense site key — public, safe to publish).
+window.PM_APPCHECK_SITE_KEY = '6LfEqiguAAAAAK8la76YDNQgEs6b2l1DcD4lkADb';
