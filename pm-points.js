@@ -72,7 +72,7 @@ const EMAIL_KEY = 'pmSignInEmail';
 const NAME_KEY = 'pmSignInName';
 
 const listeners = new Set();
-const state = { configured: false, ready: false, user: null, player: null, isAdmin: false, error: '' };
+const state = { configured: false, ready: false, user: null, player: null, isAdmin: false, error: '', teeNotify: false };
 let auth = null;
 let db = null;
 let unsubscribePlayer = null;
@@ -180,6 +180,13 @@ function fairPlayNotice(text) {
     clearTimeout(fairPlayNotice.timer);
     fairPlayNotice.timer = setTimeout(() => { el.hidden = true; }, 6000);
   } catch { /* ignore */ }
+}
+async function loadTeeNotify(user) {
+  try {
+    const snap = await getDoc(doc(db, 'teeNotify', user.uid));
+    state.teeNotify = snap.exists() && snap.data().on === true;
+  } catch { state.teeNotify = false; }
+  emit();
 }
 async function writeEvent(uid, id, data) {
   if (data.type === 'song' || data.type === 'mental') {
@@ -467,6 +474,8 @@ const PM = {
   // Called by the puzzles. Saves straight away when signed in, otherwise keeps it until sign-in.
   async record(type, info = {}) {
     if (!['song', 'mental', 'hint', 'share'].includes(type) || !contestOpen()) return { added: false };
+    // Tee’s Double Points only scores while it is live (see pm-menu.js).
+    if (info.puzzle === 'tee' && window.PMTee && !window.PMTee.isLive()) return { added: false, reason: 'closed' };
     const spec = eventSpec(type, info);
     if (!spec) return { added: false };
     if (!state.configured || !state.user || !state.player) {
@@ -494,6 +503,14 @@ const PM = {
     if (!state.isAdmin) return [];
     const snap = await getDocs(query(collection(db, 'players', uid, 'events'), orderBy('createdAt', 'asc'), limit(3000)));
     return snap.docs.map((d) => ({ id: d.id, ...d.data(), at: d.data().createdAt?.toDate?.() || new Date() }));
+  },
+
+  // “Notify me”: email this player each time Tee’s Double Points goes live (only if they ask; tap again to stop).
+  async setTeeNotify(on) {
+    if (!state.user || !state.user.email) throw new Error('Please sign in first.');
+    await setDoc(doc(db, 'teeNotify', state.user.uid), { email: state.user.email, name: state.player?.name || '', on: Boolean(on), at: serverTimestamp() });
+    state.teeNotify = Boolean(on);
+    emit();
   },
 
   async myEvents() {
@@ -638,8 +655,9 @@ window.PM = PM;
       state.user = user;
       state.isAdmin = Boolean(user && user.emailVerified && (user.email || '').toLowerCase() === ADMIN_EMAIL);
       state.player = null;
+      state.teeNotify = false;
       if (user) {
-        try { await ensurePlayer(user); watchPlayer(user); setTimeout(flushQueue, 600); }
+        try { await ensurePlayer(user); watchPlayer(user); setTimeout(flushQueue, 600); loadTeeNotify(user); }
         catch (error) { state.error = error.message; }
       } else if (unsubscribePlayer) { unsubscribePlayer(); unsubscribePlayer = null; }
       state.ready = true;
