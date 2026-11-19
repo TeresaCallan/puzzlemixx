@@ -10,7 +10,7 @@ const PLAYLIST_NAME = 'Nieve’s Playlist';
 const PIECE_SOUND = true;
 // YouTube IDs from “Nieve's Puzzle Links” (T-time workouts › Puzzles › Nieve's › links), in puzzle order.
 const PIECE_YOUTUBE_IDS = ["5KEuFHo6B38", "enzrOuKQdgs", "uql0Z7RUkVE", "QFbuQYlYXJc", "Lqb3Dv6uM7Y", "zGNQwpqZ5Jo", "PJpO2Ocbk8Q", "AHELeEvUH4o", "VzKsr4VSHI0", "71MXcF3ycMc", "xcy3THFpqNI", "bMV0G1iTABM", "VeTyCLhNLI0", "oBZJSgBIv1I", "Gyme3e05W7s", "MRHWy9sWB8s", "aCYI8TIxxzE", "-TwmwIn_s24", "KlLV6wvjAN4", "3PtzKJ5ziCw", "jJDrmOWtnA4", "y9hQEZF-E9M", "MpgjSL4UPT0", "Bx1rGeuG_9E", "QQ8IsdzdoOQ", "zWyV75cB954", "MEvD1zoyDwQ", "vyUNZYc_39k", "gNZat8mCzG4", "Re2kgwMLwqY", "VvtBFGvWeng", "h_XRpAO63TI", "W0QxIhmzW0k", "VPLNRS_7Qrc", "LgluDCEQtfU"];
-const COMPLETE_PEACE_YOUTUBE_IDS = ["CVTKAhU-ju0", "-YFCo6_jxsw", "QBT2_4PN4g8", "zuc8LaXXOA0", "MB9z09BXFlA", "Kb7HBmYsAc4", "uVVbFYGaDPo", "bbPT8P9768k", "dK0FLLlcDjo", "6QnCBeClIgE"];
+const COMPLETE_PEACE_YOUTUBE_IDS = ["CVTKAhU-ju0", "-YFCo6_jxsw", "QBT2_4PN4g8", "zuc8LaXXOA0", "MB9z09BXFlA", "Kb7HBmYsAc4", "uVVbFYGaDPo", "bbPT8P9768k", "dK0FLLlcDjo", "vDvEbSjz3Gg"];
 const clips = Array.from({ length: TOTAL }, (_, i) => i + 1);
 const SONG_PILES = [
   [1, 2, 3, 4],
