@@ -9,6 +9,9 @@ const PIECE_SOUND = true;
 // YouTube IDs from “Hannahs Puzzle Links” (T-time workouts › Puzzles › Hannahs › links), in puzzle order.
 const PIECE_YOUTUBE_IDS = ["mwwC6KO3uUo", "UM9FK2ZN_UE", "c1H2krHHT3E", "ib59FO4bS5M", "gbezFi0xztU", "kRfPlRKrYw8", "NKMctuRrBtw", "5LV95S6IUSE", "Hxp-LtYZBbE", "r0vZgaS9qmI", "2ZskNhtrD7A", "Mjuh5OsRbgQ", "sXMnqnoRZCg", "UtCn97kkAyw", "dCG2NkD2rrg", "57F8iu7jMXE", "ZPfpLbvZkz4", "Oa0NO6hxFT4", "1Py2kVShJCo", "BOdIPkA1AWw", "CjJoeqfth_w", "UqId43_Mxac", "BoMpyVtxLjo", "Or4IG2wIzsw", "yNiNZP0Ymgs", "uMUh7JoA9cw", "Gttc5cMWmUA"];
 const COMPLETE_PEACE_YOUTUBE_IDS = ["6j8Dv9WWOfM", "LlTT4CQvJe4", "G-G1WyfOJzg", "vmDwizgKme0", "aDvBjT0ZH-k", "1LnV5FU2KSA", "XOVFE9StPOQ", "eIrq1KbCuLg", "awtdTPYk0V4", "5KAJQXRdxCI"];
+// Demo videos shown in the “Won workouts” section. The pop-up reward is always the CompletePeace.
+// A null entry has no Demo yet, so that song's thumbnail opens the CompletePeace reward as before.
+const DEMO_YOUTUBE_IDS = ["S_fwhInnYAw", null, null, null, null, null, null, null, null, null];
 const clips = Array.from({ length: TOTAL }, (_, i) => i + 1);
 const SONG_PILES = [
   [1, 2, 3],
@@ -28,6 +31,40 @@ const SONG_REWARD_CLIP_STARTS = new Map();
 const SONG_REWARD_CLIP_END_TRIMS = new Map();
 const EXERCISE_TITLES = ['Mobility','Mobility & Core Prep','Cardio','Core','Flexibility & Core','Legs, Core & Coordination','Legs, Core & Coordination 2nd Side','Combination Exercises','Adage & Stretch','Aerial Dance Therapy'];
 window.PM_GAME = { puzzle: 'hannah', titles: EXERCISE_TITLES, completeIds: COMPLETE_PEACE_YOUTUBE_IDS, mentalLink: 'https://www.puzzlemixx.com/hannah.html', currentSong: null };
+
+const wonWorkoutDialog = document.querySelector('#won-workout-dialog');
+const wonWorkoutPlayer = document.querySelector('#won-workout-player');
+const wonWorkoutTitle = document.querySelector('#won-workout-title');
+let wonWorkoutReturnFocus = null;
+
+function openWonWorkout(pileId) {
+  window.PM_GAME.currentSong = pileId; window.PMShare?.refresh();
+  const demoId = DEMO_YOUTUBE_IDS[pileId - 1];
+  if (!demoId || !wonWorkoutDialog) { showSongReward(pileId); return; }
+  wonWorkoutReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  wonWorkoutTitle.textContent = `Hannah’s ${EXERCISE_TITLES[pileId - 1]}`;
+  wonWorkoutPlayer.muted = false;
+  wonWorkoutPlayer.src = `yt:${demoId}`;
+  if (!wonWorkoutDialog.open) wonWorkoutDialog.showModal();
+  wonWorkoutPlayer.play().catch(() => {});
+}
+
+function closeWonWorkout() {
+  wonWorkoutPlayer.pause();
+  wonWorkoutPlayer.removeAttribute('src');
+  wonWorkoutPlayer.load?.();
+  if (wonWorkoutDialog.open) wonWorkoutDialog.close();
+}
+
+if (wonWorkoutDialog) {
+  document.querySelector('#won-workout-close').addEventListener('click', closeWonWorkout);
+  wonWorkoutDialog.addEventListener('click', (event) => { if (event.target === wonWorkoutDialog) closeWonWorkout(); });
+  wonWorkoutDialog.addEventListener('close', () => {
+    wonWorkoutPlayer.pause();
+    wonWorkoutPlayer.removeAttribute('src');
+    if (wonWorkoutReturnFocus?.isConnected) wonWorkoutReturnFocus.focus({ preventScroll: true });
+  });
+}
 
 const game = document.querySelector('.game');
 const reels = document.querySelector('#reels');
@@ -266,11 +303,11 @@ function renderSongRewardRail() {
       const exerciseTitle = EXERCISE_TITLES[pile.id - 1];
       thumbnail.setAttribute('aria-label', `Watch the won ${exerciseTitle} workout`);
       thumbnail.innerHTML = `
-        <img src="${posterFileFor(pile.clips[0])}" alt="" loading="lazy" />
+        <img src="${DEMO_YOUTUBE_IDS[pile.id - 1] ? `https://i.ytimg.com/vi/${DEMO_YOUTUBE_IDS[pile.id - 1]}/hqdefault.jpg` : posterFileFor(pile.clips[0])}" alt="" loading="lazy" />
         <span class="reward-exercise-title">${exerciseTitle}</span>
         <span class="reward-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 7.2v9.6l7.6-4.8z"/></svg></span>
         <span class="reward-won-label">✓ WON</span>`;
-      thumbnail.addEventListener('click', () => showSongReward(pile.id));
+      thumbnail.addEventListener('click', () => (DEMO_YOUTUBE_IDS[pile.id - 1] ? openWonWorkout(pile.id) : showSongReward(pile.id)));
       songRewardList.append(thumbnail);
       return;
     }
