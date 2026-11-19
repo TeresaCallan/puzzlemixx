@@ -14,9 +14,11 @@ window.PM_FIREBASE_CONFIG = {
 // Who can approve +100 stretch bonuses, and where reports and claims are emailed.
 window.PM_ADMIN_EMAIL = 'puzzlemixx@gmail.com';
 
-// The 90-day contest: 16 Nov 2026 to 14 Feb 2027 (23:59 UK time).
+// Practice opens 16 Nov 2026; the competition (Round 1, 90 days) starts 26 Nov 2026 00:00 UTC
+// and ends 23 Feb 2027 (midnight GMT). Rounds are worked out in pm-points.js.
 window.PM_CONTEST_START = Date.UTC(2026, 10, 16, 0, 0, 0);
-window.PM_CONTEST_END = Date.UTC(2027, 1, 14, 23, 59, 59);
+window.PM_ROUND_ONE_END = Date.UTC(2026, 10, 26, 0, 0, 0);
+window.PM_CONTEST_END = Date.UTC(2027, 1, 23, 23, 59, 59);
 
 // The address shared in success posts so friends can join the game.
 window.PM_JOIN_URL = 'https://www.puzzlemixx.com';

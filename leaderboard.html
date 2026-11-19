@@ -20,7 +20,7 @@
             <button class="prize-ribbon prize-ribbon-second" type="button" data-prize="second" aria-label="See the second prize"><span>2</span><small>Second prize</small></button>
             <button class="prize-ribbon prize-ribbon-third" type="button" data-prize="third" aria-label="See the third prize"><span>3</span><small>Third prize</small></button>
           </div>
-          <div class="contest-countdown"><span>Prizes awarded in</span><strong id="contest-countdown">Loading…</strong></div>
+          <div class="contest-countdown"><span id="contest-countdown-label">Competition starts in</span><strong id="contest-countdown">Loading…</strong></div>
         </div>
         <a class="sticky-back-link" href="index.html" data-back-link data-back-text>Back to the puzzle</a>
       </div>
@@ -34,7 +34,7 @@
       <section class="leaderboard-hero" aria-labelledby="leaderboard-title">
         <div class="hero-trophy" aria-hidden="true"><img src="assets/leaderboard-trophy.svg" alt="" /></div>
         <div>
-          <p class="leaderboard-kicker"><span id="round-kicker">PuzzleMixx rewards · 16 Nov 2026 – 14 Feb 2027</span> <span aria-hidden="true">·</span> <a class="pm-terms-link" href="terms.html">T&amp;Cs</a> <span aria-hidden="true">·</span> <a class="pm-terms-link" href="privacy.html">Privacy</a></p>
+          <p class="leaderboard-kicker"><span id="round-kicker">PuzzleMixx rewards · Round 1 starts 26 Nov 2026</span> <span aria-hidden="true">·</span> <a class="pm-terms-link" href="terms.html">T&amp;Cs</a> <span aria-hidden="true">·</span> <a class="pm-terms-link" href="privacy.html">Privacy</a></p>
           <h1 id="leaderboard-title"><span class="leader-word-wrap"><span class="gold-leader" id="leader-word" tabindex="0" role="button" aria-label="Celebrate the current leaderboard leader">Leader</span><span class="leader-celebration" id="leader-celebration" aria-hidden="true"><strong id="leader-celebration-name"></strong><i class="sparkle sparkle-one">✦</i><i class="sparkle sparkle-two">✧</i><i class="sparkle sparkle-three">✦</i><i class="sparkle sparkle-four">✧</i><i class="sparkle sparkle-five">✦</i><i class="sparkle sparkle-six">✧</i></span></span><span>board</span></h1>
           <p>Conquer The Mental Workout, share your wins, or simply <span class="pm-workout-inline">workout</span> one Complete Peace at a time.</p>
         </div>
@@ -141,7 +141,7 @@
               <div>
                 <p class="card-kicker">My points</p>
                 <h2 id="my-points-title"><span id="my-points-total">0</span> <small>points</small></h2>
-                <p class="pm-fine" id="my-points-range">Everything you’ve won and spent from 16 Nov 2026 to 14 Feb 2027.</p>
+                <p class="pm-fine" id="my-points-range">Everything you’ve won and spent this round.</p>
               </div>
               <button class="pm-report-button" id="open-report" type="button">
                 <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -182,7 +182,7 @@
         <label>Postal address<textarea id="prize-address" rows="3" autocomplete="street-address" maxlength="400" required></textarea></label>
         <label>Email address<input id="prize-email" type="email" autocomplete="email" maxlength="120" required /></label>
         <label>Country<select id="prize-country" required><option value="">Choose…</option><option value="GB">United Kingdom</option><option value="IE">Ireland</option><option value="AU">Australia</option><option value="NZ">New Zealand</option></select></label>
-        <label id="prize-gym-label">Your gym, studio or sport association (we pay the £150 to them)<input id="prize-gym" maxlength="160" placeholder="Name and town or website" /></label>
+        <label id="prize-gym-label">Your gym, studio or sport association (we pay the £300 to them)<input id="prize-gym" maxlength="160" placeholder="Name and town or website" /></label>
         <label id="prize-charity-label">Back-up registered charity, if they can’t accept it<input id="prize-charity" maxlength="160" placeholder="Charity name and number" /></label>
         <div class="pm-row"><button class="leader-action" type="submit">Send my details</button><button class="text-action" type="button" data-close-dialog>Later</button></div>
         <p class="pm-fine">Only the PuzzleMixx team sees these details. We use them just to deliver your prize.</p>
@@ -241,18 +241,18 @@
 
     <dialog class="prize-dialog" id="prize-first" aria-labelledby="first-prize-title">
       <button class="prize-dialog-close" type="button" data-close-prize aria-label="Close first prize">×</button>
-      <div class="prize-dialog-heading"><span class="prize-dialog-medal gold-medal">1</span><div><p class="card-kicker">First prize</p><h2 id="first-prize-title">£150 for your <span class="title-workout-word">workout</span></h2></div></div>
-      <p class="prize-intro">Choose the place that keeps you moving. The winner receives a £150 (or your country’s currency equivalent) prize to fund their workout with their chosen organisation.</p>
+      <div class="prize-dialog-heading"><span class="prize-dialog-medal gold-medal">1</span><div><p class="card-kicker">First prize</p><h2 id="first-prize-title">£300 for your <span class="title-workout-word">workout</span></h2></div></div>
+      <p class="prize-intro">Choose the place that keeps you moving. The winner receives a £300 (or your country’s currency equivalent) prize to fund their workout with their chosen organisation.</p>
       <div class="association-choices" role="group" aria-label="Choose an association type">
         <button class="association-choice active" type="button" data-payee="your chosen Gym">Gym</button>
         <button class="association-choice" type="button" data-payee="your chosen Studio">Studio</button>
         <button class="association-choice" type="button" data-payee="your chosen Sport association">Sport association</button>
       </div>
-      <div class="prize-cheque" aria-label="A prize cheque for 150 pounds">
+      <div class="prize-cheque" aria-label="A prize cheque for 300 pounds">
         <div class="cheque-brand"><span>Puzzle<span>Mixx</span></span><small>WINNER’S PRIZE</small></div>
-        <div class="cheque-date">14 · 02 · 2027</div>
+        <div class="cheque-date">23 · 02 · 2027</div>
         <span class="cheque-label">Pay</span><strong id="cheque-payee">your chosen Gym</strong>
-        <div class="cheque-amount-words">One hundred and fifty pounds only</div><div class="cheque-amount">£150.00</div>
+        <div class="cheque-amount-words">Three hundred pounds only</div><div class="cheque-amount">£300.00</div>
         <div class="cheque-signature">PuzzleMixx</div>
       </div>
     </dialog>
@@ -275,9 +275,9 @@
     </dialog>
 
     <script src="pm-countries.js?v=2"></script>
-    <script src="firebase-config.js?v=2"></script>
-    <script type="module" src="pm-points.js?v=16"></script>
-    <script type="module" src="leaderboard-app.js?v=26"></script>
+    <script src="firebase-config.js?v=3"></script>
+    <script type="module" src="pm-points.js?v=17"></script>
+    <script type="module" src="leaderboard-app.js?v=27"></script>
       <script src="pm-words.js?v=13"></script>
   </body>
 </html>

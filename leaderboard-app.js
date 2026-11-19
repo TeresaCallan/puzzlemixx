@@ -154,10 +154,15 @@ let prizeToClaim = null;
 
 async function renderRounds() {
   const k = roundNow();
-  $('#round-kicker').textContent = `PuzzleMixx rewards · Round ${k + 1} · ${roundLabel(k)}`;
-  $('#my-points-range').textContent = `Everything you’ve won and spent in Round ${k + 1} (${roundLabel(k)}). Points start again from 0 each round.`;
+  if (k === 0) {
+    $('#round-kicker').textContent = `PuzzleMixx rewards · Practice · Round 1 starts ${fmtDay(PM.roundEnd(0))}`;
+    $('#my-points-range').textContent = `Practice points, before the competition starts on ${fmtDay(PM.roundEnd(0))}. Everyone starts Round 1 on 0.`;
+  } else {
+    $('#round-kicker').textContent = `PuzzleMixx rewards · Round ${k} · ${roundLabel(k)}`;
+    $('#my-points-range').textContent = `Everything you’ve won and spent in Round ${k} (${roundLabel(k)}). Points start again from 0 each round.`;
+  }
   const ended = [];
-  for (let r = k - 1; r >= Math.max(0, k - 3); r -= 1) ended.push(PM.roundResults(rawBoard, r));
+  for (let r = k - 1; r >= Math.max(1, k - 3); r -= 1) ended.push(PM.roundResults(rawBoard, r));   // Round 0 is practice: no results
 
   // Past winners strip
   const strip = $('#past-winners');
@@ -169,7 +174,7 @@ async function renderRounds() {
       const tie = res.pending.find((g) => g.places.includes(n));
       return tie ? `<span class="pm-pw-place pm-pw-tie"><b>${n}</b>Sudden death</span>` : '';
     }).join('');
-    return `<div class="pm-pw-row"><span class="pm-pw-round">Round ${res.round + 1}</span>${names || '<span class="pm-pw-place">No winners</span>'}</div>`;
+    return `<div class="pm-pw-row"><span class="pm-pw-round">Round ${res.round}</span>${names || '<span class="pm-pw-place">No winners</span>'}</div>`;
   }).join('') : '';
 
   // Tell puzzlemixx@gmail.com once a round ends (and again once ties are settled)
@@ -196,9 +201,9 @@ async function renderRounds() {
     }
     const tie = res.pending.find((g) => g.players.some((x) => x.uid === me.uid));
     if (tie && !seen(`pmTieShown-${res.round}`)) {
-      $('#sudden-death-kicker').textContent = `Round ${res.round + 1} · sudden death`;
+      $('#sudden-death-kicker').textContent = `Round ${res.round} · sudden death`;
       $('#sudden-death-title').textContent = `You’re tied for ${tie.places.map((n) => PLACE[n]).join(' / ')} place!`;
-      $('#sudden-death-copy').textContent = `${tie.players.length} players finished Round ${res.round + 1} on ${tie.players[0].points} points. The first of you to gain points in the new round takes ${PLACE[tie.places[0]]} place, the next takes the place after, until every prize is won.`;
+      $('#sudden-death-copy').textContent = `${tie.players.length} players finished Round ${res.round} on ${tie.players[0].points} points. The first of you to gain points in the new round takes ${PLACE[tie.places[0]]} place, the next takes the place after, until every prize is won.`;
       const d = $('#sudden-death-dialog'); if (!d.open) d.showModal();
       break;
     }
@@ -210,9 +215,9 @@ function openPrizeClaim() {
   const { round, place } = prizeToClaim;
   $('#prize-claim-medal').textContent = place;
   $('#prize-claim-medal').dataset.place = place;
-  $('#prize-claim-kicker').textContent = `Round ${round + 1} · ${PLACE[place]} place`;
+  $('#prize-claim-kicker').textContent = `Round ${round} · ${PLACE[place]} place`;
   $('#prize-claim-title').textContent = `Congratulations, ${PM.state.player?.name || 'winner'}!`;
-  $('#prize-claim-copy').textContent = `You finished Round ${round + 1} in ${PLACE[place]} place. Tell us where to send your prize.`;
+  $('#prize-claim-copy').textContent = `You finished Round ${round} in ${PLACE[place]} place. Tell us where to send your prize.`;
   $('#prize-gym-label').hidden = place !== 1;
   $('#prize-charity-label').hidden = place !== 1;
   try { const c = localStorage.getItem(COUNTRY_KEY); if (c && window.PM_COUNTRIES.canWin(c)) $('#prize-country').value = c; } catch { /* ignore */ }
@@ -602,6 +607,8 @@ function updateCountdown() {
   if (countdownRound !== null && k !== countdownRound && PM.state.configured) refreshData();   // a new round has begun
   countdownRound = k;
   const remaining = Math.max(PM.roundEnd(k) - Date.now(), 0);
+  const label = $('#contest-countdown-label');
+  if (label) label.textContent = k === 0 ? 'Competition starts in' : 'Prizes awarded in';
   const el = $('#contest-countdown');
   const d = Math.floor(remaining / 86400000);
   const h = Math.floor((remaining % 86400000) / 3600000);
