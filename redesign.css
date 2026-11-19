@@ -1,0 +1,245 @@
+/* =====================================================================
+   PuzzleMixx redesign — "Studio Light" (desktop) + "Pocket Tray" (phone)
+   Loaded after styles.css; it only overrides. Remove this one <link>
+   from a page to get the old look back.
+   ===================================================================== */
+:root {
+  --sl-bg:#F6F4FA; --sl-panel:#FFFFFF; --sl-soft:#FAF8FD; --sl-line:#E2DCEC; --sl-slot-line:#C4B8D8;
+  --sl-ink:#1B1626; --sl-muted:#4F4760; --sl-faint:#6A6078;
+  --sl-accent:#6B2FA3; --sl-accent-soft:#EDE8F5; --sl-hot:#D6457E;
+  --sl-gold-bg:#FFF4D1; --sl-gold-ink:#6B4A06;
+  --ink:var(--sl-ink); --purple:var(--sl-accent); --line:var(--sl-line); --muted:var(--sl-muted);
+}
+
+/* ---------- Page ---------- */
+body { background:var(--sl-bg); color:var(--sl-ink); }
+.masthead { border-bottom-color:var(--sl-line); }
+.masthead .eyebrow,.compact-playlist-prompt { display:none !important; }   /* brand mark shown once, in the logo */
+.brand-workouts { font-size:11px; color:var(--sl-muted); }
+.kicker,.eyebrow { font-size:12px; }
+
+/* Puzzle picker: a clear pill instead of small pink capitals */
+.playlist-picker-trigger { gap:10px; padding:9px 16px; border:1px solid #D9D0E6; border-radius:999px; background:var(--sl-panel); color:var(--sl-ink); font:700 15px/1.2 Manrope,system-ui,sans-serif; letter-spacing:0; text-transform:none; }
+.playlist-picker-trigger:hover,.playlist-picker-trigger:focus-visible { color:var(--sl-accent); text-shadow:none; border-color:var(--sl-accent); }
+.playlist-picker-trigger:focus-visible { outline:3px solid var(--sl-accent); outline-offset:2px; }
+.playlist-picker-chevron { color:var(--sl-accent); }
+.compact-playlist-picker .playlist-picker-trigger { padding:6px 12px; font-size:13px; letter-spacing:0; }
+
+/* Prizes: one readable gold pill */
+.masthead-prizes { gap:9px; padding:6px 16px 6px 8px; border-radius:999px; background:var(--sl-gold-bg); color:var(--sl-gold-ink); font:700 14px Manrope,system-ui,sans-serif; letter-spacing:0; text-transform:none; }
+.masthead-prizes img { width:28px; height:28px; filter:none; }
+.masthead-prizes:hover,.masthead-prizes:focus-visible { background:#FFEBB0; }
+.compact-leaderboard-copy { font:700 12px Manrope,system-ui,sans-serif; letter-spacing:0; text-transform:none; text-shadow:none; color:var(--sl-gold-ink); }
+.compact-leaderboard-copy span { font-size:11px; color:var(--sl-muted); }
+
+/* Headline: “workout” as a purple italic word, not tiny capitals */
+.intro h1 { letter-spacing:-.035em; text-wrap:balance; }
+/* "WORKOUT" in the heading matches the WORKOUTS label beside the logo */
+.title-workout-word { color:#6B2FA3; font:500 .5em "DM Mono",ui-monospace,monospace; font-style:normal; letter-spacing:.13em; text-transform:uppercase; vertical-align:.12em; white-space:nowrap; }
+
+/* Controls */
+.game-tools { border-left-color:var(--sl-line); }
+.view-switch { border-color:#D9D0E6; background:var(--sl-accent-soft); }
+.view-button { color:var(--sl-muted); font-size:13px; }
+/* Selected view: a white pill with plum text, softer than black */
+.view-button[aria-pressed="true"],#puzzle-view-button[aria-pressed="true"],#compact-puzzle-view-button[aria-pressed="true"],#sort-view-button[aria-pressed="true"],#compact-sort-view-button[aria-pressed="true"] { color:var(--sl-accent); background:#fff; box-shadow:0 1px 2px #1b162614, 0 3px 10px #6b2fa32e; }
+.view-button:not([aria-pressed="true"]):hover { color:var(--sl-accent); }
+.sort-brand-pic { box-shadow:0 0 0 2px #6B2FA3; }
+#puzzle-view-button { gap:0; padding-block:6px; }
+#puzzle-view-button .sort-brand-pic { width:26px; height:26px; margin-block:-4px; margin-left:.45em; }
+.compact-tools .sort-brand-pic { width:22px; height:22px; margin-block:-3px; margin-left:.4em; }
+#compact-puzzle-view-button { gap:0; }
+/* Both Sort buttons the same size, in the page and in the slim header */
+.view-switch { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.view-switch > .view-button { width:100%; justify-content:center; }
+.button { font-size:13px; }
+.button-dark { background:var(--sl-accent); box-shadow:none; }
+.button-dark:hover { background:#5A2590; }
+.button-quiet { color:var(--sl-ink); border-color:#BDB2CF; background:transparent; }
+.button-quiet:hover { border-color:var(--sl-accent); }
+
+/* ---------- Game board ---------- */
+.game { border:1px solid var(--sl-line); border-radius:18px; background:var(--sl-panel); box-shadow:0 10px 30px #1b16260d; }
+.reels-panel { background:var(--sl-panel); border-right-color:var(--sl-line); }
+.timeline-panel { background:var(--sl-soft); }
+.reels > #timeline-heading,.timeline > #progress { padding:6px 12px; border-radius:999px; color:var(--sl-muted); background:var(--sl-accent-soft); font:700 12px Manrope,system-ui,sans-serif; letter-spacing:.02em; backdrop-filter:none; -webkit-backdrop-filter:none; }
+.workout-points { color:var(--sl-gold-ink); font-size:12px; text-shadow:none; }
+.progress { font-size:12px; color:var(--sl-muted); background:var(--sl-accent-soft); }
+
+/* Reels: one calm frame colour; colour now only means "selected" or "hint" */
+.game .reel,.game .reel:nth-child(n) { --reel-accent:var(--sl-accent); border:1px solid #CFC5DF; border-radius:8px; background:#15101D; box-shadow:none; }
+.game .reel:hover,.game .reel:focus-visible { border-color:var(--sl-accent); box-shadow:0 6px 16px #6b2fa333; }
+.game .reel.selected { outline:3px solid var(--sl-hot); outline-offset:-3px; }
+.reel-play { width:22px; height:22px; opacity:.6; }
+
+/* Slots: neutral until filled */
+.timeline .slot,.timeline .slot:nth-child(n) { border:1.5px dashed var(--sl-slot-line); border-radius:8px; background:var(--sl-panel); color:var(--sl-faint); }
+.timeline .slot:hover { border-color:var(--sl-accent); border-style:solid; }
+.slot-number { top:5px; left:7px; font:700 11px Manrope,system-ui,sans-serif; }
+.slot-text { display:none; }
+.timeline .slot.correct { border:2px solid var(--sl-accent); background:#15101D; }
+.timeline .slot.correct .slot-number { color:#fff; background:var(--sl-accent); border-radius:9px; padding:1px 6px; }
+
+/* Song-sorting view */
+.messy-pile { border-color:var(--sl-slot-line); background:var(--sl-soft); }
+.messy-pile::before { color:var(--sl-faint); font-size:12px; }
+.sort-piles .song-pile:nth-child(n),.sorted-song-pile:nth-child(n) { background:var(--sl-panel); border-color:var(--sl-slot-line); }
+.song-pile.complete { border-color:var(--sl-accent); background:var(--sl-accent-soft); }
+.sort-pile-number,.sort-pile-count { font-size:11px; }
+.sort-pile-prompt { font-size:12px; }
+.sorted-pile-heading,.game.songs-sorted .sorted-pile-heading { font-size:10px; }
+.pile-complete-copy { font-size:10px; }
+
+/* Your rewards: a gold shelf across the top of the puzzle, so the prize is the first thing you see */
+.song-reward-rail { display:flex; flex-direction:column; gap:10px; min-width:0; padding:14px 16px; border:0; border-bottom:1px solid #EBD38A; background:linear-gradient(120deg,#FFFCF2 0%,#FFF3CF 55%,#FBE6A6 100%); }
+.song-reward-rail-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin:0; }
+.reward-shelf-text { display:flex; flex-direction:column; gap:3px; min-width:0; }
+.reward-shelf-kicker { display:flex; align-items:center; gap:6px; margin:0; color:var(--sl-gold-ink); font:500 10.5px "DM Mono",ui-monospace,monospace; letter-spacing:.14em; text-transform:uppercase; }
+.reward-shelf-kicker img { width:16px; height:16px; object-fit:contain; filter:drop-shadow(0 0 4px #F0B83D88); }
+.song-reward-rail-heading .reward-shelf-title { margin:0; color:var(--sl-ink); font:400 clamp(1.15rem,1.6vw,1.45rem)/1.1 "DM Serif Display",Georgia,serif; letter-spacing:-.015em; text-wrap:balance; }
+.song-reward-rail-heading .reward-shelf-count { align-self:flex-start; margin:2px 0 0; padding:3px 10px; border:1px solid #E3C46A; border-radius:999px; background:#FFFFFFb3; color:var(--sl-gold-ink); font:700 12px Manrope,system-ui,sans-serif; letter-spacing:0; text-transform:none; }
+.reward-shelf-count.has-wins { background:linear-gradient(135deg,#FDEBB5,#F6D274); border-color:#D9AE45; }
+.song-reward-rail-heading button { flex:0 0 auto; width:26px; height:26px; border-color:#E0C477; color:var(--sl-gold-ink); background:#FFFFFFb3; }
+
+.song-reward-list { display:grid; grid-template-columns:repeat(10,minmax(0,1fr)); gap:8px; min-height:0; }
+.song-reward-thumbnail { position:relative; display:block; width:100%; height:auto; min-height:0; aspect-ratio:16/10; overflow:hidden; padding:0; border-radius:10px; box-shadow:none; container-type:size; }
+.song-reward-thumbnail.won { border:2px solid #E2B33C; background:#2a2135; cursor:pointer; box-shadow:0 0 0 3px #F5D77A66, 0 6px 16px #B8861E33; transition:transform .16s, box-shadow .16s; animation:pmRewardGlow 3.6s ease-in-out infinite; }
+.song-reward-thumbnail.won:hover,.song-reward-thumbnail.won:focus-visible { outline:0; transform:translateY(-2px); box-shadow:0 0 0 4px #F2C94C, 0 10px 22px #B8861E55; }
+.song-reward-thumbnail.won img { display:block; width:100%; height:100%; object-fit:cover; }
+.reward-play { position:absolute; z-index:2; top:42%; left:50%; display:grid; place-items:center; width:28px; height:28px; border-radius:50%; background:#FFFFFFeb; box-shadow:0 2px 8px #0005; transform:translate(-50%,-50%); transition:transform .16s; }
+.reward-play svg { width:18px; height:18px; fill:var(--sl-accent); }
+.song-reward-thumbnail.won:hover .reward-play { transform:translate(-50%,-50%) scale(1.12); }
+.reward-exercise-title { padding:14px 5px 4px; font:700 10px/1.15 Manrope,system-ui,sans-serif; text-align:center; }
+.reward-won-label { top:4px; right:4px; padding:2px 6px; border-radius:999px; background:linear-gradient(135deg,#FDEBB5,#F2C451); color:#4A3304; font:800 8.5px Manrope,system-ui,sans-serif; letter-spacing:.04em; }
+
+.song-reward-thumbnail.locked { display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:2px; padding:6px 5px 6px; border:1.5px dashed #CDB98A; background:#FFFFFFa6; color:var(--sl-muted); }
+.reward-slot-number { top:4px; left:4px; min-width:17px; height:17px; padding:0 4px; border:0; border-radius:999px; background:#EAD9A6; color:var(--sl-gold-ink); font:700 10px/17px Manrope,system-ui,sans-serif; }
+.reward-lock { position:absolute; top:5px; right:5px; width:14px; height:14px; fill:none; stroke:#B39350; stroke-width:2; stroke-linecap:round; }
+.reward-locked-name { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; width:100%; color:var(--sl-ink); font:700 10.5px/1.15 Manrope,system-ui,sans-serif; text-align:center; overflow-wrap:break-word; hyphens:auto; opacity:.78; }
+.song-reward-rail-show { border-color:#E0C477; color:var(--sl-gold-ink); background:linear-gradient(135deg,#FFFAEB,#FDEBB5); }
+.song-reward-rail-show span { font:700 11px Manrope,system-ui,sans-serif; text-transform:none; letter-spacing:0; }
+@keyframes pmRewardGlow { 0%,100% { box-shadow:0 0 0 3px #F5D77A55, 0 6px 16px #B8861E2b; } 50% { box-shadow:0 0 0 5px #F5D77A88, 0 8px 22px #B8861E4d; } }
+
+/* Nieve's won workout plays here, with sound */
+.dialog.won-workout-dialog { width:min(94vw,920px); border-top:4px solid #E2B33C; border-top-color:#E2B33C; }
+.won-workout-dialog h2 { margin:6px 0 16px; font:400 clamp(1.6rem,3vw,2.2rem)/1.1 "DM Serif Display",Georgia,serif; letter-spacing:-.02em; }
+
+@media (min-width:761px) {
+  .game,.game:not(.reward-rail-hidden),.game.reward-rail-hidden { grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); grid-template-rows:auto minmax(0,1fr); }
+  .game.songs-sorted,.game.songs-sorted:not(.reward-rail-hidden),.game.songs-sorted.reward-rail-hidden { grid-template-columns:clamp(190px,24vw,300px) minmax(0,1fr); }
+  .game > .song-reward-rail { grid-row:1; grid-column:1 / -1; flex-direction:row; align-items:center; gap:18px; padding:12px 18px; }
+  .game > .reels-panel { grid-row:2; grid-column:1; }
+  .game > .timeline-panel { grid-row:2; grid-column:2; }
+  .song-reward-rail-heading { flex:0 0 clamp(180px,18vw,240px); }
+  .song-reward-rail-heading .reward-shelf-title { font-size:clamp(1.05rem,1.4vw,1.3rem); }
+  .song-reward-list { flex:1 1 auto; height:clamp(58px,7.2vh,76px); }
+  .song-reward-thumbnail { height:100%; aspect-ratio:auto; }
+  .song-reward-rail-show { top:8px; }
+  /* 35 reels in 5 × 7 gives each clip a closer-to-video shape */
+  .game:not(.sort-mode) .reels:not(.sorted-pile-list) { grid-template-columns:repeat(5,minmax(0,1fr)); grid-template-rows:repeat(7,minmax(0,1fr)); gap:6px; }
+}
+
+/* ---------- Dialogs ---------- */
+.dialog { border-top-color:var(--sl-accent); background:var(--sl-panel); }
+.song-reward-status { font:700 12px Manrope,system-ui,sans-serif; letter-spacing:0; text-transform:none; color:var(--sl-muted); }
+.compact-header { background:#F6F4FAee; border-bottom-color:var(--sl-line); }
+.hint-notice { font-size:14px; color:var(--sl-ink); background:#FFFFFFf2; border-color:var(--sl-line); }
+
+/* YouTube players sit exactly where the old <video> players were */
+yt-video { display:block; position:relative; overflow:hidden; background:#090a09; }
+yt-video[hidden] { display:none !important; }
+yt-video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+.dialog yt-video { width:100%; aspect-ratio:16/9; max-height:min(58svh,560px); border-radius:6px; }
+.song-reward-dialog yt-video { margin-top:20px; }
+.finish-dialog yt-video#lazy-workout-player,.finish-dialog yt-video#movie-player { width:100%; height:auto; aspect-ratio:16/9; min-height:0; max-height:calc(100svh - 220px); justify-self:center; }
+.reel yt-video.reel-preview { position:absolute; inset:0; z-index:0; background:transparent; pointer-events:none; }
+.reel yt-video.reel-preview.is-playing { opacity:1; }
+.reel yt-video.reel-preview iframe { width:140%; height:140%; left:-20%; top:-20%; }   /* crops YouTube's title bar out of the small tiles */
+
+/* ---------- Phone: "Pocket Tray" ---------- */
+@media (max-width:760px) {
+  .intro h1 { font-size:clamp(1.9rem,7.4vw,2.6rem); }
+  .masthead-playlist-area { justify-content:flex-start; }
+
+  /* Timeline stays on screen as a compact 5-column grid */
+  .game:not(.sort-mode) .timeline { grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; padding-top:44px; }
+  .game:not(.sort-mode) .timeline .slot { min-height:0; aspect-ratio:16/9; border-radius:5px; }
+  .game:not(.sort-mode) .slot-number { top:2px; left:4px; font-size:11px; }
+  .game:not(.sort-mode) .timeline-panel { border-bottom:0; }
+
+  /* Reels live in a tray docked to the bottom of the screen */
+  .game:not(.sort-mode) .reels-panel { position:fixed; z-index:120; left:0; right:0; bottom:0; padding:6px 0 calc(12px + env(safe-area-inset-bottom,0px)); border:0; border-radius:22px 22px 0 0; background:var(--sl-panel); box-shadow:0 -10px 30px #1b162629; }
+  .game:not(.sort-mode) .reels-panel::before { content:""; display:block; width:40px; height:5px; margin:0 auto 4px; border-radius:3px; background:#D4CAE3; }
+  .game:not(.sort-mode) .reels:not(.sorted-pile-list) { display:grid; grid-template-columns:none; grid-template-rows:repeat(2,auto); grid-auto-flow:column; grid-auto-columns:118px; gap:8px; overflow-x:auto; overscroll-behavior-x:contain; scroll-snap-type:x proximity; scroll-padding-inline:16px; padding:40px max(16px,env(safe-area-inset-left,0px)) 4px; }
+  .game:not(.sort-mode) .reels:not(.sorted-pile-list) .reel { aspect-ratio:16/9; min-height:0; height:auto; scroll-snap-align:start; }
+  .game:not(.sort-mode) .reels > #timeline-heading { left:16px; top:4px; }
+  .game:not(.sort-mode) .reels:empty,.game:not(.sort-mode) .reels-panel:has(.reels:empty) { display:none; }
+  .shell { padding-bottom:240px; }
+  .game:not(.sort-mode) #progress { z-index:110; }   /* keep the timeline's count under the reel tray */
+
+  /* Your rewards: the gold shelf sits on top, 5 across in two rows */
+  .game:not(.reward-rail-hidden) { display:block; }
+  .song-reward-rail { margin:0; padding:12px max(12px,env(safe-area-inset-left,0px)) 12px; border-left:0; }
+  .song-reward-list { grid-template-columns:repeat(5,minmax(0,1fr)); gap:6px; }
+  .song-reward-thumbnail { aspect-ratio:auto; height:58px; border-radius:8px; }
+  .reward-locked-name { font-size:8.5px; -webkit-line-clamp:3; letter-spacing:-.01em; }
+  .reward-exercise-title { font-size:8.5px; padding:10px 3px 3px; }
+  .reward-play { width:22px; height:22px; } .reward-play svg { width:14px; height:14px; }
+  .reward-won-label { font-size:7px; padding:1px 4px; }
+  .reward-lock { width:11px; height:11px; }
+}
+@media (prefers-reduced-motion:reduce) { .button,.reel,.song-reward-thumbnail { transition:none; animation:none; } }
+
+/* Prizes & leaderboard: a soft, slow golden glow */
+.masthead-prizes,.compact-leaderboard { border:1px solid #E8C870; background:linear-gradient(135deg,#FFFAEB 0%,#FDEBB5 55%,#F8DC8A 100%); color:var(--sl-gold-ink); animation:pmGoldGlow 3.6s ease-in-out infinite; }
+.compact-leaderboard { border-radius:999px; padding:3px 12px 3px 4px; }
+.masthead-prizes img,.compact-leaderboard img { filter:drop-shadow(0 0 5px #F0B83D99); }
+.masthead-prizes:hover,.masthead-prizes:focus-visible,.compact-leaderboard:hover,.compact-leaderboard:focus-visible { background:linear-gradient(135deg,#FFF6D6 0%,#FBE29A 55%,#F3CC63 100%); }
+@keyframes pmGoldGlow {
+  0%,100% { box-shadow:0 0 0 0 #E9B13000, 0 2px 8px #C9912826; }
+  50% { box-shadow:0 0 0 4px #E9B1302b, 0 4px 18px #C9912859; }
+}
+@media (prefers-reduced-motion:reduce) { .masthead-prizes,.compact-leaderboard { animation:none; box-shadow:0 0 0 3px #E9B13026, 0 3px 12px #C991283d; } }
+
+
+/* Mixx / Mixxers in the deep PuzzleMixx purple of the profile circle */
+.brand-mixx,.standings-ers { color:#6B2FA3; }
+
+/* Discreet Terms & Conditions link at the foot of the puzzle pages */
+.pm-legal { padding:18px 16px 26px; text-align:center; }
+.pm-legal a { color:var(--sl-muted); font:500 10.5px "DM Mono",ui-monospace,monospace; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; opacity:.75; }
+.pm-legal a:hover { color:#6B2FA3; opacity:1; text-decoration:underline; text-underline-offset:3px; }
+
+.pm-legal { display:flex; justify-content:center; flex-wrap:wrap; gap:6px 10px; }
+.pm-legal span { color:var(--sl-muted); opacity:.5; font-size:10px; }
+
+/* Share your win (+5) */
+.pm-share { position:relative; margin:14px auto 4px; text-align:center; }
+.pm-share-button { display:inline-flex; align-items:center; gap:10px; padding:11px 20px; border:1px solid #E8C870; border-radius:999px; background:linear-gradient(135deg,#FFFAEB 0%,#FDEBB5 55%,#F8DC8A 100%); color:#2B2140; font:700 .95rem Manrope,system-ui,sans-serif; cursor:pointer; box-shadow:0 2px 10px #C9912833; }
+.pm-share-button:hover, .pm-share-button:focus-visible { box-shadow:0 0 0 3px #F8DC8A88, 0 4px 14px #C9912844; }
+.pm-share-points { padding:2px 9px; border-radius:999px; background:#6B2FA3; color:#fff; font:500 .8rem "DM Mono",ui-monospace,monospace; }
+.pm-share-menu { position:absolute; left:50%; top:calc(100% + 6px); transform:translateX(-50%); z-index:5; display:grid; min-width:190px; padding:6px; border:1px solid #E6DDF0; border-radius:14px; background:#fff; box-shadow:0 10px 30px #2B214033; text-align:left; }
+.pm-share-menu[hidden] { display:none; }
+.pm-share-menu a, .pm-share-menu button { display:block; width:100%; padding:9px 12px; border:0; border-radius:9px; background:none; color:#2B2140; font:600 .92rem Manrope,system-ui,sans-serif; text-decoration:none; text-align:left; cursor:pointer; }
+.pm-share-menu a:hover, .pm-share-menu button:hover { background:#F4EEFA; color:#6B2FA3; }
+.pm-share-status { min-height:1.2em; margin:8px 0 0; font-size:.88rem; color:#5d5670; }
+.pm-share-status.yes { color:#1f7a44; }
+.pm-share-status.no { color:#b3261e; }
+
+/* Hovering a piece: a floating "Tap for sound" badge (the hover preview itself is silent) */
+.reel-sound { position:absolute; z-index:3; left:50%; top:8%; display:inline-flex; align-items:center; gap:5px; padding:4px 9px 4px 7px; border-radius:999px; background:#ffffffee; color:#6B2FA3; box-shadow:0 3px 10px #1e1f1c40; font:600 10px/1 Manrope,system-ui,sans-serif; white-space:nowrap; pointer-events:none; opacity:0; transform:translate(-50%,4px); transition:opacity .18s, transform .18s; }
+.reel-sound-icon { font-size:11px; line-height:1; }
+@media (hover:hover) {
+  .reel:hover .reel-sound { opacity:1; transform:translate(-50%,0); animation:pmSoundFloat 1.8s ease-in-out .2s infinite; }
+}
+@keyframes pmSoundFloat { 0%,100% { transform:translate(-50%,0); } 50% { transform:translate(-50%,-4px); } }
+/* Small tiles: just the speaker icon */
+.pile-reels .reel-sound, .sort-pile-thumbs .reel-sound { padding:3px 4px; gap:0; }
+.pile-reels .reel-sound-text, .sort-pile-thumbs .reel-sound-text { display:none; }
+.reel.dragging .reel-sound { display:none; }
+@media (prefers-reduced-motion:reduce) { .reel:hover .reel-sound { animation:none; } }
+
+/* Tee’s DBL PTS PuzzleMixx: golden option, greyed out until it opens */
+.playlist-menu a.golden-puzzle-option.is-locked { cursor:not-allowed; filter:grayscale(.45) brightness(.97); opacity:.72; pointer-events:auto; }
+.playlist-menu a.golden-puzzle-option.is-locked:hover, .playlist-menu a.golden-puzzle-option.is-locked:focus-visible { color:#815712; border-color:#e9d296; background:linear-gradient(105deg,#fff8dc,#f9e9b9aa); text-shadow:0 0 8px #ffd978cc; box-shadow:0 0 16px #edc66b77; }
+.playlist-menu a .pm-soon { margin-left:auto; padding:2px 7px; border-radius:999px; background:#00000012; color:#5d5670; font:500 9px/1.4 "DM Mono",ui-monospace,monospace; letter-spacing:.08em; text-transform:uppercase; text-shadow:none; white-space:nowrap; }

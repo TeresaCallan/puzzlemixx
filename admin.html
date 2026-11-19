@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>PuzzleMixx — Approvals</title>
+<link rel="icon" href="assets/puzzlemixx-brand-mark.webp" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=DM+Serif+Display&family=Manrope:wght@500;600;700&display=swap" />
+<link rel="stylesheet" href="pm.css?v=37" />
+<style>
+  body { margin:0; font-family:Manrope,system-ui,sans-serif; }
+  .admin { max-width:900px; margin:0 auto; padding:32px max(16px,env(safe-area-inset-left)) 60px; display:flex; flex-direction:column; gap:20px; }
+  .admin-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .admin-head h1 { margin:0; font:400 2.4rem/1 "DM Serif Display",Georgia,serif; letter-spacing:-.03em; }
+  .admin-head h1 span { color:var(--pm-accent); }
+  .claim { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px 16px; align-items:center; padding:16px; border:1px solid var(--pm-line); border-radius:14px; background:#fff; }
+  .claim h3 { margin:0; font-size:1.05rem; }
+  .claim .claim-kind { margin:0 0 4px; color:var(--pm-gold-ink); font:700 12px Manrope,system-ui,sans-serif; letter-spacing:.02em; }
+  .claim p { margin:2px 0 0; color:var(--pm-muted); font-size:.9rem; overflow-wrap:anywhere; }
+  .claim a { color:var(--pm-accent); font-weight:700; }
+  .claim .pm-row { justify-content:flex-end; }
+  .reject { border:1px solid #E3C2CB; background:#fff; color:var(--pm-red); border-radius:999px; padding:11px 18px; font:700 14px Manrope,system-ui,sans-serif; cursor:pointer; }
+  .list { display:flex; flex-direction:column; gap:10px; }
+  @media (max-width:600px) { .claim { grid-template-columns:1fr; } .claim .pm-row { justify-content:flex-start; } }
+</style>
+</head>
+<body class="pm-page">
+<main class="admin">
+  <div class="admin-head">
+    <h1>Puzzle<span>Mixx</span> approvals</h1>
+    <a class="text-action" href="leaderboard.html">Open the leaderboard</a>
+  </div>
+  <p class="pm-notice" id="notice" hidden></p>
+
+  <section class="leader-card pm-card" id="signin" hidden>
+    <p class="card-kicker">Team only</p>
+    <h2>Sign in as puzzlemixx@gmail.com</h2>
+    <button class="pm-google" id="admin-google" type="button"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg><span>Continue with Google</span></button>
+    <p class="pm-or"><span>or</span></p>
+    <form id="signin-form" class="pm-form">
+      <label>Email<input id="signin-email" type="email" value="puzzlemixx@gmail.com" required /></label>
+      <button class="leader-action" type="submit">Email me a sign-in link</button>
+    </form>
+    <p class="form-status" id="signin-status" aria-live="polite"></p>
+    <button class="text-action" id="signin-resend" type="button" hidden>Resend the link</button>
+  </section>
+
+  <section class="leader-card pm-card" id="pending" hidden>
+    <p class="card-kicker">+100 stretch bonuses</p>
+    <h2>Waiting for approval <span id="pending-count"></span></h2>
+    <p class="pm-fine">Check each video: 90 seconds of a PuzzleMixx exercise, singing the song, tagged @puzzlemixx. Each different video earns +100 (one bonus per video). Approving adds the points straight away.</p>
+    <div class="list" id="pending-list"></div>
+    <p class="pm-empty" id="pending-empty">Nothing waiting. New claims are also emailed to puzzlemixx@gmail.com.</p>
+  </section>
+
+  <section class="leader-card pm-card" id="rounds-card" hidden>
+    <p class="card-kicker">Prizes</p>
+    <h2>Round winners</h2>
+    <p class="pm-fine">Each round lasts 90 days and points start again from 0. Ties are settled by sudden death: the first tied player to gain points in the next round takes the higher place.</p>
+    <div class="list" id="rounds-list"></div>
+    <p class="pm-empty" id="rounds-empty">No round has finished yet. Round 1 ends on 14 Feb 2027.</p>
+  </section>
+
+  <section class="leader-card pm-card" id="prize-details" hidden>
+    <p class="card-kicker">Delivery</p>
+    <h2>Winners’ details</h2>
+    <div class="list" id="prize-list"></div>
+    <p class="pm-empty" id="prize-empty">No winner has sent their details yet. You’ll also get each one by email.</p>
+  </section>
+
+  <section class="leader-card pm-card" id="decided" hidden>
+    <p class="card-kicker">History</p>
+    <h2>Recent decisions</h2>
+    <div class="list" id="decided-list"></div>
+    <p class="pm-empty" id="decided-empty">No decisions yet.</p>
+    <div class="pm-row" style="margin-top:14px"><button class="text-action" id="admin-sign-out" type="button">Sign out</button></div>
+  </section>
+</main>
+<script src="pm-countries.js?v=2"></script>
+<script src="firebase-config.js?v=2"></script>
+<script type="module" src="pm-points.js?v=16"></script>
+<script src="pm-words.js?v=13"></script>
+<script type="module" src="admin.js?v=7"></script>
+</body>
+</html>

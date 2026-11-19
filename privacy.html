@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>PuzzleMixx — Privacy Notice</title>
+    <link rel="icon" href="assets/puzzlemixx-brand-mark.webp" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=DM+Serif+Display:ital@0;1&family=Manrope:wght@500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="styles.css?v=redesign-5" />
+    <style>
+      :root { --t-ink:#1B1626; --t-muted:#4F4760; --t-line:#E2DCEC; --t-bg:#F6F4FA; --t-deep:#6B2FA3; --t-gold:#E2B33C; }
+      body.terms-page { margin:0; background:var(--t-bg); color:var(--t-ink); font:500 16px/1.65 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif; }
+      .t-nav { max-width:880px; margin:0 auto; padding:18px max(16px,env(safe-area-inset-right,0px)) 6px max(16px,env(safe-area-inset-left,0px)); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+      .t-nav a.t-back { color:var(--t-deep); font:700 14px Manrope,system-ui,sans-serif; text-decoration:none; }
+      .t-nav a.t-back:hover { text-decoration:underline; text-underline-offset:3px; }
+      .t-main { max-width:880px; margin:0 auto; padding:10px max(16px,env(safe-area-inset-right,0px)) 72px max(16px,env(safe-area-inset-left,0px)); }
+      .t-head { padding:28px clamp(20px,4vw,40px); border:1px solid #E6D6B0; border-radius:24px; background:linear-gradient(120deg,#FFFFFF 0%,#FBF6FF 50%,#FFF4D6 100%); box-shadow:0 20px 50px #6B2FA314; }
+      .t-kicker { margin:0 0 6px; color:var(--t-muted); font:500 11px "DM Mono",ui-monospace,monospace; letter-spacing:.14em; text-transform:uppercase; }
+      .t-head h1 { margin:0; color:var(--t-deep); font:400 clamp(2.1rem,5vw,3.1rem)/1.05 "DM Serif Display",Georgia,serif; letter-spacing:-.025em; text-wrap:balance; }
+      .t-head p { margin:12px 0 0; color:var(--t-muted); max-width:62ch; }
+      .t-test { margin:22px 0 0; padding:18px 20px; border:1px solid #E3C46A; border-radius:16px; background:linear-gradient(135deg,#FFFAEB,#FDEBB5); }
+      .t-test h2 { margin:0 0 6px; color:#4A3304; font:400 1.35rem/1.2 "DM Serif Display",Georgia,serif; }
+      .t-test p { margin:0; color:#4A3304; }
+      .t-test p + p { margin-top:8px; }
+      .t-toc { margin:26px 0 8px; padding:16px 20px; border:1px solid var(--t-line); border-radius:16px; background:#fff; }
+      .t-toc ol { margin:6px 0 0; padding-left:22px; columns:2 260px; column-gap:28px; }
+      .t-toc a { color:var(--t-deep); text-decoration:none; font-weight:700; font-size:.94rem; }
+      .t-toc a:hover { text-decoration:underline; text-underline-offset:3px; }
+      section.t-sec { margin-top:30px; }
+      section.t-sec h2 { margin:0 0 8px; color:var(--t-deep); font:400 1.55rem/1.15 "DM Serif Display",Georgia,serif; letter-spacing:-.015em; scroll-margin-top:20px; }
+      section.t-sec p, section.t-sec li { max-width:68ch; }
+      section.t-sec ol, section.t-sec ul { padding-left:22px; }
+      section.t-sec li + li { margin-top:6px; }
+      .t-points { width:100%; max-width:560px; border-collapse:collapse; margin:10px 0 4px; font-size:.95rem; }
+      .t-points th, .t-points td { padding:8px 10px; border-bottom:1px solid var(--t-line); text-align:left; vertical-align:top; }
+      .t-points th { color:var(--t-muted); font:500 11px "DM Mono",ui-monospace,monospace; letter-spacing:.1em; text-transform:uppercase; }
+      .t-points td:first-child { width:90px; color:var(--t-deep); font:400 1.2rem "DM Serif Display",Georgia,serif; }
+      .t-table-wrap { overflow-x:auto; }
+      .t-fill { padding:1px 6px; border-radius:6px; background:#FDEBB5; color:#4A3304; font-weight:800; }
+      .t-foot { margin-top:40px; padding-top:18px; border-top:1px solid var(--t-line); color:var(--t-muted); font-size:.88rem; }
+      a { color:var(--t-deep); }
+      .t-countries { list-style:none; padding-left:0 !important; display:flex; flex-wrap:wrap; gap:8px 18px; }
+      .t-check { margin:14px 0 10px; padding:16px 18px; border:1px solid #E3C46A; border-radius:16px; background:linear-gradient(135deg,#FFFCF2,#FFF3CF); display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; }
+      .t-check label { color:var(--t-ink); }
+      .t-check select { min-width:220px; max-width:100%; padding:9px 12px; border:1px solid #CFC5DF; border-radius:10px; background:#fff; color:var(--t-ink); font:600 15px Manrope,system-ui,sans-serif; }
+      .t-check select:focus-visible { outline:3px solid #B98BE0; outline-offset:1px; }
+      .t-check-result { flex:1 1 100%; margin:0; min-height:1.4em; font-weight:700; }
+      .t-check-result.yes { color:#1F7A4D; }
+      .t-check-result.no { color:#6B2FA3; }
+    </style>
+  </head>
+  <body class="terms-page">
+    <header class="t-nav">
+      <a class="brand" href="index.html" aria-label="PuzzleMixx home"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">WORKOUTS</span></a>
+      <nav style="display:flex;gap:16px;flex-wrap:wrap"><a class="t-back" href="privacy.html">Privacy</a><a class="t-back" href="leaderboard.html">← Leaderboard</a></nav>
+    </header>
+
+            <main class="t-main">
+      <div class="t-head">
+        <p class="t-kicker">PuzzleMixx · version 2 · last updated 17 November 2026</p>
+        <h1>Privacy Notice</h1>
+        <p>This notice explains what information PuzzleMixx collects, why, where it goes, how long we keep it and your rights. We keep it to the minimum needed to run the game and send prizes. We never sell your information or use it for advertising or marketing.</p>
+      </div>
+
+      <section class="t-sec">
+        <h2>1. Who is responsible for your information</h2>
+        <p><strong>Teresa Rae Callan, trading as PuzzleMixx</strong>, 11 Clock Tower Mews, London N1 7BB, United Kingdom, is the data controller. Contact: <strong>puzzlemixx@gmail.com</strong>.</p>
+      </section>
+
+      <section class="t-sec">
+        <h2>2. What we collect</h2>
+        <ul>
+          <li><strong>Your account:</strong> your PuzzleMixxer Player ID, your sign-in email address and, if you use Google, the name on your Google account. Google’s sign-in service also gives us a user number for your account.</li>
+          <li><strong>Your game:</strong> your points, which songs and workouts you completed, hints you paid for, and when (per round).</li>
+          <li><strong>Your agreement:</strong> the date and version of the Terms you accepted, your confirmation that you are 18 or over, and your country.</li>
+          <li><strong>Shared wins:</strong> a note that you shared a win (not what you shared, who to, or which app). Sharing happens in your own app; we never see the message.</li>
+          <li><strong>Reports:</strong> what you tell us in “Report a problem”, with your name, email and points.</li>
+          <li><strong>Prize winners:</strong> full name, postal address, country, email address and your nominated gym, studio, sport association or charity.</li>
+          <li><strong>On your device:</strong> your browser stores your puzzle progress and settings (for example which boxes you closed and that you ticked the Terms box). This stays on your device; we can’t see it.</li>
+        </ul>
+      </section>
+
+      <section class="t-sec">
+        <h2>3. Why we use it, and our legal basis</h2>
+        <ul>
+          <li><strong>To run the game, leaderboard and prizes</strong> as set out in our Terms, which is necessary to provide what you signed up for (contract).</li>
+          <li><strong>To keep the game fair and secure</strong>, deal with reports and improve the game during the test rounds: our legitimate interests in running a fair, working game.</li>
+          <li><strong>To show prizes were awarded fairly</strong> if asked by the Advertising Standards Authority or another regulator: legal and regulatory obligations.</li>
+        </ul>
+        <p>We do not use your information for marketing, advertising, profiling or automated decisions about you, other than working out leaderboard places from points as described in the Terms.</p>
+      </section>
+
+      <section class="t-sec">
+        <h2>4. Who handles it, and where</h2>
+        <ul>
+          <li><strong>Google Firebase</strong> hosts the game’s database (your name, points and game history) on servers in <strong>London</strong>. Google’s Firebase sign-in service (Firebase Authentication) processes sign-in details, such as your email address, in the <strong>United States</strong>.</li>
+          <li><strong>FormSubmit</strong> (formsubmit.co), an email-forwarding service, passes reports and prize details from the website to our inbox at puzzlemixx@gmail.com, which is provided by <strong>Google (Gmail)</strong>.</li>
+          <li><strong>YouTube</strong> (in privacy-enhanced mode) shows the workout videos. When a video plays, YouTube receives your device’s internet address and may store information on your device.</li>
+          <li><strong>Google Fonts</strong> supplies the lettering on the pages, which means Google receives your device’s internet address when a page loads.</li>
+        </ul>
+        <p>Where information goes outside the UK (for example to the United States), it is protected by the UK’s data adequacy arrangements, such as the UK Extension to the EU–US Data Privacy Framework that Google is certified under, or by contractual safeguards those providers offer.</p>
+      </section>
+
+      <section class="t-sec">
+        <h2>5. Who can see it</h2>
+        <ul>
+          <li><strong>Everyone:</strong> your Player ID and points, and Past Winners by Player ID. Your email address is never shown.</li>
+          <li><strong>Only you and us:</strong> your points history and prize details. Our database security rules stop other players from reading them.</li>
+          <li>We share winner details with a regulator only if asked to show a prize was fairly awarded, and with delivery companies or the nominated organisation only as needed to deliver a prize.</li>
+        </ul>
+      </section>
+
+      <section class="t-sec">
+        <h2>6. How long we keep it</h2>
+        <ul>
+          <li><strong>Accounts and points:</strong> while you play. We delete accounts that have not been signed into for 24 months, or sooner if you ask.</li>
+          <li><strong>Prize details:</strong> deleted 12 months after the prize is sent.</li>
+          <li><strong>Reports and claim emails:</strong> deleted after 12 months.</li>
+          <li><strong>Round results</strong> (Player IDs, points and places): kept for 2 years after the round ends, as a record that prizes were awarded fairly.</li>
+        </ul>
+      </section>
+
+      <section class="t-sec">
+        <h2>7. Accounts are for adults</h2>
+        <p>Leaderboard accounts are only for people aged 18 or over, and we do not knowingly collect information about children. Anyone can play the puzzles without signing in, and then we collect nothing about them. If you think someone under 18 has signed up, email <a href="mailto:puzzlemixx@gmail.com">puzzlemixx@gmail.com</a> and we will delete the account.</p>
+      </section>
+
+      <section class="t-sec">
+        <h2>8. Your rights</h2>
+        <p>You can ask us to give you a copy of your information, correct it, delete it, restrict or object to how we use it, or send it to you in a portable format. Email <strong>puzzlemixx@gmail.com</strong>; we will reply within one month. If you’re unhappy with how we handle your information, you can complain to the UK Information Commissioner’s Office: <strong>ico.org.uk</strong>, 0303 123 1113.</p>
+      </section>
+
+      <section class="t-sec">
+        <h2>9. Changes</h2>
+        <p>If we change this notice we will update the version and date above, and tell players on the leaderboard if the change is significant.</p>
+      </section>
+
+      <p class="t-foot">PuzzleMixx · Privacy Notice · version 2 · last updated 17 November 2026</p>
+    </main>
+  </body>
+</html>

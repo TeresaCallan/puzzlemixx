@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>PuzzleMixx — Leaderboard</title>
+    <link rel="icon" href="assets/puzzlemixx-brand-mark.webp" />
+    <link rel="stylesheet" href="styles.css?v=redesign-5" />
+    <link rel="stylesheet" href="leaderboard.css?v=redesign-5" />
+    <link rel="stylesheet" href="pm.css?v=50" />
+  </head>
+  <body class="leaderboard-page pm-page">
+    <header class="leaderboard-sticky" id="leaderboard-sticky" aria-hidden="true" inert>
+      <div class="leaderboard-sticky-inner">
+        <a class="brand leaderboard-sticky-brand" href="index.html" data-back-link aria-label="Return to PuzzleMixx"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">workouts</span></a>
+        <div class="sticky-prize-centre">
+          <div class="sticky-my-points" aria-live="polite"><img src="assets/leaderboard-trophy.svg" alt="" /><span>My Points<strong id="sticky-my-points">— pts</strong></span></div>
+          <div class="prize-ribbons" aria-label="Leaderboard prizes">
+            <button class="prize-ribbon prize-ribbon-first" type="button" data-prize="first" aria-label="See the first prize"><span>1</span><small>First prize</small></button>
+            <button class="prize-ribbon prize-ribbon-second" type="button" data-prize="second" aria-label="See the second prize"><span>2</span><small>Second prize</small></button>
+            <button class="prize-ribbon prize-ribbon-third" type="button" data-prize="third" aria-label="See the third prize"><span>3</span><small>Third prize</small></button>
+          </div>
+          <div class="contest-countdown"><span>Prizes awarded in</span><strong id="contest-countdown">Loading…</strong></div>
+        </div>
+        <a class="sticky-back-link" href="index.html" data-back-link data-back-text>Back to the puzzle</a>
+      </div>
+    </header>
+    <header class="leaderboard-nav">
+      <a class="brand" href="index.html" data-back-link aria-label="Return to PuzzleMixx"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">workouts</span></a>
+      <a class="back-to-puzzle" href="index.html" data-back-link>← <span data-back-text>Back to the puzzle</span></a>
+    </header>
+
+    <main class="leaderboard-main">
+      <section class="leaderboard-hero" aria-labelledby="leaderboard-title">
+        <div class="hero-trophy" aria-hidden="true"><img src="assets/leaderboard-trophy.svg" alt="" /></div>
+        <div>
+          <p class="leaderboard-kicker"><span id="round-kicker">PuzzleMixx rewards · 16 Nov 2026 – 14 Feb 2027</span> <span aria-hidden="true">·</span> <a class="pm-terms-link" href="terms.html">T&amp;Cs</a> <span aria-hidden="true">·</span> <a class="pm-terms-link" href="privacy.html">Privacy</a></p>
+          <h1 id="leaderboard-title"><span class="leader-word-wrap"><span class="gold-leader" id="leader-word" tabindex="0" role="button" aria-label="Celebrate the current leaderboard leader">Leader</span><span class="leader-celebration" id="leader-celebration" aria-hidden="true"><strong id="leader-celebration-name"></strong><i class="sparkle sparkle-one">✦</i><i class="sparkle sparkle-two">✧</i><i class="sparkle sparkle-three">✦</i><i class="sparkle sparkle-four">✧</i><i class="sparkle sparkle-five">✦</i><i class="sparkle sparkle-six">✧</i></span></span><span>board</span></h1>
+          <p>Conquer The Mental Workout, share your wins, or simply <span class="pm-workout-inline">workout</span> one Complete Peace at a time.</p>
+        </div>
+        <div class="total-score" aria-live="polite"><span class="top-scorer-label">Top scorer</span><strong id="top-scorer-points">—</strong><span class="top-scorer-name" id="top-scorer-name">—</span></div>
+      </section>
+
+      <section class="points-ribbon pm-points-ribbon" aria-label="How points work">
+        <div class="pm-tip-tile" tabindex="0" aria-describedby="tip-song"><strong>+1</strong><span><span class="pm-per">per</span> Complete Peace</span>
+          <span class="pm-tip" id="tip-song" role="tooltip">Workout one <span class="pm-tip-icon pm-shimmer-icon"><img src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" /></span> at a time.</span>
+        </div>
+        <div class="pm-tip-tile pm-celebrate-tile" tabindex="0" aria-label="+10 Mental Workout bonus. Mental Bonus every time!"><strong>+10</strong><span>Mental Workout bonus</span>
+          <span class="leader-celebration pm-tile-celebration" aria-hidden="true"><b>Mental Bonus every time!</b><i class="sparkle sparkle-one">✦</i><i class="sparkle sparkle-two">✧</i><i class="sparkle sparkle-three">✦</i><i class="sparkle sparkle-four">✧</i><i class="sparkle sparkle-five">✦</i><i class="sparkle sparkle-six">✧</i></span>
+        </div>
+        <div class="pm-ribbon-star pm-tip-tile" tabindex="0" aria-describedby="tip-share"><strong>+5</strong><span>per shared win</span>
+          <span class="pm-tip" id="tip-share" role="tooltip">Tap “Share your win” after each win.<br />+5 per win.</span>
+        </div>
+        <!-- +100 Instagram video bonus: paused. Remove "hidden" here and set BONUS_ON = true in leaderboard-app.js to bring it back. -->
+        <div class="pm-ribbon-star pm-rules-anchor" id="bonus-tile" hidden>
+          <button class="pm-rules-trigger" id="bonus-rules-trigger" type="button" aria-expanded="false" aria-controls="bonus-rules"><strong>+100</strong><span>for each 90-second Instagram video</span></button>
+          <div class="pm-rules" id="bonus-rules" role="dialog" aria-labelledby="bonus-rules-title" hidden>
+          <p class="card-kicker">Bonus rules</p>
+          <h3 id="bonus-rules-title">Your 90-second stretch · +100</h3>
+          <ol>
+            <li>Perform 90 seconds of any PuzzleMixx exercise.</li>
+            <li>Do the exercises <strong>and</strong> sing the song.</li>
+            <li>Post it on <strong>Instagram</strong>, adding the song with Instagram’s own music feature, and tag <strong>@puzzlemixx</strong>. Then share the link to your post in your PuzzleMixx profile.</li>
+            <li>We approve your link, and your points are added!</li>
+            <li>Post as many <strong>different</strong> exercises as you like for <strong>+100</strong>. 1 bonus per video.</li>
+          </ol>
+          <p class="pm-fine pm-rules-terms"><a href="terms.html">Full Terms &amp; Conditions</a></p>
+        </div>
+        </div>
+        <div class="pm-ribbon-minus pm-tip-tile" tabindex="0" aria-describedby="tip-hint"><strong>−5</strong><span>for each paid hint</span>
+          <span class="pm-tip pm-tip-moving" id="tip-hint" role="tooltip" aria-label="Come from behind ... and get ahead!"><span class="tip-rise">Come from behind ...</span> <span class="tip-slide">and get ahead!</span></span>
+        </div>
+      </section>
+
+      <p class="pm-notice" id="pm-notice" hidden></p>
+      <div class="pm-grid">
+        <section class="leader-card standings-card pm-standings" id="standings-card" aria-labelledby="standings-title">
+          <div class="card-heading-row"><div><h2 id="standings-title"><span class="standings-top-word">Top</span><span class="standings-wordmark" aria-label="PuzzleMixxers"><span class="brand standings-exact-brand" aria-hidden="true"><span class="brand-mark"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span><span class="standings-ers">ers</span></span></span></h2></div><div class="standings-heading-actions"><button class="jump-to-me" id="jump-to-me" type="button">Jump to my standing</button><img src="assets/leaderboard-trophy.svg" alt="" /></div></div>
+          <p class="form-status pm-jump-status" id="jump-status" aria-live="polite"></p>
+          <div class="pm-past-winners" id="past-winners" hidden></div>
+          <ol class="standings" id="standings"></ol>
+          <p class="pm-empty" id="standings-empty">Be the first to claim the top spot.</p>
+        </section>
+
+        <div class="pm-side">
+          <div class="card-reopen-row pm-reopen-row" id="reopen-row">
+            <button class="card-reopen" type="button" data-reopen="account-card" hidden>Your profile</button>
+            <button class="card-reopen" type="button" data-reopen="my-points" hidden>My points</button>
+            <button class="card-reopen" type="button" data-reopen="bonus-card" hidden>90-second bonus</button>
+          </div>
+          <!-- Account -->
+          <section class="leader-card pm-card pm-collapsible" id="account-card" aria-labelledby="account-title">
+            <button class="card-close" type="button" data-collapse="account-card" aria-label="Hide your profile" hidden>×</button>
+            <p class="card-kicker">Your profile</p>
+            <h2 id="account-title">Join the leaderboard</h2>
+            <form id="signup-form" class="pm-form" novalidate>
+              <label>Your PuzzleMixxer Player ID<input id="signup-name" name="name" autocomplete="nickname" maxlength="20" required placeholder="A nickname, e.g. PuzzleQueen" /></label>
+              <p class="pm-id-result" id="signup-id-result" aria-live="polite"></p>
+              <label class="pm-country">Where do you live?
+                <select id="signup-country"><option value="">Choose your country…</option></select>
+              </label>
+              <p class="pm-country-result" id="signup-country-result" aria-live="polite"></p>
+              <label class="pm-terms-check"><input type="checkbox" id="signup-terms" /><span id="signup-terms-text">I’m 18 or over and I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Conditions</a></span></label>
+              <button class="pm-google" id="signup-google" type="button"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg><span>Continue with Google</span></button>
+              <p class="pm-or"><span>or use your email</span></p>
+              <label>Email<input id="signup-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" /></label>
+              <button class="leader-action" type="submit">Email me a sign-in link</button>
+              <p class="pm-fine">No password needed. With Google it’s one tap; with email we send you a link to click on this device. Only your Player ID is shown on the leaderboard, never your email. Under 18? Play for fun, or play with your grown-up on their account so your wins count for them.</p>
+            </form>
+            <div class="pm-sent" id="signup-sent" hidden>
+              <p><strong>Check your email.</strong> We sent a sign-in link to <span id="signup-sent-to"></span>. Open it on this device, in this browser, to finish. It can take a minute to arrive, so check your spam or junk folder too.</p>
+              <details class="pm-paste">
+                <summary>The link opened somewhere else, or didn’t work?</summary>
+                <form class="pm-form" id="signup-paste-form">
+                  <label>In the email, right-click the sign-in link, choose “Copy Link”, then paste it here
+                    <input id="signup-paste-link" type="url" inputmode="url" autocomplete="off" placeholder="https://puzzlemixx-7e014.firebaseapp.com/…" required />
+                  </label>
+                  <button class="leader-action" type="submit">Finish signing in</button>
+                </form>
+              </details>
+              <div class="pm-row"><button class="text-action" id="signup-resend" type="button">Resend the link</button><button class="text-action" id="signup-again" type="button">Use a different email</button></div>
+            </div>
+            <div class="profile-summary pm-profile" id="profile-summary" hidden>
+              <span class="profile-avatar" id="profile-avatar">P</span>
+              <div><strong id="profile-name"></strong><span id="profile-email"></span></div>
+              <button class="pm-prize-button" id="open-prize" type="button" hidden>🏆 Claim your prize</button>
+              <div class="profile-controls"><button class="text-action" id="edit-name" type="button">Change Player ID</button><button class="text-action" id="sign-out" type="button">Sign out</button></div>
+            </div>
+            <form id="rename-form" class="pm-form pm-inline" hidden>
+              <label>New Player ID<input id="rename-input" maxlength="20" required /></label>
+              <p class="pm-id-result" id="rename-id-result" aria-live="polite"></p>
+              <div class="pm-row"><button class="leader-action" type="submit">Save</button><button class="text-action" id="rename-cancel" type="button">Cancel</button></div>
+            </form>
+            <p class="form-status" id="account-status" aria-live="polite"></p>
+          </section>
+
+          <!-- My points -->
+          <section class="leader-card pm-card pm-mypoints pm-collapsible" id="my-points" aria-labelledby="my-points-title" hidden>
+            <button class="card-close" type="button" data-collapse="my-points" aria-label="Hide my points">×</button>
+            <div class="pm-mypoints-head">
+              <div>
+                <p class="card-kicker">My points</p>
+                <h2 id="my-points-title"><span id="my-points-total">0</span> <small>points</small></h2>
+                <p class="pm-fine" id="my-points-range">Everything you’ve won and spent from 16 Nov 2026 to 14 Feb 2027.</p>
+              </div>
+              <button class="pm-report-button" id="open-report" type="button">
+                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Report a problem
+              </button>
+            </div>
+            <ul class="pm-history" id="points-history"></ul>
+            <p class="pm-empty" id="history-empty">No points yet. Finish a song in any puzzle to earn your first point.</p>
+          </section>
+
+          <!-- Stretch bonus -->
+          <section class="leader-card pm-card pm-bonus pm-collapsible" id="bonus-card" aria-labelledby="bonus-title" hidden>
+            <button class="card-close" type="button" data-collapse="bonus-card" aria-label="Hide the 90-second bonus">×</button>
+            <p class="card-kicker">Bonus · +100 per video</p>
+            <h2 id="bonus-title">Your 90-second stretch</h2>
+            <p class="pm-share-how">Perform 90 seconds of any PuzzleMixx exercise, singing the song. Post it on <strong>Instagram</strong> (add the song with Instagram’s music feature), tag <strong>@puzzlemixx</strong>, and share the link here. <button class="text-action pm-inline-rules" id="bonus-rules-link" type="button">Read the rules</button></p>
+            <form id="bonus-form" class="pm-form" novalidate>
+              <label>Link to your Instagram post<input id="bonus-link" type="url" inputmode="url" placeholder="https://www.instagram.com/reel/…" required /></label>
+              <button class="leader-action" type="submit">Send for approval</button>
+            </form>
+            <ul class="pm-claims" id="bonus-claims"></ul>
+            <p class="form-status" id="bonus-status" aria-live="polite"></p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Report a problem -->
+    <!-- Winner: claim your prize -->
+    <dialog class="prize-dialog pm-dialog pm-win-dialog" id="prize-claim-dialog" aria-labelledby="prize-claim-title">
+      <button class="prize-dialog-close" type="button" data-close-dialog aria-label="Close">×</button>
+      <div class="pm-win-medal" id="prize-claim-medal">1</div>
+      <p class="card-kicker" id="prize-claim-kicker">Round 1 winner</p>
+      <h2 id="prize-claim-title">Congratulations!</h2>
+      <p id="prize-claim-copy">You finished in first place. Tell us where to send your prize.</p>
+      <form id="prize-claim-form" class="pm-form" novalidate>
+        <label>Full name<input id="prize-name" autocomplete="name" maxlength="80" required /></label>
+        <label>Postal address<textarea id="prize-address" rows="3" autocomplete="street-address" maxlength="400" required></textarea></label>
+        <label>Email address<input id="prize-email" type="email" autocomplete="email" maxlength="120" required /></label>
+        <label>Country<select id="prize-country" required><option value="">Choose…</option><option value="GB">United Kingdom</option><option value="IE">Ireland</option><option value="AU">Australia</option><option value="NZ">New Zealand</option></select></label>
+        <label id="prize-gym-label">Your gym, studio or sport association (we pay the £150 to them)<input id="prize-gym" maxlength="160" placeholder="Name and town or website" /></label>
+        <label id="prize-charity-label">Back-up registered charity, if they can’t accept it<input id="prize-charity" maxlength="160" placeholder="Charity name and number" /></label>
+        <div class="pm-row"><button class="leader-action" type="submit">Send my details</button><button class="text-action" type="button" data-close-dialog>Later</button></div>
+        <p class="pm-fine">Only the PuzzleMixx team sees these details. We use them just to deliver your prize.</p>
+      </form>
+      <div class="pm-sent" id="prize-claim-sent" hidden>
+        <p><strong>Thank you!</strong> We’ve got your details and will be in touch about your prize.</p>
+        <button class="leader-action" type="button" data-close-dialog>Done</button>
+      </div>
+      <p class="form-status" id="prize-claim-status" aria-live="polite"></p>
+    </dialog>
+
+    <!-- Agree to the latest Terms (signed-in players) -->
+    <dialog class="prize-dialog pm-dialog" id="consent-dialog" aria-labelledby="consent-title">
+      <button class="prize-dialog-close" type="button" data-close-dialog aria-label="Close">×</button>
+      <p class="card-kicker">Terms &amp; Conditions · version 3</p>
+      <h2 id="consent-title">A quick check before you play</h2>
+      <p>We’ve updated our <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Conditions</a>. Please confirm your Player ID and details to keep playing for prizes.</p>
+      <form id="consent-form" class="pm-form" novalidate>
+        <label>Your PuzzleMixxer Player ID<input id="consent-id" maxlength="20" autocomplete="nickname" placeholder="A nickname, e.g. PuzzleQueen" /></label>
+        <p class="pm-id-result" id="consent-id-result" aria-live="polite"></p>
+        <label class="pm-country">Where do you live?<select id="consent-country"><option value="">Choose your country…</option></select></label>
+        <p class="pm-country-result" id="consent-country-result" aria-live="polite"></p>
+        <label class="pm-terms-check"><input type="checkbox" id="consent-terms" /><span>I’m 18 or over and I agree to the <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Conditions</a></span></label>
+        <div class="pm-row"><button class="leader-action" type="submit">Save and continue</button></div>
+      </form>
+      <p class="form-status" id="consent-status" aria-live="polite"></p>
+    </dialog>
+
+    <!-- Tied at the end of a round -->
+    <dialog class="prize-dialog pm-dialog pm-win-dialog" id="sudden-death-dialog" aria-labelledby="sudden-death-title">
+      <button class="prize-dialog-close" type="button" data-close-dialog aria-label="Close">×</button>
+      <div class="pm-win-medal pm-win-medal-tie">⚡</div>
+      <p class="card-kicker" id="sudden-death-kicker">Round 1 · sudden death</p>
+      <h2 id="sudden-death-title">It’s a tie!</h2>
+      <p id="sudden-death-copy"></p>
+      <div class="pm-row"><a class="leader-action" href="index.html" data-back-link>Play now</a><button class="text-action" type="button" data-close-dialog>Close</button></div>
+    </dialog>
+
+    <dialog class="prize-dialog pm-dialog" id="report-dialog" aria-labelledby="report-title">
+      <button class="prize-dialog-close" type="button" data-close-dialog aria-label="Close">×</button>
+      <p class="card-kicker">Something not right?</p>
+      <h2 id="report-title">Report a problem with my points</h2>
+      <form id="report-form" class="pm-form" novalidate>
+        <label>Date of the win<input id="report-date" type="date" required /></label>
+        <label>Points you won<input id="report-points" type="number" inputmode="numeric" min="-5" max="1000" step="1" required placeholder="e.g. 10" /></label>
+        <label>Anything else? <span class="pm-optional">(optional)</span><textarea id="report-note" rows="3" maxlength="600" placeholder="e.g. I finished song 3 but didn’t get my point"></textarea></label>
+        <div class="pm-row"><button class="leader-action" type="submit">Send report</button><button class="text-action" type="button" data-close-dialog>Cancel</button></div>
+        <p class="pm-fine">Your report goes to the PuzzleMixx team at puzzlemixx@gmail.com with your name and current points, so we can look into it.</p>
+      </form>
+      <div class="pm-sent" id="report-sent" hidden>
+        <p><strong>Thank you.</strong> Your report has been sent. We’ll check it and reply by email.</p>
+        <button class="leader-action" type="button" data-close-dialog>Done</button>
+      </div>
+      <p class="form-status" id="report-status" aria-live="polite"></p>
+    </dialog>
+
+    <dialog class="prize-dialog" id="prize-first" aria-labelledby="first-prize-title">
+      <button class="prize-dialog-close" type="button" data-close-prize aria-label="Close first prize">×</button>
+      <div class="prize-dialog-heading"><span class="prize-dialog-medal gold-medal">1</span><div><p class="card-kicker">First prize</p><h2 id="first-prize-title">£150 for your <span class="title-workout-word">workout</span></h2></div></div>
+      <p class="prize-intro">Choose the place that keeps you moving. The winner receives a £150 (or your country’s currency equivalent) prize to fund their workout with their chosen organisation.</p>
+      <div class="association-choices" role="group" aria-label="Choose an association type">
+        <button class="association-choice active" type="button" data-payee="your chosen Gym">Gym</button>
+        <button class="association-choice" type="button" data-payee="your chosen Studio">Studio</button>
+        <button class="association-choice" type="button" data-payee="your chosen Sport association">Sport association</button>
+      </div>
+      <div class="prize-cheque" aria-label="A prize cheque for 150 pounds">
+        <div class="cheque-brand"><span>Puzzle<span>Mixx</span></span><small>WINNER’S PRIZE</small></div>
+        <div class="cheque-date">14 · 02 · 2027</div>
+        <span class="cheque-label">Pay</span><strong id="cheque-payee">your chosen Gym</strong>
+        <div class="cheque-amount-words">One hundred and fifty pounds only</div><div class="cheque-amount">£150.00</div>
+        <div class="cheque-signature">PuzzleMixx</div>
+      </div>
+    </dialog>
+
+    <dialog class="prize-dialog prize-video-dialog" id="prize-second" aria-labelledby="second-prize-title">
+      <button class="prize-dialog-close" type="button" data-close-prize aria-label="Close second prize">×</button>
+      <div class="prize-dialog-heading"><span class="prize-dialog-medal silver-medal">2</span><div><p class="card-kicker">Second prize</p><h2 id="second-prize-title"><a class="prize-title-link" href="https://www.converse.com/uk/en/products/customize" target="_blank" rel="noopener noreferrer">Customise Your Converse</a></h2></div></div>
+      <video id="second-prize-video" controls preload="metadata" playsinline>
+        <source src="assets/prizes/TrainersTaylor.mp4" type="video/mp4" />
+      </video>
+    </dialog>
+
+    <dialog class="prize-dialog prize-shirt-dialog" id="prize-third" aria-labelledby="third-prize-title">
+      <button class="prize-dialog-close" type="button" data-close-prize aria-label="Close third prize">×</button>
+      <div class="prize-dialog-heading"><span class="prize-dialog-medal bronze-medal">3</span><div><p class="card-kicker">Third prize</p><h2 id="third-prize-title">Inner <span class="prize-title-brand-pic pm-shimmer-icon"><img src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" /></span> prize oversize T</h2></div></div>
+      <button class="prize-shirt-zoom" id="prize-shirt-zoom" type="button" aria-pressed="false" aria-label="Zoom in to inspect the inside back-neck embroidery">
+        <img src="assets/prizes/youre-my-psycho-tshirt-v5.png" alt="Black drop-shoulder T-shirt with subtle black-on-black textured embroidery reading You’re My Psycho on the left breast and purple embroidery contained entirely within the inside back neck" />
+        <span id="prize-shirt-zoom-hint">Click to zoom into the neck embroidery</span>
+      </button>
+    </dialog>
+
+    <script src="pm-countries.js?v=2"></script>
+    <script src="firebase-config.js?v=2"></script>
+    <script type="module" src="pm-points.js?v=16"></script>
+    <script type="module" src="leaderboard-app.js?v=26"></script>
+      <script src="pm-words.js?v=13"></script>
+  </body>
+</html>

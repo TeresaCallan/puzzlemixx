@@ -1,41 +1,192 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>PuzzleMixx — Coming soon</title>
-<meta name="description" content="PuzzleMixx workouts: work out the puzzle to reveal your workout. Coming soon." />
-<meta name="robots" content="noindex" />
-<link rel="icon" href="assets/puzzlemixx-brand-mark.webp" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=DM+Serif+Display:ital@0;1&family=Manrope:wght@600;700&display=swap" />
-<style>
-  :root { --bg:#F6F4FA; --ink:#1B1626; --muted:#4F4760; --accent:#6B2FA3; --line:#E2DCEC; }
-  * { box-sizing:border-box; }
-  html,body { height:100%; }
-  body { margin:0; display:grid; place-items:center; min-height:100svh; background:var(--bg); color:var(--ink); font-family:Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;
-         padding:max(24px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left)); }
-  main { width:min(100%,560px); display:flex; flex-direction:column; align-items:center; gap:22px; text-align:center; }
-  .mark { width:112px; height:112px; border-radius:50%; object-fit:cover; box-shadow:0 0 0 6px var(--accent),0 18px 40px #6b2fa333; }
-  .word { margin:0; font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:clamp(2.4rem,9vw,3.4rem); letter-spacing:-.035em; line-height:1; }
-  .word span { color:var(--accent); }
-  .sub { margin:-10px 0 0; font-family:"DM Mono",ui-monospace,monospace; font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
-  h1 { margin:6px 0 0; font-family:"DM Serif Display",Georgia,serif; font-weight:400; font-size:clamp(1.9rem,7vw,2.6rem); letter-spacing:-.03em; line-height:1.05; text-wrap:balance; }
-  h1 em { color:var(--accent); }
-  p.lede { margin:0; max-width:40ch; color:var(--muted); font-size:1.05rem; line-height:1.55; }
-  .pill { display:inline-block; padding:10px 20px; border:1px solid var(--line); border-radius:999px; background:#fff; font-weight:700; font-size:.95rem; }
-  @media (prefers-reduced-motion:no-preference) { .mark { animation:breathe 3.2s ease-in-out infinite; } }
-  @keyframes breathe { 50% { transform:scale(1.04); } }
-</style>
-</head>
-<body>
-<main>
-  <img class="mark" src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" width="112" height="112" />
-  <p class="word">Puzzle<span>Mixx</span></p>
-  <p class="sub">workouts</p>
-  <h1>Something new is on its way</h1>
-  <p class="lede">Work out the puzzle to reveal your <em>workout</em>. Win prizes, share your success, and dance the playlist with us.</p>
-  <span class="pill">Coming soon</span>
-</main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PuzzleMixx — Movie Puzzle</title>
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=" />
+    <link rel="stylesheet" href="styles.css?v=redesign-5" />
+    <link rel="stylesheet" href="redesign.css?v=18" />
+  </head>
+  <body>
+    <header class="compact-header" id="compact-header" aria-hidden="true" inert>
+      <div class="compact-header-inner">
+        <a class="brand compact-brand" href="/" aria-label="PuzzleMixx workouts home"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">workouts</span></a>
+        <a class="compact-leaderboard" href="leaderboard.html" aria-label="Open the PuzzleMixx Leaderboard">
+          <span class="compact-trophy"><img src="assets/leaderboard-trophy.svg" alt="" /></span>
+          <span class="compact-leaderboard-copy">Leaderboard <span id="leaderboard-points">0 pts</span></span>
+        </a>
+        <div class="compact-playlist-area">
+          <div class="playlist-picker compact-playlist-picker" data-playlist-id="nieve">
+            <button class="playlist-picker-trigger" type="button" aria-label="Choose a puzzle" aria-controls="compact-playlist-options">Nieve’s PuzzleMixx<span class="playlist-picker-chevron" aria-hidden="true"></span></button>
+            <nav class="playlist-menu" id="compact-playlist-options" aria-label="Puzzles">
+              <div class="playlist-menu-inner">
+                <a href="index.html" data-playlist-id="nieve" aria-current="page">Nieve’s PuzzleMixx</a>
+                <a href="hannah.html" data-playlist-id="hannah">Hannah’s PuzzleMixx</a>
+                <a class="golden-puzzle-option" href="tee.html" data-playlist-id="tee">Tee’s DBL PTS PuzzleMixx</a>
+              </div>
+            </nav>
+          </div>
+          <span class="compact-playlist-prompt">Work out <img class="eyebrow-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" /> by <img class="eyebrow-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" /></span>
+        </div>
+        <div class="compact-tools">
+          <div class="view-switch compact-view-switch" role="group" aria-label="Choose puzzle view">
+            <button class="view-button" id="compact-puzzle-view-button" aria-pressed="true" aria-label="Sort by PuzzleMixx">
+              <span>Sort by</span><img class="sort-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="" />
+            </button>
+            <button class="view-button" id="compact-sort-view-button" aria-pressed="false">Sort by song</button>
+          </div>
+          <button class="button button-dark" id="compact-hint-button">Hint</button>
+          <button class="button button-quiet" id="compact-reset-button">Start over</button>
+        </div>
+      </div>
+    </header>
+    <p class="hint-notice" id="hint-notice" aria-live="polite"></p>
+    <main class="shell">
+      <header class="masthead">
+        <div class="brand-explainer">
+          <a class="brand" href="/" aria-label="PuzzleMixx workouts home" aria-describedby="brand-explanation"><span class="brand-mark" aria-hidden="true"><img src="assets/puzzlemixx-brand-mark.webp" alt="" /></span>uzzle<span class="brand-mixx">Mixx</span> <span class="brand-workouts">workouts</span></a>
+          <div class="brand-explanation" id="brand-explanation" role="note">
+            <div class="brand-explanation-card">
+              <span class="brand-explanation-kicker">How PuzzleMixx works</span>
+              <p>WIN your workout&nbsp;&nbsp;<img class="lede-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" />&nbsp;&nbsp;by&nbsp;&nbsp;<img class="lede-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" />&nbsp;&nbsp;and share to WIN more prizes. Puzzle together the <span class="lede-playlist-word">playlist</span> to reveal the full length workout!</p>
+            </div>
+          </div>
+        </div>
+        <a class="masthead-prizes" href="leaderboard.html" aria-label="See the PuzzleMixx prizes and leaderboard"><img src="assets/leaderboard-trophy.svg" alt="" /><span>Prizes &amp; leaderboard</span></a>
+        <div class="masthead-playlist-area">
+          <div class="playlist-picker" data-playlist-id="nieve">
+            <button class="playlist-picker-trigger" type="button" aria-label="Choose a puzzle" aria-controls="playlist-options">Nieve’s PuzzleMixx<span class="playlist-picker-chevron" aria-hidden="true"></span></button>
+            <nav class="playlist-menu" id="playlist-options" aria-label="Puzzles">
+              <div class="playlist-menu-inner">
+                <a href="index.html" data-playlist-id="nieve" aria-current="page">Nieve’s PuzzleMixx</a>
+                <a href="hannah.html" data-playlist-id="hannah">Hannah’s PuzzleMixx</a>
+                <a class="golden-puzzle-option" href="tee.html" data-playlist-id="tee">Tee’s DBL PTS PuzzleMixx</a>
+              </div>
+            </nav>
+          </div>
+          <p class="eyebrow">WORK OUT <img class="eyebrow-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" /> BY <img class="eyebrow-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="PuzzleMixx" /></p>
+        </div>
+      </header>
+
+      <section class="intro" aria-labelledby="game-title">
+        <h1 id="game-title">Work out the puzzle to reveal your <span class="title-workout-word">WORKOUT</span></h1>
+        <div class="game-tools">
+          <div class="view-switch" role="group" aria-label="Choose puzzle view">
+            <button class="view-button" id="puzzle-view-button" aria-pressed="true" aria-label="Sort by PuzzleMixx">
+              <span>Sort by</span><img class="sort-brand-pic" src="assets/puzzlemixx-brand-mark.webp" alt="" />
+            </button>
+            <button class="view-button" id="sort-view-button" aria-pressed="false">Sort by song</button>
+          </div>
+          <button class="button button-dark" id="hint-button">Give me a hint</button>
+          <button class="button button-quiet" id="reset-button">Start over</button>
+        </div>
+      </section>
+
+      <section class="game" aria-label="Movie puzzle">
+        <aside class="song-reward-rail" id="song-reward-rail" aria-labelledby="reward-shelf-title" hidden>
+          <div class="song-reward-rail-heading">
+            <div class="reward-shelf-text">
+              <p class="reward-shelf-kicker"><img src="assets/puzzlemixx-brand-mark.webp" alt="" />Your rewards</p>
+              <h2 class="reward-shelf-title" id="reward-shelf-title">Win all 10 workout videos</h2>
+              <p class="reward-shelf-count" id="song-reward-count" aria-live="polite">0 of 10 won</p>
+            </div>
+            <button type="button" id="hide-song-rewards" aria-label="Hide your rewards">×</button>
+          </div>
+          <div class="song-reward-list" id="song-reward-list"></div>
+        </aside>
+        <button class="song-reward-rail-show" id="show-song-rewards" type="button" aria-label="Show your rewards" hidden>
+          <img src="assets/puzzlemixx-brand-mark.webp" alt="" />
+          <span>Your rewards</span>
+        </button>
+        <div class="reels-panel">
+          <div class="section-heading"><p class="kicker" id="reels-heading"></p><p id="reels-instructions"></p></div>
+          <div class="reels" id="reels" aria-label="Unplaced video reels"></div>
+        </div>
+        <div class="timeline-panel">
+          <div class="section-heading"><div class="timeline-title-row"><p class="progress" id="progress" aria-live="polite">0 of 35 placed</p><p class="kicker" id="timeline-heading">The Mental Workout</p></div><p id="timeline-instructions"></p></div>
+          <div class="timeline" id="timeline" aria-label="Movie timeline"></div>
+        </div>
+      </section>
+      <p class="sr-only" id="sort-status" aria-live="polite"></p>
+    </main>
+    <footer class="pm-legal"><a href="terms.html">Terms &amp; Conditions</a><span aria-hidden="true">·</span><a href="privacy.html">Privacy</a></footer>
+
+    <dialog id="clip-dialog" class="dialog clip-dialog">
+      <button class="close" aria-label="Close clip">×</button>
+      <p class="kicker" id="clip-label">Reel</p>
+      <yt-video id="clip-player" controls muted></yt-video>
+      <p>Watch and listen closely — every moment has a home.</p>
+    </dialog>
+
+    <dialog id="finish-dialog" class="dialog finish-dialog">
+      <button class="finish-close" type="button" aria-label="Close completed workout">×</button>
+      <div class="finish-copy">
+        <h2>You worked out <span class="finish-playlist-name" data-playlist-name>Nieve’s Playlist</span> !</h2>
+      </div>
+      <yt-video id="movie-player" controls></yt-video>
+      <div class="finish-actions">
+        <button class="button button-dark" id="replay-button">Play from the beginning</button>
+        <a class="button button-gold" href="leaderboard.html">See your points</a>
+      </div>
+    </dialog>
+
+    <dialog id="won-workout-dialog" class="dialog won-workout-dialog" aria-labelledby="won-workout-title">
+      <button class="song-reward-close" id="won-workout-close" type="button" aria-label="Close">×</button>
+      <p class="reward-shelf-kicker"><img src="assets/puzzlemixx-brand-mark.webp" alt="" />Your reward</p>
+      <h2 id="won-workout-title">Nieve’s workout</h2>
+      <yt-video id="won-workout-player" controls></yt-video>
+    </dialog>
+
+    <dialog id="song-reward-dialog" class="dialog song-reward-dialog">
+      <button class="song-reward-close" type="button" aria-label="Return to The Lazy Workout">×</button>
+      <h2 id="song-reward-title">You have WON the Complete Peace!</h2>
+      <p class="song-reward-copy">This <span class="rainbow-peace" role="img" aria-label="PEACE"><span aria-hidden="true">P</span><span aria-hidden="true">E</span><span aria-hidden="true">A</span><span aria-hidden="true">C</span><span aria-hidden="true">E</span></span> is sorted ! Dance and sing the <span class="rainbow-peace" role="img" aria-label="PEACE"><span aria-hidden="true">P</span><span aria-hidden="true">E</span><span aria-hidden="true">A</span><span aria-hidden="true">C</span><span aria-hidden="true">E</span></span> now, or <button class="song-reward-inline-close" type="button">close</button> to return to the puzzle.</p>
+      <div class="song-reward-actions" id="song-reward-actions">
+        <button class="song-watch-button" id="song-watch-button" type="button">
+          <img src="assets/puzzlemixx-brand-mark.webp" alt="" />
+          <span>Click the <span class="rainbow-peace" role="img" aria-label="PEACE"><span aria-hidden="true">P</span><span aria-hidden="true">E</span><span aria-hidden="true">A</span><span aria-hidden="true">C</span><span aria-hidden="true">E</span></span> to see Nieve’s workout</span>
+        </button>
+      </div>
+      <yt-video id="song-reward-player" controls hidden></yt-video>
+      <p class="song-reward-status" id="song-reward-status" aria-live="polite"></p>
+      <div class="song-replay-choice" id="song-replay-choice" hidden>
+        <img src="assets/puzzlemixx-brand-mark.webp" alt="" />
+        <h3 id="song-replay-prompt">Dance it again?</h3>
+        <div class="song-replay-buttons">
+          <button class="button button-dark" id="song-play-again" type="button">Play again</button>
+          <button class="button button-quiet" id="song-return-puzzle" type="button">Return to the puzzle</button>
+        </div>
+      </div>
+      <a class="button button-gold song-share-link" id="song-share-link" href="leaderboard.html">See your points</a>
+    </dialog>
+
+    <dialog id="hint-cost-dialog" class="dialog hint-cost-dialog" aria-describedby="hint-cost-description">
+      <button class="hint-cost-close" type="button" aria-label="Cancel hint">×</button>
+      <p class="kicker">A little help · −5 pts</p>
+      <h2>Are you sure you want a hint?</h2>
+      <p class="hint-cost-balance" id="hint-cost-balance" aria-live="polite"></p>
+      <p id="hint-cost-description">Confirm to deduct 5 points. Your hint glows for 6 seconds.</p>
+      <div class="hint-cost-actions">
+        <button class="button button-dark" id="confirm-paid-hint" type="button">Yes, deduct 5 pts</button>
+        <button class="button button-quiet" id="cancel-paid-hint" type="button">No, keep my points</button>
+      </div>
+    </dialog>
+
+    <template id="reel-template">
+      <article class="reel" draggable="true" role="button" tabindex="0">
+        <img class="reel-poster" alt="" />
+        <video class="reel-preview" playsinline preload="none" muted loop aria-hidden="true"></video>
+        <span class="reel-play" aria-hidden="true"><span class="play-icon">▶</span></span>
+        <span class="reel-sound" aria-hidden="true"><span class="reel-sound-icon">🔊</span><span class="reel-sound-text">Tap for sound</span></span>
+      </article>
+    </template>
+    <script src="pm-menu.js?v=1"></script>
+    <script src="yt-video.js?v=2"></script>
+    <script src="firebase-config.js?v=2"></script>
+    <script src="script.js?v=redesign-22"></script>
+    <script type="module" src="pm-points.js?v=16"></script>
+      <script src="pm-words.js?v=13"></script>
+    <script src="pm-share.js?v=3"></script>
+  </body>
 </html>
