@@ -422,6 +422,13 @@ const PM = {
     return writeEvent(state.user.uid, spec.id, spec.data);
   },
 
+  // Admin only: one player's points history, oldest first (used to flag possible fake wins).
+  async eventsOf(uid) {
+    if (!state.isAdmin) return [];
+    const snap = await getDocs(query(collection(db, 'players', uid, 'events'), orderBy('createdAt', 'asc'), limit(3000)));
+    return snap.docs.map((d) => ({ id: d.id, ...d.data(), at: d.data().createdAt?.toDate?.() || new Date() }));
+  },
+
   async myEvents() {
     if (!state.user) return [];
     const snap = await getDocs(query(collection(db, 'players', state.user.uid, 'events'), orderBy('createdAt', 'desc'), limit(500)));

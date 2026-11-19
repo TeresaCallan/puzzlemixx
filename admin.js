@@ -63,6 +63,90 @@ async function loadRounds() {
   }
 }
 
+// ---------- Possible fake wins ----------
+// A real player needs several minutes to complete a whole puzzle, and can only finish songs so fast.
+// These checks flag wins that come faster or more often than that. They are warning signs, not proof.
+const FAIR = {
+  mentalGapMin: 3,        // two Mental Workouts on the same puzzle less than 3 minutes apart
+  songsPerMinute: 6,      // 6 or more songs completed within one minute
+  winsPer10Min: 25,       // 25 or more songs + Mental Workouts within 10 minutes
+  mentalPerDay: 8,        // 8 or more Mental Workouts in one day
+  pointsPerHour: 100      // 100 or more points gained within one hour
+};
+const PUZZLE_NAME = { nieve: 'Nieve’s', hannah: 'Hannah’s', tee: 'Tee’s' };
+const clock = (d) => d.toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+function maxInWindow(times, ms) {
+  let best = 0, at = null;
+  for (let i = 0, j = 0; j < times.length; j += 1) {
+    while (times[j] - times[i] > ms) i += 1;
+    if (j - i + 1 > best) { best = j - i + 1; at = times[i]; }
+  }
+  return { count: best, at };
+}
+
+function fairPlayFlags(events) {
+  const flags = [];
+  const wins = events.filter((e) => e.type === 'song' || e.type === 'mental');
+  const mental = wins.filter((e) => e.type === 'mental');
+  Object.keys(PUZZLE_NAME).forEach((puzzle) => {
+    const m = mental.filter((e) => e.puzzle === puzzle);
+    const quick = [];
+    for (let i = 1; i < m.length; i += 1) {
+      const gap = (m[i].at - m[i - 1].at) / 60000;
+      if (gap < FAIR.mentalGapMin) quick.push({ gap, at: m[i].at });
+    }
+    if (quick.length) {
+      const fastest = quick.reduce((x, y) => (y.gap < x.gap ? y : x));
+      const t = fastest.gap < 1 ? `${Math.round(fastest.gap * 60)} seconds` : `${fastest.gap.toFixed(1)} minutes`;
+      flags.push(`${PUZZLE_NAME[puzzle]} Mental Workout won again under ${FAIR.mentalGapMin} minutes after the last one ${quick.length === 1 ? 'once' : `${quick.length} times`} (fastest: ${t}, ${clock(fastest.at)})`);
+    }
+  });
+  const songTimes = wins.filter((e) => e.type === 'song').map((e) => e.at.getTime());
+  const fastSongs = maxInWindow(songTimes, 60000);
+  if (fastSongs.count >= FAIR.songsPerMinute) flags.push(`${fastSongs.count} songs completed within one minute (from ${clock(new Date(fastSongs.at))})`);
+  const burst = maxInWindow(wins.map((e) => e.at.getTime()), 600000);
+  if (burst.count >= FAIR.winsPer10Min) flags.push(`${burst.count} wins within 10 minutes (from ${clock(new Date(burst.at))})`);
+  const perDay = {};
+  mental.forEach((e) => { const day = e.at.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); perDay[day] = (perDay[day] || 0) + 1; });
+  Object.entries(perDay).forEach(([day, n]) => { if (n >= FAIR.mentalPerDay) flags.push(`${n} Mental Workouts on ${day}`); });
+  const gains = events.filter((e) => e.points > 0);
+  let bestHour = 0, hourAt = null;
+  for (let i = 0, j = 0, sum = 0; j < gains.length; j += 1) {
+    sum += gains[j].points;
+    while (gains[j].at - gains[i].at > 3600000) { sum -= gains[i].points; i += 1; }
+    if (sum > bestHour) { bestHour = sum; hourAt = gains[i].at; }
+  }
+  if (bestHour >= FAIR.pointsPerHour) flags.push(`${bestHour} points gained within one hour (from ${clock(hourAt)})`);
+  return flags;
+}
+
+async function loadFairPlay() {
+  try {
+    const k = PM.roundAt();
+    const since = PM.roundStart(k);
+    const board = (await PM.leaderboard()).map((p) => ({ ...p, pts: PM.roundPointsOf(p, k) }))
+      .filter((p) => p.pts > 0).sort((a, b) => b.pts - a.pts).slice(0, 50);
+    const flagged = [];
+    for (const p of board) {
+      const events = (await PM.eventsOf(p.id)).filter((e) => e.at.getTime() >= since);
+      const flags = fairPlayFlags(events);
+      if (flags.length) flagged.push({ p, flags, wins: events.filter((e) => e.type === 'song' || e.type === 'mental').length });
+    }
+    $('#fake-count').textContent = flagged.length ? `(${flagged.length})` : '';
+    $('#fake-list').innerHTML = flagged.map(({ p, flags, wins }) => `
+      <article class="claim"><div>
+        <p class="claim-kind">${p.pts} pts this round · ${wins} wins</p>
+        <h3>${esc(p.name)}</h3>
+        <ul>${flags.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>
+      </div></article>`).join('');
+    $('#fake-empty').hidden = flagged.length > 0;
+  } catch (error) {
+    $('#fake-empty').hidden = false;
+    $('#fake-empty').textContent = `Couldn’t check for fake wins: ${error.message}`;
+  }
+}
+
 async function decide(el, claim, approve) {
   el.querySelectorAll('button').forEach((b) => { b.disabled = true; });
   try {
@@ -84,7 +168,8 @@ PM.onChange((s) => {
   else notice.hidden = true;
   $('#rounds-card').hidden = !s.isAdmin;
   $('#prize-details').hidden = !s.isAdmin;
-  if (s.isAdmin && !load.started) { load.started = true; load(); loadRounds(); setInterval(() => { load(); loadRounds(); }, 60000); }
+  $('#fake-card').hidden = !s.isAdmin;
+  if (s.isAdmin && !load.started) { load.started = true; load(); loadRounds(); loadFairPlay(); setInterval(() => { load(); loadRounds(); }, 60000); setInterval(loadFairPlay, 600000); }
 });
 
 $('#signin-form').addEventListener('submit', async (e) => {

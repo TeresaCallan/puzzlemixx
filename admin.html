@@ -54,6 +54,14 @@
     <p class="pm-empty" id="pending-empty">Nothing waiting. New claims are also emailed to puzzlemixx@gmail.com.</p>
   </section>
 
+  <section class="leader-card pm-card" id="fake-card" hidden>
+    <p class="card-kicker">Fair play</p>
+    <h2>Possible fake wins <span id="fake-count"></span></h2>
+    <p class="pm-fine">Checked every 10 minutes for this round’s top 50 players. These are only warning signs — wins faster or more often than a person could really play. Look at the times before deciding anything; under the T&amp;Cs (section 8) you can remove points gained by breaking the fair play rules.</p>
+    <div class="list" id="fake-list"></div>
+    <p class="pm-empty" id="fake-empty">Nothing suspicious so far.</p>
+  </section>
+
   <section class="leader-card pm-card" id="rounds-card" hidden>
     <p class="card-kicker">Prizes</p>
     <h2>Round winners</h2>
@@ -79,8 +87,8 @@
 </main>
 <script src="pm-countries.js?v=2"></script>
 <script src="firebase-config.js?v=3"></script>
-<script type="module" src="pm-points.js?v=18"></script>
+<script type="module" src="pm-points.js?v=19"></script>
 <script src="pm-words.js?v=13"></script>
-<script type="module" src="admin.js?v=8"></script>
+<script type="module" src="admin.js?v=9"></script>
 </body>
 </html>
