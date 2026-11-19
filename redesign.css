@@ -243,3 +243,7 @@ yt-video iframe { position:absolute; inset:0; width:100%; height:100%; border:0;
 .playlist-menu a.golden-puzzle-option.is-locked { cursor:not-allowed; filter:grayscale(.45) brightness(.97); opacity:.72; pointer-events:auto; }
 .playlist-menu a.golden-puzzle-option.is-locked:hover, .playlist-menu a.golden-puzzle-option.is-locked:focus-visible { color:#815712; border-color:#e9d296; background:linear-gradient(105deg,#fff8dc,#f9e9b9aa); text-shadow:0 0 8px #ffd978cc; box-shadow:0 0 16px #edc66b77; }
 .playlist-menu a .pm-soon { margin-left:auto; padding:2px 7px; border-radius:999px; background:#00000012; color:#5d5670; font:500 9px/1.4 "DM Mono",ui-monospace,monospace; letter-spacing:.08em; text-transform:uppercase; text-shadow:none; white-space:nowrap; }
+
+/* reCAPTCHA (App Check) badge hidden; the required notice is shown in the page footers instead. */
+.grecaptcha-badge { visibility: hidden !important; }
+.pm-recaptcha { font-size: .85em; }

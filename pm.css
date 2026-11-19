@@ -364,3 +364,7 @@
 .pm-page .pm-points-ribbon .pm-tip-moving .tip-slide { margin-left:0; }
 /* Keep the points-box pop-ups above the cards underneath */
 .pm-page .leaderboard-main > .pm-points-ribbon { position:relative; z-index:30; }
+
+/* reCAPTCHA (App Check) badge hidden; the required notice is shown in the page footers instead. */
+.grecaptcha-badge { visibility: hidden !important; }
+.pm-recaptcha { font-size: .85em; }

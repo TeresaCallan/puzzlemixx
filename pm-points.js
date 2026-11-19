@@ -2,6 +2,7 @@
 // Exposes window.PM. Works in a reduced "not set up yet" mode until
 // window.PM_FIREBASE_CONFIG (firebase-config.js) is filled in.
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check.js';
 import {
   getAuth, onAuthStateChanged, sendSignInLinkToEmail, isSignInWithEmailLink,
   signInWithEmailLink, signOut as fbSignOut,
@@ -135,25 +136,82 @@ function eventSpec(type, info = {}) {
   return null;
 }
 
-// Songs and The Mental Workout score every time they are won (after Start over). The first win this
-// round keeps the plain id; later wins add -p2, -p3… A share matches the latest win of that song.
-const MAX_REPEATS = 1000;
-const eventExists = async (uid, id) => (await getDoc(doc(db, 'players', uid, 'events', id))).exists();
-async function winsSoFar(uid, base) {
-  let n = 0;
-  while (n < MAX_REPEATS && await eventExists(uid, n === 0 ? base : `${base}-p${n + 1}`)) n += 1;
-  return n;
+// Fair play. Songs and The Mental Workout score every time they are won (after Start over), up to
+// DAILY_WINS times a day each (per song, per puzzle), and not too close together. Day = UTC date of the
+// server's clock; win n of the day gets the id  <base>-<Y>-<M>-<D>-<n>. A share names the win it is for.
+const DAILY_WINS = 3;
+const MIN_GAP_MS = { song: 30 * 1000, mental: 3 * 60 * 1000 };
+let clockOffset = null;   // server time − this device's time, from the web server's Date header
+async function serverNow() {
+  if (clockOffset === null) {
+    clockOffset = 0;
+    try {
+      const sent = Date.now();
+      const res = await fetch(`${location.origin}/?clock=${sent}`, { method: 'HEAD', cache: 'no-store' });
+      const date = Date.parse(res.headers.get('date') || '');
+      if (!Number.isNaN(date)) clockOffset = date + 500 - (sent + Date.now()) / 2;
+    } catch { /* keep this device's clock */ }
+  }
+  return Date.now() + clockOffset;
+}
+const dayKey = (t) => { const d = new Date(t); return `${d.getUTCFullYear()}-${d.getUTCMonth() + 1}-${d.getUTCDate()}`; };
+const eventDoc = (uid, id) => getDoc(doc(db, 'players', uid, 'events', id));
+async function winsOnDay(uid, base, day) {
+  const found = [];
+  for (let n = 1; n <= DAILY_WINS; n += 1) {
+    const snap = await eventDoc(uid, `${base}-${day}-${n}`);
+    if (!snap.exists()) break;
+    found.push(snap.data());
+  }
+  return found;
+}
+function fairPlayNotice(text) {
+  try {
+    let el = document.querySelector('#pm-fair-notice');
+    if (!el) {
+      el = document.createElement('p');
+      el.id = 'pm-fair-notice';
+      el.setAttribute('role', 'status');
+      el.style.cssText = 'position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:9999;max-width:min(92vw,460px);margin:0;padding:12px 16px;border-radius:14px;background:#1B1626;color:#fff;font:600 14px/1.4 Manrope,system-ui,sans-serif;box-shadow:0 10px 30px #0004;text-align:center';
+      document.body.append(el);
+    }
+    el.textContent = text;
+    el.hidden = false;
+    clearTimeout(fairPlayNotice.timer);
+    fairPlayNotice.timer = setTimeout(() => { el.hidden = true; }, 6000);
+  } catch { /* ignore */ }
 }
 async function writeEvent(uid, id, data) {
   if (data.type === 'song' || data.type === 'mental') {
-    const n = (await winsSoFar(uid, id)) + 1;
-    if (n > MAX_REPEATS) return { added: false, reason: 'limit' };
-    if (n > 1) { id = `${id}-p${n}`; data = { ...data, n }; }
+    const now = await serverNow();
+    const day = dayKey(now);
+    const today = await winsOnDay(uid, id, day);
+    if (today.length >= DAILY_WINS) {
+      fairPlayNotice(data.type === 'song'
+        ? `You’ve had today’s ${DAILY_WINS} wins for this song. Play on for fun — it scores again tomorrow.`
+        : `You’ve had today’s ${DAILY_WINS} Mental Workout wins on this puzzle. It scores again tomorrow.`);
+      return { added: false, reason: 'daily-limit' };
+    }
+    const last = today[today.length - 1];
+    const lastAt = last?.createdAt?.toMillis?.();
+    if (lastAt && now - lastAt < MIN_GAP_MS[data.type]) {
+      fairPlayNotice(data.type === 'song' ? 'Nice and quick! That one was too soon after your last win of this song to score.' : 'That Mental Workout was too soon after your last one to score (3 minutes apart).');
+      return { added: false, reason: 'too-soon' };
+    }
+    const n = today.length + 1;
+    id = `${id}-${day}-${n}`;
+    data = { ...data, n };
   } else if (data.type === 'share') {
     const winBase = data.songId ? `song-${data.puzzle}-${data.songId}${roundSuffix()}` : `mental-${data.puzzle}${roundSuffix()}`;
-    const n = await winsSoFar(uid, winBase);
-    if (n === 0) return { added: false, reason: 'nowin' };
-    if (n > 1) { id = `${id}-p${n}`; data = { ...data, n }; }
+    const now = await serverNow();
+    let winKey = '';
+    for (const day of [dayKey(now), dayKey(now - 86400000)]) {
+      const wins = await winsOnDay(uid, winBase, day);
+      if (wins.length) { winKey = `${day}-${wins.length}`; break; }
+    }
+    if (!winKey) return { added: false, reason: 'nowin' };
+    id = `${id}-${winKey}`;
+    data = { ...data, successKey: winKey };
   }
   const playerRef = doc(db, 'players', uid);
   const eventRef = doc(db, 'players', uid, 'events', id);
@@ -263,7 +321,7 @@ const PM = {
   roundPoints(player = state.player) { return roundPointsOf(player, roundAt()); },
 
   // Terms agreement, kept privately with the account (only the player and the admin can read it).
-  TERMS_VERSION: 3,
+  TERMS_VERSION: 4,
   async myConsent() {
     if (!state.user || !db) return null;
     try { const snap = await getDoc(doc(db, 'players', state.user.uid, 'private', 'consent')); return snap.exists() ? snap.data() : null; }
@@ -566,6 +624,11 @@ window.PM = PM;
   }
   try {
     const app = initializeApp(config);
+    // App Check: points are only accepted from the real PuzzleMixx pages (reCAPTCHA v3, invisible to players).
+    if (window.PM_APPCHECK_SITE_KEY) {
+      try { initializeAppCheck(app, { provider: new ReCaptchaV3Provider(window.PM_APPCHECK_SITE_KEY), isTokenAutoRefreshEnabled: true }); }
+      catch (error) { console.warn('PuzzleMixx: App Check did not start', error); }
+    }
     auth = getAuth(app);
     db = getFirestore(app);
     state.configured = true;
