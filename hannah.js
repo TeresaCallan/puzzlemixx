@@ -11,7 +11,7 @@ const PIECE_YOUTUBE_IDS = ["mwwC6KO3uUo", "UM9FK2ZN_UE", "c1H2krHHT3E", "ib59FO4
 const COMPLETE_PEACE_YOUTUBE_IDS = ["6j8Dv9WWOfM", "LlTT4CQvJe4", "G-G1WyfOJzg", "vmDwizgKme0", "aDvBjT0ZH-k", "1LnV5FU2KSA", "XOVFE9StPOQ", "eIrq1KbCuLg", "awtdTPYk0V4", "5KAJQXRdxCI"];
 // Demo videos shown in the “Won workouts” section. The pop-up reward is always the CompletePeace.
 // A null entry has no Demo yet, so that song's thumbnail opens the CompletePeace reward as before.
-const DEMO_YOUTUBE_IDS = ["S_fwhInnYAw", "QgrSdd_Vz2Q", null, null, null, null, null, null, null, null];
+const DEMO_YOUTUBE_IDS = ["S_fwhInnYAw", "QgrSdd_Vz2Q", "zpQ_P75aQxA", null, null, null, null, null, null, null];
 const clips = Array.from({ length: TOTAL }, (_, i) => i + 1);
 const SONG_PILES = [
   [1, 2, 3],
