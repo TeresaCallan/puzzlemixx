@@ -6,6 +6,8 @@
 (function () {
   // Puzzles not released yet: still listed in the menu, greyed out and untappable. Remove a name to open it.
   const CLOSED_PUZZLES = ['hannah'];
+  // The tag shown on each closed puzzle. Hannah’s comes when Nieve’s competition (Round 1) ends: 23 Feb 2027.
+  const COMING_LABEL = { hannah: 'Coming 23 Feb 2027' };
   const TEE_ALWAYS_OPEN = false;
   const TEE_LIVE_WINDOWS = true;
   const WINDOWS_PER_DAY = 8;
@@ -174,8 +176,9 @@
       a.removeAttribute('aria-current');
       a.setAttribute('aria-disabled', 'true');
       a.setAttribute('tabindex', '-1');
-      a.title = 'Coming soon';
-      if (!a.querySelector('.pm-soon')) a.insertAdjacentHTML('beforeend', '<span class="pm-soon">Coming soon</span>');
+      const label = COMING_LABEL[puzzle] || 'Coming soon';
+      a.title = label;
+      if (!a.querySelector('.pm-soon')) a.insertAdjacentHTML('beforeend', `<span class="pm-soon">${label}</span>`);
       a.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); }, true);
     });
     // Visiting the page directly while it is offline goes back to the first puzzle (add ?preview to work on it).
