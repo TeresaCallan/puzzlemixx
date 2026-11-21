@@ -469,6 +469,7 @@ const PM = {
     if (!['song', 'mental', 'hint', 'share'].includes(type) || !contestOpen()) return { added: false };
     // Tee’s Double Points only scores while it is live (see pm-menu.js).
     if (info.puzzle === 'tee' && window.PMTee && !window.PMTee.isLive()) return { added: false, reason: 'closed' };
+    if (window.PMClosed?.(info.puzzle)) return { added: false, reason: 'closed' };   // a puzzle that is offline for now
     const spec = eventSpec(type, info);
     if (!spec) return { added: false };
     if (!state.configured || !state.user || !state.player) {

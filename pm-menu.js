@@ -4,6 +4,8 @@
 // Every visitor works out the same windows from the date, using the web server’s clock.
 // Set TEE_ALWAYS_OPEN to true to open it all the time, or TEE_LIVE_WINDOWS to false to keep it closed.
 (function () {
+  // Puzzles not released yet: still listed in the menu, greyed out and untappable. Remove a name to open it.
+  const CLOSED_PUZZLES = ['hannah'];
   const TEE_ALWAYS_OPEN = false;
   const TEE_LIVE_WINDOWS = true;
   const WINDOWS_PER_DAY = 8;
@@ -64,6 +66,7 @@
   }
   const isLive = () => Boolean(liveWindow());
   window.PMTee = { isLive, liveWindow, now };
+  window.PMClosed = (puzzle) => CLOSED_PUZZLES.includes(puzzle);
 
   // ---------- Styles (shared by every page) ----------
   const css = `
@@ -157,6 +160,27 @@
       setTimeout(() => location.replace('index.html'), 6000);
     }
   }
+
+  // ---------- Puzzles that are offline for now (e.g. Hannah’s): greyed out, untappable ----------
+  const closedStyle = document.createElement('style');
+  closedStyle.textContent = `.playlist-menu a.pm-closed-puzzle { cursor:not-allowed; opacity:.5; filter:grayscale(.6); pointer-events:auto; display:flex; align-items:center; gap:8px; }
+  .playlist-menu a.pm-closed-puzzle:hover, .playlist-menu a.pm-closed-puzzle:focus-visible { background:transparent; color:inherit; }
+  .playlist-menu a.pm-closed-puzzle .pm-soon { margin-left:auto; padding:2px 7px; border-radius:999px; background:#00000012; color:#5d5670; font:500 9px/1.4 "DM Mono",ui-monospace,monospace; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; }`;
+  document.head.append(closedStyle);
+  CLOSED_PUZZLES.forEach((puzzle) => {
+    document.querySelectorAll(`.playlist-menu a[data-playlist-id="${puzzle}"]`).forEach((a) => {
+      a.classList.add('pm-closed-puzzle');
+      a.removeAttribute('href');
+      a.removeAttribute('aria-current');
+      a.setAttribute('aria-disabled', 'true');
+      a.setAttribute('tabindex', '-1');
+      a.title = 'Coming soon';
+      if (!a.querySelector('.pm-soon')) a.insertAdjacentHTML('beforeend', '<span class="pm-soon">Coming soon</span>');
+      a.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); }, true);
+    });
+    // Visiting the page directly while it is offline goes back to the first puzzle (add ?preview to work on it).
+    if (new RegExp(`/${puzzle}\\.html$`).test(location.pathname) && !preview) location.replace('index.html');
+  });
 
   function tick() {
     const w = liveWindow();
